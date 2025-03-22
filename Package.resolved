@@ -1,0 +1,24 @@
+{
+  "originHash" : "d0aef7a1dd3f67087c78515b2ed846ce5b87498915623703a0cbdb8d3b089f33",
+  "pins" : [
+    {
+      "identity" : "devtesting",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/prachigauriar/DevTesting",
+      "state" : {
+        "revision" : "9118a83bf983c366f8caa526fbfdb113d3776fd7",
+        "version" : "1.0.0-beta.4"
+      }
+    },
+    {
+      "identity" : "urlmock",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/prachigauriar/URLMock.git",
+      "state" : {
+        "revision" : "6d52a5e64c9f5e3a1248de6269d100fe39c5bdc8",
+        "version" : "1.3.6"
+      }
+    }
+  ],
+  "version" : 3
+}
