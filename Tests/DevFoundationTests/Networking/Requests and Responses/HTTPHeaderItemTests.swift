@@ -34,14 +34,12 @@ struct HTTPHeaderItemTests: RandomValueGenerating {
         // Set a header and make sure the value is what we set
         var headerItem1 = randomHTTPHeaderItem()
         urlRequest.set(headerItem1)
-        let headerItems1 = try #require(urlRequest.httpHeaderItems)
-        #expect(headerItems1 == [headerItem1])
+        #expect(urlRequest.httpHeaderItems == [headerItem1])
 
         // Set a new value for the same field and make sure the value is overwritten
         headerItem1.value = randomAlphanumericString()
         urlRequest.set(headerItem1)
-        let headerItems2 = try #require(urlRequest.httpHeaderItems)
-        #expect(headerItems2 == [headerItem1])
+        #expect(urlRequest.httpHeaderItems == [headerItem1])
 
         // Add a value for the same field and make sure the value is appended
         var headerItem2 = headerItem1
@@ -49,8 +47,7 @@ struct HTTPHeaderItemTests: RandomValueGenerating {
         urlRequest.add(headerItem2)
         var expectedHeaderItem = headerItem1
         expectedHeaderItem.value += ",\(headerItem2.value)"
-        let headerItems3 = try #require(urlRequest.httpHeaderItems)
-        #expect(headerItems3 == [expectedHeaderItem])
+        #expect(urlRequest.httpHeaderItems == [expectedHeaderItem])
 
         // Overwrite all of them (a few times) and make sure they’re completely overwritten
         for _ in 0 ..< 3 {
