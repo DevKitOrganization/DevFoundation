@@ -134,7 +134,7 @@ struct WebServiceClientTests: RandomValueGenerating {
         // Verify that authenticator.prepare(_:context:previousFailures:) was called with the correct arguments
         #expect(authenticator.prepareStub.calls.count == 1)
         let prepareArguments = try #require(authenticator.prepareStub.callArguments.first)
-        let expectedURLRequest = try #require(try request.urlRequest(with: baseURLConfiguration))
+        let expectedURLRequest = try request.urlRequest(with: baseURLConfiguration)
         #expect(prepareArguments.request == expectedURLRequest)
         #expect(prepareArguments.context == request.authenticatorContext)
         #expect(prepareArguments.previousFailures.isEmpty)
@@ -191,7 +191,7 @@ struct WebServiceClientTests: RandomValueGenerating {
         // Verify that authenticator.prepare(_:context:previousFailures:) was called with the correct arguments
         #expect(authenticator.prepareStub.calls.count == 1)
         let prepareArguments = try #require(authenticator.prepareStub.callArguments.first)
-        let expectedURLRequest = try #require(try request.urlRequest(with: baseURLConfiguration))
+        let expectedURLRequest = try request.urlRequest(with: baseURLConfiguration)
         #expect(prepareArguments.request == expectedURLRequest)
         #expect(prepareArguments.context == request.authenticatorContext)
         #expect(prepareArguments.previousFailures.isEmpty)
@@ -274,7 +274,7 @@ struct WebServiceClientTests: RandomValueGenerating {
         // Verify that authenticator.prepare(_:context:previousFailures:) was called with the correct arguments
         #expect(authenticator.prepareStub.calls.count == 1)
         let prepareArguments = try #require(authenticator.prepareStub.callArguments.first)
-        let expectedURLRequest = try #require(try request.urlRequest(with: baseURLConfiguration))
+        let expectedURLRequest = try request.urlRequest(with: baseURLConfiguration)
         #expect(prepareArguments.request == expectedURLRequest)
         #expect(prepareArguments.context == request.authenticatorContext)
         #expect(prepareArguments.previousFailures.isEmpty)
