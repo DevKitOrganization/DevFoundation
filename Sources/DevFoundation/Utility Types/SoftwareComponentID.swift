@@ -24,7 +24,7 @@ import Foundation
 ///     let widgets = spacely.appending("widgets")
 ///     let checkout = widgets.appending("checkout")
 ///     let checkoutButton = checkout.appending("checkoutButton")
-public struct SoftwareComponentID: DottedHierarchicalID, TypedExtensibleEnum {
+public struct SoftwareComponentID: Codable, DottedHierarchicalID, TypedExtensibleEnum {
     public let rawValue: String
 
 
