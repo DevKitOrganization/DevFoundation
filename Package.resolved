@@ -1,13 +1,13 @@
 {
-  "originHash" : "d0aef7a1dd3f67087c78515b2ed846ce5b87498915623703a0cbdb8d3b089f33",
+  "originHash" : "1453c26ea10e83c3227cf18322faaf6a77576c84197ec7162386b7bdbda59792",
   "pins" : [
     {
       "identity" : "devtesting",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/prachigauriar/DevTesting",
       "state" : {
-        "revision" : "9118a83bf983c366f8caa526fbfdb113d3776fd7",
-        "version" : "1.0.0-beta.4"
+        "revision" : "93e51158c35680315934e7aa7cdc81608dd86f25",
+        "version" : "1.0.0-beta.5"
       }
     },
     {

@@ -10,7 +10,7 @@ let package = Package(
         .macOS(.v15),
         .tvOS(.v18),
         .visionOS(.v2),
-        .watchOS(.v8),
+        .watchOS(.v11),
     ],
     products: [
         .library(
@@ -19,7 +19,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/prachigauriar/DevTesting", from: "1.0.0-beta.4"),
+        .package(url: "https://github.com/prachigauriar/DevTesting", from: "1.0.0-beta.5"),
         .package(url: "https://github.com/prachigauriar/URLMock.git", from: "1.3.6"),
     ],
     targets: [
