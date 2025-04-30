@@ -1,0 +1,32 @@
+{
+  "configurations" : [
+    {
+      "id" : "39CF179E-A6E4-40A6-8D6A-55A3C4CCCB47",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "defaultTestExecutionTimeAllowance" : 60,
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "dfobTests",
+        "name" : "dfobTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "DevFoundationTests",
+        "name" : "DevFoundationTests"
+      }
+    }
+  ],
+  "version" : 1
+}

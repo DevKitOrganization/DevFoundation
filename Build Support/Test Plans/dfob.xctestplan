@@ -1,0 +1,30 @@
+{
+  "configurations" : [
+    {
+      "id" : "5717E6CF-E18D-4ADE-94BB-3E6CA6DC3AF0",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "defaultTestExecutionTimeAllowance" : 60,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:",
+      "identifier" : "dfob",
+      "name" : "dfob"
+    },
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "dfobTests",
+        "name" : "dfobTests"
+      }
+    }
+  ],
+  "version" : 1
+}
