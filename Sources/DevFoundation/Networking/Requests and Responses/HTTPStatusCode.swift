@@ -55,7 +55,6 @@ public struct HTTPStatusCode: TypedExtensibleEnum {
 }
 
 
-
 // Most of this documentation is lifted directly from RFC-9110.
 extension HTTPStatusCode {
     /// A 100 status code, which indicates that the initial part of a request has been received and has not yet been
