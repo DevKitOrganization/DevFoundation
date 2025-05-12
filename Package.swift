@@ -1,7 +1,11 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.1
 
 import PackageDescription
 
+
+let swiftSettings: [SwiftSetting] = [
+    .enableUpcomingFeature("ExistentialAny")
+]
 
 let package = Package(
     name: "DevFoundation",
@@ -27,15 +31,13 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.5.0"),
-        .package(url: "https://github.com/prachigauriar/DevTesting", from: "1.0.0-beta.5"),
+        .package(url: "https://github.com/DevKitOrganization/DevTesting", from: "1.0.0-beta.7"),
         .package(url: "https://github.com/prachigauriar/URLMock.git", from: "1.3.6"),
     ],
     targets: [
         .target(
             name: "DevFoundation",
-            swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny")
-            ]
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "DevFoundationTests",
@@ -44,9 +46,7 @@ let package = Package(
                 "DevTesting",
                 "URLMock",
             ],
-            swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny")
-            ]
+            swiftSettings: swiftSettings
         ),
 
         .executableTarget(
@@ -55,9 +55,7 @@ let package = Package(
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 "DevFoundation",
             ],
-            swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny")
-            ]
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "dfobTests",
@@ -67,9 +65,7 @@ let package = Package(
                 "DevTesting",
                 "dfob",
             ],
-            swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny")
-            ]
+            swiftSettings: swiftSettings
         ),
     ]
 )

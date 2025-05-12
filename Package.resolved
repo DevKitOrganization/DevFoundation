@@ -1,13 +1,13 @@
 {
-  "originHash" : "112eb69ccb5affc94878c5854390320ece0aa0ceac684e09894dd9aae3f1eed7",
+  "originHash" : "78b01d0969bcc71f9a7cff02cc420eceb4202fd5ead71b112c782acfb5cb03bc",
   "pins" : [
     {
       "identity" : "devtesting",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/prachigauriar/DevTesting",
+      "location" : "https://github.com/DevKitOrganization/DevTesting",
       "state" : {
-        "revision" : "93e51158c35680315934e7aa7cdc81608dd86f25",
-        "version" : "1.0.0-beta.5"
+        "revision" : "32dd16262b17b291279adda9cfc7dd683ed7e6ee",
+        "version" : "1.0.0-beta.7"
       }
     },
     {
