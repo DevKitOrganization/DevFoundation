@@ -16,6 +16,11 @@ extension RandomValueGenerating {
     }
 
 
+    mutating func randomDate() -> Date {
+        return Date(timeIntervalSinceNow: random(TimeInterval.self, in: -10_000 ... 10_000))
+    }
+
+
     mutating func randomError() -> MockError {
         return MockError(id: random(Int.self, in: 0 ... .max))
     }
