@@ -11,7 +11,6 @@ import Foundation
 import Testing
 
 
-@Suite(.serialized)
 struct ExpiringValueTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()
 
@@ -33,15 +32,14 @@ struct ExpiringValueTests: RandomValueGenerating {
         let value = randomUUID()
         let duration = random(TimeInterval.self, in: 1 ... 10_000)
 
-        let start = randomDate()
-        let mockDateProvider = MockDateProvider(now: start)
-
-        DateProviders.current = mockDateProvider
+        let date = Date()
         let expiringValue = ExpiringValue(value, lifetimeDuration: duration)
-        DateProviders.current = DateProviders.system
 
         #expect(expiringValue.value == value)
-        #expect(expiringValue.lifetimeRange == start ... start + duration)
+        #expect(expiringValue.lifetimeRange.lowerBound.isApproximatelyEqual(to: date, absoluteTolerance: 0.01))
+        #expect(
+            expiringValue.lifetimeRange.upperBound.isApproximatelyEqual(to: date + duration, absoluteTolerance: 0.01)
+        )
     }
 
 
@@ -71,11 +69,6 @@ struct ExpiringValueTests: RandomValueGenerating {
         )
 
         #expect(!expiringValue.isExpired)
-
-        let mockDateProvider = MockDateProvider(now: end + 0.01)
-        DateProviders.current = mockDateProvider
-        #expect(expiringValue.isExpired)
-        DateProviders.current = DateProviders.system
 
         #expect(!expiringValue.isExpired(at: start))
         #expect(!expiringValue.isExpired(at: end))

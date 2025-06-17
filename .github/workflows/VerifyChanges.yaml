@@ -71,26 +71,26 @@ jobs:
         run: |
           xcrun xccov view --report .build/DevFoundation-Package_test.xcresult --json \
               | swift run --quiet --skip-build --package-path xccovPretty xccovPretty --github-comment \
-              > .build/xccovPretty.output
+              > .build/xccovPretty-${{ matrix.platform }}.output
       - name: Upload Logs
         uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
-          name: Logs-${{matrix.platform}}
+          name: Logs-${{ matrix.platform }}
           path: .build/*.log
           include-hidden-files: true
       - name: Upload XCResults
         uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
-          name: XCResults-${{matrix.platform}}
+          name: XCResults-${{ matrix.platform }}
           path: .build/*.xcresult
           include-hidden-files: true
       - name: Upload xccovPretty output
         uses: actions/upload-artifact@v4
         with:
-          name: xccovPrettyOutput-${{matrix.platform}}
-          path: .build/xccovPretty-${{matrix.platform}}.output
+          name: xccovPrettyOutput-${{ matrix.platform }}
+          path: .build/xccovPretty-${{ matrix.platform }}.output
           include-hidden-files: true
   post-pr-comments:
     name: Post PR Comments
