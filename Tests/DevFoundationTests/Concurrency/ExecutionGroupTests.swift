@@ -39,7 +39,7 @@ struct ExecutionGroupTests {
                     // While the task is running, isExecuting should be true
                     didExecute()
                     #expect(group.isExecuting)
-                    try? await Task.sleep(for: .seconds(0.25))
+                    try? await Task.sleep(for: .seconds(0.5))
 
                 }
 
@@ -51,7 +51,7 @@ struct ExecutionGroupTests {
                 }
 
                 // Wait for the tasks to finish
-                try? await Task.sleep(for: .seconds(0.75))
+                try? await Task.sleep(for: .seconds(1.1))
 
                 // When the tasks are finished, isExecuting should be false
                 #expect(!group.isExecuting)

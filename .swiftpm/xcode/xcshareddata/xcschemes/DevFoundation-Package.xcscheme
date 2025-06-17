@@ -25,7 +25,7 @@
             buildForTesting = "YES"
             buildForRunning = "YES"
             buildForProfiling = "YES"
-            buildForArchiving = "YES"
+            buildForArchiving = "NO"
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
@@ -81,15 +81,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "dfob"
-            BuildableName = "dfob"
-            BlueprintName = "dfob"
-            ReferencedContainer = "container:">
-         </BuildableReference>
-      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -100,9 +91,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "dfob"
-            BuildableName = "dfob"
-            BlueprintName = "dfob"
+            BlueprintIdentifier = "DevFoundation"
+            BuildableName = "DevFoundation"
+            BlueprintName = "DevFoundation"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>

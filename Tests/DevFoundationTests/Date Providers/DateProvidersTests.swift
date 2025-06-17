@@ -18,13 +18,11 @@ struct DateProvidersTests: RandomValueGenerating {
 
     @Test
     mutating func currentIsSetCorrectly() {
-        let mockDateProvider = MockDateProvider()
-
         let dateProvider = DateProviders.current
         #expect(dateProvider is SystemDateProvider)
 
-        DateProviders.current = mockDateProvider
-        #expect(DateProviders.current as? MockDateProvider === mockDateProvider)
+        DateProviders.current = TestSystemDateProvider()
+        #expect(DateProviders.current is TestSystemDateProvider)
 
         DateProviders.current = DateProviders.system
         #expect(dateProvider is SystemDateProvider)
@@ -40,5 +38,13 @@ struct DateProvidersTests: RandomValueGenerating {
         let mockDateProvider = MockDateProvider(now: mockNow)
         DateProviders.current = mockDateProvider
         #expect(DateProviders.autoupdatingCurrent.now == mockNow)
+        DateProviders.current = DateProviders.system
+    }
+}
+
+
+private struct TestSystemDateProvider: DateProvider {
+    var now: Date {
+        return Date()
     }
 }

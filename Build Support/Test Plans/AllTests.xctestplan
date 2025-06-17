@@ -9,6 +9,20 @@
     }
   ],
   "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:",
+          "identifier" : "DevFoundation",
+          "name" : "DevFoundation"
+        },
+        {
+          "containerPath" : "container:",
+          "identifier" : "dfob",
+          "name" : "dfob"
+        }
+      ]
+    },
     "defaultTestExecutionTimeAllowance" : 60,
     "testTimeoutsEnabled" : true
   },
