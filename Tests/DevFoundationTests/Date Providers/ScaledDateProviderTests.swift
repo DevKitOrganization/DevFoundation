@@ -26,7 +26,7 @@ struct ScaledDateProviderTests: RandomValueGenerating {
         // Move the base clock forward
         let elapsedTimeInterval = random(Double.self, in: 0.01 ... 1000)
         let baseNextDate = baseStartDate + elapsedTimeInterval
-        base.stub_now = Stub(defaultReturnValue: baseNextDate)
+        base.nowStub = Stub(defaultReturnValue: baseNextDate)
 
         #expect(
             scaledProvider.now.isApproximatelyEqual(

@@ -12,16 +12,16 @@ import Foundation
 
 final class MockDateProvider: DateProvider {
     nonisolated(unsafe)
-    var stub_now: Stub<Void, Date>!
+    var nowStub: Stub<Void, Date>!
 
 
     convenience init(now: Date) {
         self.init()
-        self.stub_now = Stub(defaultReturnValue: now)
+        self.nowStub = Stub(defaultReturnValue: now)
     }
 
 
     var now: Date {
-        stub_now()
+        nowStub()
     }
 }
