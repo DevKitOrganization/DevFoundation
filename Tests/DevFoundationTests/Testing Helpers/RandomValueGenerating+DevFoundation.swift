@@ -9,7 +9,6 @@ import DevFoundation
 import DevTesting
 import Foundation
 
-
 extension RandomValueGenerating {
     mutating func randomAuthenticatorContext() -> MockHTTPRequestAuthenticator.Context {
         return randomCase(of: MockHTTPRequestAuthenticator.Context.self)!

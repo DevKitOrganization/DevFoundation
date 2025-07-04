@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// An error indicating that an HTTP response was received that had an invalid status code.
 public struct InvalidHTTPStatusCodeError: Error, Hashable {
     /// The HTTP URL response that was received.

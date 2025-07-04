@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Go to the repository root (one level up from Scripts)
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"
+
+# Check if we're in a git repository
+if [ ! -d "$REPO_ROOT/.git" ]; then
+    echo "Error: Not in a git repository"
+    exit 1
+fi
+
+mkdir -p "$REPO_ROOT/.git/hooks"
+
+# Function to install the pre-commit hook
+install_pre_commit_hook() {
+    local pre_commit_hook="$REPO_ROOT/.git/hooks/pre-commit"
+
+    echo "Installing pre-commit hook..."
+
+    cat > "$pre_commit_hook" << 'EOF'
+#!/bin/bash
+
+# Get the directory where this hook is located
+HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Go to the repository root (two levels up from .git/hooks)
+REPO_ROOT="$(dirname "$(dirname "$HOOK_DIR")")"
+
+# Run the lint script
+echo "Running lint check..."
+if ! "$REPO_ROOT/Scripts/lint"; then
+    echo "Lint check failed. Please fix formatting issues before committing."
+    exit 1
+fi
+
+echo "Lint check passed."
+EOF
+
+    chmod +x "$pre_commit_hook"
+    echo "Pre-commit hook installed successfully!"
+}
+
+# Install the pre-commit hook
+install_pre_commit_hook
+
+echo "All git hooks installed successfully!"
+echo "The pre-commit hook will run 'Scripts/lint' before each commit."

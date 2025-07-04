@@ -5,13 +5,13 @@
 //  Created by Prachi Gauriar on 4/30/25.
 //
 
-@testable import ArgumentParser
-@testable import dfob
 import DevFoundation
 import DevTesting
 import Foundation
 import Testing
 
+@testable import ArgumentParser
+@testable import dfob
 
 struct ObfuscateCommandTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()

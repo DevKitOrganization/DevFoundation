@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A type representing a string identifier that uses period characters to indicate hierarchy.
 ///
 /// `DottedHierarchicalIDs`s provide a type-safe way to store IDs in what is commonly referred to as reverse-DNS
@@ -79,8 +78,9 @@ extension DottedHierarchicalID {
     public func lowestCommonAncestor(with other: Self) -> Self? {
         var ancestor: Self? = nil
         for component in components.map(String.init(_:)) {
-            guard let candidate = ancestor.flatMap({ $0.appending(component) }) ?? Self(rawValue: component),
-                  candidate.isAncestor(of: other)
+            guard
+                let candidate = ancestor.flatMap({ $0.appending(component) }) ?? Self(rawValue: component),
+                candidate.isAncestor(of: other)
             else {
                 return ancestor
             }

@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A type-safe representation of a JSON payload.
 ///
 /// JSON values can only represent valid JSON payloads. A JSON value can be an array, boolean, number, object, string,
@@ -216,7 +215,7 @@ struct JSONCodingKey: CodingKey {
 // MARK: - Hashable
 
 extension JSONValue: Hashable {
-    public static func ==(lhs: Self, rhs: Self) -> Bool {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
         switch (lhs, rhs) {
         case (.array(let left), .array(let right)):
             return left.compactMap(\.unwrapped) == right.compactMap(\.unwrapped)
@@ -322,7 +321,7 @@ extension JSONValue {
     /// This is equivalent to `.ifPresent(value.map(JSONValue.number(_:)))`.
     ///
     /// - Parameter value: The optional binary floating point to wrap.
-    public static func ifPresent(_ value: (some BinaryFloatingPoint)?) -> JSONValue {
+    public static func ifPresent(_ value: (some BinaryFloatingPoint & Sendable)?) -> JSONValue {
         return .ifPresent(value.map(JSONValue.number(_:)))
     }
 
@@ -332,7 +331,7 @@ extension JSONValue {
     /// This is equivalent to `.ifPresent(value.map(JSONValue.number(_:)))`.
     ///
     /// - Parameter value: The optional binary floating point to wrap.
-    public static func ifPresent(_ integer: (some SignedInteger)?) -> JSONValue {
+    public static func ifPresent(_ integer: (some SignedInteger & Sendable)?) -> JSONValue {
         return .ifPresent(integer.map(JSONValue.number(_:)))
     }
 
@@ -352,7 +351,7 @@ extension JSONValue {
     /// This is equivalent to `.ifPresent(value.map(JSONValue.number(_:)))`.
     ///
     /// - Parameter value: The optional unsigned integer to wrap.
-    public static func ifPresent(_ value: (some UnsignedInteger)?) -> JSONValue {
+    public static func ifPresent(_ value: (some UnsignedInteger & Sendable)?) -> JSONValue {
         return .ifPresent(value.map(JSONValue.number(_:)))
     }
 
@@ -468,8 +467,8 @@ extension JSONValue {
             self = .array(elements)
         case let bool as Bool:
             self = .boolean(bool)
-        case let dictionary as [String : Any?]:
-            var elements: [String : JSONValue] = [:]
+        case let dictionary as [String: Any?]:
+            var elements: [String: JSONValue] = [:]
 
             for (key, anyValue) in dictionary {
                 guard let value = JSONValue(value: anyValue) else {

@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A date provider that runs at a different rate relative to a base date provider.
 struct ScaledDateProvider<Base>: DateProvider where Base: DateProvider {
     /// The base date provider whose dates this provider’s dates are relative to.
@@ -19,7 +18,7 @@ struct ScaledDateProvider<Base>: DateProvider where Base: DateProvider {
     ///
     /// This value must be postive.
     private let scale: Double
-    
+
     /// The base provider’s date when this provider was initialized.
     private let startDate: Date
 

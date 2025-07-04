@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A type that describes the parts of a web service request and how to handle the response.
 ///
 /// `WebServiceRequest` provides a declarative interface for creating URL requests and handling their responses. This
@@ -40,7 +39,7 @@ public protocol WebServiceRequest: Sendable {
     ///
     /// This is most often an ``HTTPResponse`` with a specific body type.
     associatedtype MappedResponse
-    
+
     /// The HTTP method for the web service request.
     var httpMethod: HTTPMethod { get }
 
@@ -58,23 +57,23 @@ public protocol WebServiceRequest: Sendable {
     ///
     /// A default implementation of this function is provided if `BaseURLConfiguration.BaseURL` is `Void`.
     var baseURL: BaseURLConfiguration.BaseURL { get }
-    
+
     /// The path components of the web service request’s URL relative to its base URL.
     ///
     /// Path components are automatically percent-encoded when a URL request is created, and thus should not be
     /// percent-encoded in advance.
     var pathComponents: [URLPathComponent] { get }
-    
+
     /// The URL fragment for the web service request.
     ///
     /// Defaults to `nil`.
     var fragment: String? { get }
-    
+
     /// The web service request’s URL query items.
     ///
     /// Defaults to `[]`.
     var queryItems: [URLQueryItem] { get }
-    
+
     /// Whether the web service request automatically percent-encodes query items.
     ///
     /// Defaults to `true`.
@@ -167,7 +166,7 @@ extension WebServiceRequest {
         return request
     }
 
-    
+
     /// Returns the request’s URL using the specified base URL configuration.
     ///
     /// - Parameter baseURLConfiguration: The configuration from which to get a base URL for the request.
@@ -176,9 +175,10 @@ extension WebServiceRequest {
         let baseURL = baseURLConfiguration.url(for: baseURL)
         let path = pathComponents.map(\.rawValue).joined(separator: "/")
 
-        guard let percentEncodedPath = path.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed),
-              let url = percentEncodedPath.isEmpty ? baseURL : URL(string: percentEncodedPath, relativeTo: baseURL),
-              var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
+        guard
+            let percentEncodedPath = path.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed),
+            let url = percentEncodedPath.isEmpty ? baseURL : URL(string: percentEncodedPath, relativeTo: baseURL),
+            var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
         else {
             // This line is likely impossible to hit given how we’ve written this code
             return nil

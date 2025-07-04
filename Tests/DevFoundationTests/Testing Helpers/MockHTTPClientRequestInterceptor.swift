@@ -9,7 +9,6 @@ import DevFoundation
 import DevTesting
 import Foundation
 
-
 final class MockHTTPClientRequestInterceptor: HashableByID, HTTPClientRequestInterceptor {
     struct InterceptArguments {
         let request: URLRequest
@@ -17,11 +16,8 @@ final class MockHTTPClientRequestInterceptor: HashableByID, HTTPClientRequestInt
     }
 
 
-    nonisolated(unsafe)
-    var interceptPrologue: (() async throws -> Void)?
-
-    nonisolated(unsafe)
-    var interceptStub: ThrowingStub<InterceptArguments, URLRequest, any Error>!
+    nonisolated(unsafe) var interceptPrologue: (() async throws -> Void)?
+    nonisolated(unsafe) var interceptStub: ThrowingStub<InterceptArguments, URLRequest, any Error>!
 
 
     func intercept(_ request: URLRequest, from client: HTTPClient) async throws -> URLRequest {

@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A client for a web service.
 ///
 /// Web service clients provides a declarative approach for accessing a web service. The client itself is simple:
@@ -28,7 +27,7 @@ where BaseURLConfiguration: BaseURLConfiguring, Authenticator: HTTPRequestAuthen
     /// The base URL configuration that the web service client uses to create its requests.
     public let baseURLConfiguration: BaseURLConfiguration
 
-    
+
     /// Creates a new web service client with the specified properties.
     ///
     /// - Parameters:
@@ -79,7 +78,7 @@ where BaseURLConfiguration: BaseURLConfiguring, Authenticator: HTTPRequestAuthen
         return authenticatingHTTPClient.responseInterceptors
     }
 
-    
+
     /// Loads a request and returns its mapped response.
     ///
     /// This function works by creating a URL request for the web service request by calling
@@ -95,9 +94,10 @@ where BaseURLConfiguration: BaseURLConfiguring, Authenticator: HTTPRequestAuthen
     public func load<Request>(
         _ request: Request
     ) async throws -> Request.MappedResponse
-    where Request: WebServiceRequest,
-          Request.BaseURLConfiguration == BaseURLConfiguration,
-          Request.Authenticator == Authenticator
+    where
+        Request: WebServiceRequest,
+        Request.BaseURLConfiguration == BaseURLConfiguration,
+        Request.Authenticator == Authenticator
     {
         let urlRequest = try request.urlRequest(with: baseURLConfiguration)
         let response = try await authenticatingHTTPClient.load(

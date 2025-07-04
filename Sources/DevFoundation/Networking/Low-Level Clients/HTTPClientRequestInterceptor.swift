@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A type that can intercept and potentially modify a request before an HTTP client loads it.
 public protocol HTTPClientRequestInterceptor: Sendable {
     /// Intercepts a request from an HTTP client.

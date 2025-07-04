@@ -10,7 +10,6 @@ import DevTesting
 import Foundation
 import Testing
 
-
 struct ExecutionGroupTests {
     @Test
     func tasksUpdateIsExecuting() async throws {

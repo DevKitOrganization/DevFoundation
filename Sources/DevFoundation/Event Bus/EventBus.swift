@@ -8,19 +8,18 @@
 import Foundation
 import Synchronization
 
-
 /// An object that sends type-safe events to registered observers.
 public final class EventBus: HashableByID, Sendable {
     /// The bus’s observers.
     private let observers: Mutex<[any BusEventObserver]> = .init([])
 
-    
+
     /// Creates a new event bus with no registered observers.
     public init() {
         // Intentionally empty
     }
 
-    
+
     /// Adds an observer to the event bus.
     ///
     /// - Parameter observer: The observer to add.
@@ -40,7 +39,7 @@ public final class EventBus: HashableByID, Sendable {
         }
     }
 
-    
+
     /// Posts an event to the event bus.
     ///
     /// Bus event observers are sent the event via ``BusEventObserver/observe(_:)-7p3d5``. Observers are called in the

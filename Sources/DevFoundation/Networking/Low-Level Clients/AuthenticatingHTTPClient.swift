@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// An HTTP client that uses an authenticator to authenticate requests.
 ///
 /// Authenticating HTTP clients use ``HTTPRequestAuthenticator``s to prepare their outgoing requests with authentication
@@ -110,11 +109,13 @@ public final class AuthenticatingHTTPClient<Authenticator>: Sendable where Authe
         previousFailures: [HTTPRequestAuthenticationFailure]
     ) async throws -> HTTPResponse<Data> {
         // Prepare the request, throwing a cancellation error if the authenticator returns nil
-        guard let preparedRequest = try await authenticator.prepare(
-            urlRequest,
-            context: authenticatorContext,
-            previousFailures: previousFailures
-        ) else {
+        guard
+            let preparedRequest = try await authenticator.prepare(
+                urlRequest,
+                context: authenticatorContext,
+                previousFailures: previousFailures
+            )
+        else {
             throw AuthenticatorCancellationError()
         }
 

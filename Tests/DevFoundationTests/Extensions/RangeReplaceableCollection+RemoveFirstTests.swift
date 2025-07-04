@@ -5,11 +5,11 @@
 //  Created by Prachi Gauriar on 4/5/25.
 //
 
-@testable import DevFoundation
 import DevTesting
 import Foundation
 import Testing
 
+@testable import DevFoundation
 
 struct RangeReplaceableCollection_RemoveFirstTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()

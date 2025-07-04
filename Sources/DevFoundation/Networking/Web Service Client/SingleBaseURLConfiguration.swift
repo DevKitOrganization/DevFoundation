@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A base URL configuration that has a single URL.
 public struct SingleBaseURLConfiguration: BaseURLConfiguring {
     public typealias BaseURL = Void
@@ -15,7 +14,7 @@ public struct SingleBaseURLConfiguration: BaseURLConfiguring {
     /// The configuration’s single base URL.
     public let baseURL: URL
 
-    
+
     /// Creates a new single base URL configuration with the specified URL.
     ///
     /// - Parameter baseURL: The single base URL that the configuration has.

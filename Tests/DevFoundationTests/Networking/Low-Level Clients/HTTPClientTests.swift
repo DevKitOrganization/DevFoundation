@@ -10,7 +10,6 @@ import DevTesting
 import Foundation
 import Testing
 
-
 struct HTTPClientTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()
 
@@ -313,7 +312,7 @@ struct HTTPClientTests: RandomValueGenerating {
         let urlRequestLoader = MockURLRequestLoader()
         let expectedError = randomError()
         urlRequestLoader.dataStub = .init(
-            defaultResult: .failure(expectedError) ,
+            defaultResult: .failure(expectedError),
             resultQueue: [.success((randomData(), randomHTTPURLResponse()))]
         )
 

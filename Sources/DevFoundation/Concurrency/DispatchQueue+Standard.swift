@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 extension DispatchQueue {
     /// A non-overcommitting, serial dispatch queue that can be used to execute utility tasks.
     ///

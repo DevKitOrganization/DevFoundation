@@ -9,7 +9,6 @@ import DevFoundation
 import Foundation
 import Testing
 
-
 struct AuthenticatorCancellationErrorTests {
     @Test
     func initDoesNothing() {

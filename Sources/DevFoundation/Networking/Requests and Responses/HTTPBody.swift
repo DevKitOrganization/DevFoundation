@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// The body of an HTTP request, which pairs the body’s data with its content type.
 public struct HTTPBody: Hashable, Sendable {
     /// The body’s content type.

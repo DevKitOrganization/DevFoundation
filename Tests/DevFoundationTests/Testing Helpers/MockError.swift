@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct MockError: Error, Hashable, Sendable {
     let id: Int
 }

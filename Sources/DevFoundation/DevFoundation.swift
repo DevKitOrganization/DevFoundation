@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// Prepends the specified string with `"com.gauriar.devfoundation."`.
 ///
 /// - Parameter suffix: The string that will have DevFoundation’s reverse DNS prefix prepended to it.

@@ -10,7 +10,6 @@ import DevTesting
 import Foundation
 import Testing
 
-
 struct TypedExtensibleEnumTests: RandomValueGenerating {
     var randomNumberGenerator = Self.makeRandomNumberGenerator()
 

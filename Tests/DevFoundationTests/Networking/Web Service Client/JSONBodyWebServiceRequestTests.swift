@@ -10,7 +10,6 @@ import DevTesting
 import Foundation
 import Testing
 
-
 struct JSONBodyWebServiceRequestTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()
 
@@ -80,7 +79,7 @@ private struct MockJSONBody: Codable, Hashable {
 
 
 private struct DefaultJSONBodyWebServiceRequest: JSONBodyWebServiceRequest {
-typealias Authenticator = MockHTTPRequestAuthenticator
+    typealias Authenticator = MockHTTPRequestAuthenticator
     typealias BaseURLConfiguration = SingleBaseURLConfiguration
 
     var jsonBody: MockJSONBody
@@ -101,7 +100,7 @@ typealias Authenticator = MockHTTPRequestAuthenticator
     }
 
 
-    func mapResponse(_ response: HTTPResponse<Data>) throws -> Void {
+    func mapResponse(_ response: HTTPResponse<Data>) throws {
         fatalError("not implemented")
     }
 }
@@ -131,7 +130,7 @@ where JSONBody: Encodable & Sendable {
     }
 
 
-    func mapResponse(_ response: HTTPResponse<Data>) throws -> Void {
+    func mapResponse(_ response: HTTPResponse<Data>) throws {
         fatalError("not implemented")
     }
 }

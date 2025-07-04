@@ -6,11 +6,10 @@
 //
 
 import DevFoundation
-import Foundation
 import DevTesting
+import Foundation
 import Synchronization
 import Testing
-
 
 struct GibberishGeneratorTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()

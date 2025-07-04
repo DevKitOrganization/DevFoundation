@@ -7,23 +7,22 @@
 
 import Foundation
 
-
 /// A value that can expire after its lifetime is complete.
 ///
-/// This type is useful for implementing time-based caches. 
+/// This type is useful for implementing time-based caches.
 public struct ExpiringValue<Value> {
     /// The value.
     public let value: Value
-    
+
     /// The range of dates encompassing the value’s lifetime.
     ///
     /// The value is expired for any dates outside of this range.
     public let lifetimeRange: ClosedRange<Date>
-    
+
     /// Whether the value has been manually expired by calling ``expire()``.
     private var isManuallyExpired: Bool = false
 
-    
+
     /// Creates a new expiring value with the specified value and lifetime range.
     ///
     /// - Parameters:
@@ -48,7 +47,7 @@ public struct ExpiringValue<Value> {
         self.lifetimeRange = now ... (now + lifetimeDuration)
     }
 
-    
+
     /// Manually expires the value.
     ///
     /// Use this function mark a value as expired, regardless of its lifetime range.
@@ -56,7 +55,7 @@ public struct ExpiringValue<Value> {
         isManuallyExpired = true
     }
 
-    
+
     /// Whether the value is expired now.
     ///
     /// See ``isExpired(at:)`` for details about how expiration is computed.
@@ -64,7 +63,7 @@ public struct ExpiringValue<Value> {
         return isExpired(at: DateProviders.current.now)
     }
 
-    
+
     /// Whether the value is expired at a specified date.
     ///
     /// This function returns true if the value was manually expired or `date` is outside the lifetime range of the
@@ -77,8 +76,8 @@ public struct ExpiringValue<Value> {
 }
 
 
-extension ExpiringValue: Decodable where Value: Decodable { }
-extension ExpiringValue: Encodable where Value: Encodable { }
-extension ExpiringValue: Equatable where Value: Equatable { }
-extension ExpiringValue: Hashable where Value: Hashable { }
-extension ExpiringValue: Sendable where Value: Sendable { }
+extension ExpiringValue: Decodable where Value: Decodable {}
+extension ExpiringValue: Encodable where Value: Encodable {}
+extension ExpiringValue: Equatable where Value: Equatable {}
+extension ExpiringValue: Hashable where Value: Hashable {}
+extension ExpiringValue: Sendable where Value: Sendable {}

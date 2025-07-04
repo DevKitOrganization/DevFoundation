@@ -10,7 +10,6 @@ import DevTesting
 import Foundation
 import Testing
 
-
 struct HTTPHeaderFieldTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()
 
@@ -57,7 +56,7 @@ struct HTTPHeaderFieldTests: RandomValueGenerating {
     mutating func httpURLResponseAccessor() throws {
         let response = randomHTTPURLResponse()
 
-        let headers = try #require(response.allHeaderFields as? [String : String])
+        let headers = try #require(response.allHeaderFields as? [String: String])
         for (field, value) in headers {
             #expect(response.httpHeaderValue(for: HTTPHeaderField(field)) == value)
         }

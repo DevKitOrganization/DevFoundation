@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// An object that generates gibberish.
 ///
 /// Each gibberish generator can generate words, sentences or paragraphs. A generator’s words and sentences are stored
@@ -174,6 +173,7 @@ public struct GibberishGenerator: Sendable {
         using randomNumberGenerator: inout some RandomNumberGenerator,
         sentenceCount: Int? = nil
     ) -> String {
+        // swift-format-ignore
         let sentenceCount = sentenceCount ?? Int.random(
             in: lexicon.preferredSentencesPerParagraphRange,
             using: &randomNumberGenerator
@@ -214,7 +214,7 @@ extension GibberishGenerator {
                 "@ @ @ @ @, @ @ @.",
                 "@ @ @ @ @; @ @ @ @ @.",
                 "@ @ @ @ @.",
-                "@ @ @ @ @ @." ,
+                "@ @ @ @ @ @.",
                 "@ @ @ @ @ @ @, @ @ @ @ @ @.",
                 "@ @ @ @ @ @ @.",
                 "@ @ @ @ @ @ @ @ @; @ @ @ @ @ @.",
@@ -224,7 +224,7 @@ extension GibberishGenerator {
                 "@ @ @ @ @ @ @ @; @ @ @ @.",
                 "@ @ @ @ @, @ @ @ @ @ @ @ @ @.",
                 "@ @ @, @ @ @ @ @ @, @ @ @.",
-                "@ @ @ @ @ @ @, @ @ @, @ @ @ @."
+                "@ @ @ @ @ @ @, @ @ @, @ @ @ @.",
             ],
             templateWordToken: "@",
             words: [
@@ -314,7 +314,7 @@ extension GibberishGenerator {
                 "viverra", "volenisis", "volesed", "volobore", "volor", "volore", "volorerci", "voloreros", "volumsan",
                 "volut", "volutpat", "vulla", "vullam", "vullan", "vullandigna", "vullandio", "vulluptat",
                 "vulluptatet", "vulluptatum", "vulput", "vulputat", "vulputate", "vulpute", "wis", "wiscinim", "wisi",
-                "wisis", "wisl", "wismod", "wismodi", "wismoloreet", "wisse", "xer"
+                "wisis", "wisl", "wismod", "wismodi", "wismoloreet", "wisse", "xer",
             ]
         )
 

@@ -2,7 +2,6 @@
 
 import PackageDescription
 
-
 let swiftSettings: [SwiftSetting] = [
     .enableUpcomingFeature("ExistentialAny")
 ]
@@ -27,7 +26,7 @@ let package = Package(
                 "DevFoundation",
                 "dfob",
             ]
-        )
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.5.0"),

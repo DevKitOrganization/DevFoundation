@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// An HTTP method.
 ///
 /// DevFoundation provides constants for ``get``, ``post``, ``put``, ``patch``, and ``delete``. Other HTTP methods can
@@ -15,7 +14,7 @@ import Foundation
 public struct HTTPMethod: TypedExtensibleEnum {
     public let rawValue: String
 
-    
+
     /// Creates a new HTTP method with the specified raw value.
     ///
     /// The raw value is uppercased before being stored.

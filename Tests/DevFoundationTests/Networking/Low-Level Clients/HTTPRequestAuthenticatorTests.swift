@@ -10,7 +10,6 @@ import DevTesting
 import Foundation
 import Testing
 
-
 struct HTTPRequestAuthenticatorTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()
 

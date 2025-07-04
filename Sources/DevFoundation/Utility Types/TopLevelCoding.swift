@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A type that can decode `Decodable` values.
 ///
 /// This type differs from Combine’s `TopLevelDecoder` in that it also requires a mutable ``userInfo`` dictionary.
@@ -15,13 +14,8 @@ public protocol TopLevelDecoder<Input>: AnyObject {
     /// The type this decoder accepts.
     associatedtype Input
 
-#if compiler(>=6.1)
     /// A dictionary you use to customize the decoding process by providing contextual information.
     var userInfo: [CodingUserInfoKey: any Sendable] { get set }
-#else
-    /// A dictionary you use to customize the decoding process by providing contextual information.
-    var userInfo: [CodingUserInfoKey: Any] { get set }
-#endif
 
     /// Decodes a value of the specified type from an input.
     ///
@@ -39,13 +33,8 @@ public protocol TopLevelEncoder<Output>: AnyObject {
     /// The type this encoder produces.
     associatedtype Output
 
-#if compiler(>=6.1)
     /// A dictionary you use to customize the encoding process by providing contextual information.
     var userInfo: [CodingUserInfoKey: any Sendable] { get set }
-#else
-    /// A dictionary you use to customize the encoding process by providing contextual information.
-    var userInfo: [CodingUserInfoKey: Any] { get set }
-#endif
 
     /// Encodes a value of the specified type.
     ///
@@ -54,11 +43,11 @@ public protocol TopLevelEncoder<Output>: AnyObject {
 }
 
 
-extension JSONDecoder: TopLevelDecoder { }
-extension JSONEncoder: TopLevelEncoder { }
+extension JSONDecoder: TopLevelDecoder {}
+extension JSONEncoder: TopLevelEncoder {}
 
-extension PropertyListDecoder: TopLevelDecoder { }
-extension PropertyListEncoder: TopLevelEncoder { }
+extension PropertyListDecoder: TopLevelDecoder {}
+extension PropertyListEncoder: TopLevelEncoder {}
 
 
 // MARK: - Decoding Top-Level Keys

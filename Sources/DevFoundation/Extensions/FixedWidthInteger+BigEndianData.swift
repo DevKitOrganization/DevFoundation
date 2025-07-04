@@ -7,14 +7,13 @@
 
 import Foundation
 
-
 extension FixedWidthInteger {
     /// The number of bytes used for the underlying binary representation of values of this type.
     static var byteWidth: Int {
         return bitWidth / 8
     }
 
-    
+
     /// Creates a new integer using the big-endian bytes in a `Data` instance.
     ///
     /// Returns `nil` if the data does not contain exactly `byteWidth` bytes.
@@ -34,7 +33,7 @@ extension FixedWidthInteger {
             }
         )
     }
-    
+
 
     /// The integer’s big-endian representation as a `Data` instance.
     var bigEndianData: Data {

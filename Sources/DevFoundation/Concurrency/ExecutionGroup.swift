@@ -8,7 +8,6 @@
 import Foundation
 import Synchronization
 
-
 /// A dynamic group of tasks that tracks its execution status.
 ///
 /// Execution groups can be used to determine whether a group of related tasks is currently executing. It is ideal for
@@ -67,7 +66,7 @@ public final class ExecutionGroup: Sendable {
         // Intentionally empty
     }
 
-    
+
     /// Whether the group has any currently executing tasks.
     public var isExecuting: Bool {
         access(keyPath: \.isExecuting)

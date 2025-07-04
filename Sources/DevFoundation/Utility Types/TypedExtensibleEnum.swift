@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A type whose instances represent an extensible set of known values.
 ///
 /// Typed extensible enums provide an extensible way to represent strongly-typed constants. Its interface is modeled

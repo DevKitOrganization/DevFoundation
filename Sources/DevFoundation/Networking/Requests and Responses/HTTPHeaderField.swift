@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// An HTTP header field.
 ///
 /// DevFoundation provides a few common header fields out of the box, but as with all typed extensible enums, you can
@@ -15,7 +14,7 @@ import Foundation
 public struct HTTPHeaderField: TypedExtensibleEnum {
     public let rawValue: String
 
-    
+
     /// Creates a new HTTP header field.
     ///
     /// The raw value is lowercased before being stored.
@@ -28,7 +27,7 @@ public struct HTTPHeaderField: TypedExtensibleEnum {
 
 
 extension HTTPHeaderField {
-        /// The Accept HTTP header field, `accept`.
+    /// The Accept HTTP header field, `accept`.
     public static let accept = HTTPHeaderField("accept")
 
     /// The Accept Language HTTP header field, `accept-language`.

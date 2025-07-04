@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Go to the repository root (one level up from Scripts)
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"
+
+# Run swift format lint with full paths to preserve user's PWD
+swift format lint --recursive --strict "$REPO_ROOT/Sources/" "$REPO_ROOT/Tests/"
