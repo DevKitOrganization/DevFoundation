@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A type that provides the current date.
 ///
 /// Date providers make it easier to test code that relies on dates. Tests can mock date providers to always return

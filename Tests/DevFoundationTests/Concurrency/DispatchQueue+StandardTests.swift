@@ -10,7 +10,6 @@ import DevTesting
 import Foundation
 import Testing
 
-
 struct DispatchQueue_StandardTests {
     @Test
     func utilityQueueHasCorrectProperties() {

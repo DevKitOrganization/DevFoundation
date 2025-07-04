@@ -10,7 +10,6 @@ import DevTesting
 import Foundation
 import Testing
 
-
 struct HTTPResponseTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()
 

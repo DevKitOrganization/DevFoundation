@@ -10,7 +10,6 @@ import DevTesting
 import Foundation
 import Testing
 
-
 struct InvalidWebServiceRequestErrorTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()
 

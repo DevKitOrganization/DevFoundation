@@ -10,7 +10,6 @@ import DevTesting
 import Foundation
 import Testing
 
-
 struct HTTPStatusCodeTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()
 
@@ -112,9 +111,8 @@ struct HTTPStatusCodeTests: RandomValueGenerating {
 
     @Test
     mutating func httpURLResponseStatusCode() {
-        let statusCode = random(Int.self , in: 100 ..< 600)
+        let statusCode = random(Int.self, in: 100 ..< 600)
         let response = randomHTTPURLResponse(statusCode: statusCode)
         #expect(response.httpStatusCode == HTTPStatusCode(statusCode))
     }
 }
-

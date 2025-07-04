@@ -10,7 +10,6 @@ import DevTesting
 import Foundation
 import Testing
 
-
 struct MediaTypeTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()
 

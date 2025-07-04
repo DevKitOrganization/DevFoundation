@@ -6,11 +6,11 @@
 //
 
 import DevFoundation
-@testable import struct DevFoundation.JSONCodingKey
 import DevTesting
 import Foundation
 import Testing
 
+@testable import struct DevFoundation.JSONCodingKey
 
 struct JSONValueTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()
@@ -33,7 +33,7 @@ struct JSONValueTests: RandomValueGenerating {
                     [
                         "key1": .null,
                         "key2": .ifPresent(.ifPresent(.number(0))),
-                        "key3": .ifPresent(nil as Bool?)
+                        "key3": .ifPresent(nil as Bool?),
                     ]
                 ),
                 .null,
@@ -72,7 +72,7 @@ struct JSONValueTests: RandomValueGenerating {
                         .number(100 as UInt),
                         .number(-100),
                         .ifPresent(.ifPresent(.number(Float64.pi))),
-                        .ifPresent(nil as Int?)
+                        .ifPresent(nil as Int?),
                     ]
                 ),
                 "bool": .boolean(true),
@@ -85,7 +85,7 @@ struct JSONValueTests: RandomValueGenerating {
                     [
                         "key1": .null,
                         "key2": .ifPresent(.number(0)),
-                        "key3": .ifPresent(nil as Bool?)
+                        "key3": .ifPresent(nil as Bool?),
                     ]
                 ),
                 "null": .null,
@@ -231,7 +231,7 @@ struct JSONValueTests: RandomValueGenerating {
             "key2": false,
             "key3": 1,
             "key4": "two",
-            "key5": .ifPresent(.ifPresent(.number(Float64.pi)))
+            "key5": .ifPresent(.ifPresent(.number(Float64.pi))),
         ]
         let equal = object
         let unequal: JSONValue = [
@@ -240,7 +240,7 @@ struct JSONValueTests: RandomValueGenerating {
             "key3": 1,
             "key4": false,
             "key5": nil,
-            "key6": 0
+            "key6": 0,
         ]
 
         #expect(object == equal)
@@ -534,7 +534,7 @@ struct JSONValueTests: RandomValueGenerating {
                     "6": ["key": .string("value")],
                 ],
             ),
-            .string("string")
+            .string("string"),
         ]
 
         #expect(jsonValue == expectedJSONValue)

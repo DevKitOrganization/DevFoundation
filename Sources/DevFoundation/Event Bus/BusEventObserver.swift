@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A type that can observe events posted to an event bus.
 ///
 /// In general, you will rarely need to conform to this type; ``ContextualBusEventObserver`` provides an implementation

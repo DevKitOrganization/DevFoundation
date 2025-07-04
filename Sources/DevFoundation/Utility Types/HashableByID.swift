@@ -7,14 +7,13 @@
 
 import Foundation
 
-
 /// A type that conforms to `Hashable` using only its ID.
 ///
 /// `HashableByID` provides default conformance to `Hashable` as follows:
 ///
 ///   - Two instances are equal if their IDs are the same.
 ///   - An instance’s hash is computed using only its ID.
-public protocol HashableByID: Hashable, Identifiable { }
+public protocol HashableByID: Hashable, Identifiable {}
 
 
 extension HashableByID {

@@ -9,7 +9,6 @@ import Foundation
 import Synchronization
 import os
 
-
 /// DevFoundation’s logger for outputting information about date providers.
 let dateProvidersLogger = Logger(subsystem: "DevFoundation", category: "dateProviders")
 
@@ -19,7 +18,7 @@ public enum DateProviders {
     /// A mutex that synchronizes access to the current date provider.
     private static let currentDateProvider: Mutex<any DateProvider> = .init(SystemDateProvider())
 
-    
+
     /// The current date provider.
     ///
     /// - Warning: Setting this value to a date provider that references the auto-updating current date provider, e.g.,

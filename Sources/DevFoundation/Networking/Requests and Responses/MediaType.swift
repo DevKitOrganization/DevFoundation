@@ -8,7 +8,6 @@
 import Foundation
 import UniformTypeIdentifiers
 
-
 /// A typed extensible enum for representing IANA media types.
 ///
 /// Media types are often referred to as MIME types. DevFoundation includes a few common media types like ``json`` and
@@ -16,7 +15,7 @@ import UniformTypeIdentifiers
 public struct MediaType: TypedExtensibleEnum {
     public let rawValue: String
 
-    
+
     /// Creates a new media type with the specified raw value.
     ///
     /// The raw value is lowercased before being stored.
@@ -37,15 +36,15 @@ public struct MediaType: TypedExtensibleEnum {
 
 
 extension MediaType {
-    /// The media type for JSON data, `"application/json"`.
+    /// The media type for JSON data, "application/json".
     public static let json = MediaType("application/json")
 
-    /// The media type for arbitrary binary data, `"application/octet-stream"`.
+    /// The media type for arbitrary binary data, "application/octet-stream".
     public static let octetStream = MediaType("application/octet-stream")
 
-    /// The media type for plain text, `"text/plain"`.
+    /// The media type for plain text, "text/plain".
     public static let plainText = MediaType("text/plain")
 
-    /// The media type for URL-encoded HTML form data, `"application/x-www-form-urlencoded"`.
+    /// The media type for URL-encoded HTML form data, "application/x-www-form-urlencoded".
     public static let wwwFormURLEncoded = MediaType("application/x-www-form-urlencoded")
 }

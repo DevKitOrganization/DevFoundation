@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 public protocol URLRequestLoader: Sendable {
     /// Loads a URL request and delivers its data asynchronously.
     ///

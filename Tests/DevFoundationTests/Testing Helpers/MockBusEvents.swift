@@ -8,7 +8,6 @@
 import DevFoundation
 import Foundation
 
-
 struct MockBusEvent: BusEvent, Hashable {
     let string: String
 }

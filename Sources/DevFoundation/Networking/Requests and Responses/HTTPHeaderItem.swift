@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// An HTTP header item, including its field and value.
 public struct HTTPHeaderItem: Hashable, Sendable {
     /// The HTTP header item’s field.
@@ -16,7 +15,7 @@ public struct HTTPHeaderItem: Hashable, Sendable {
     /// The HTTP header item’s value.
     public var value: String
 
-    
+
     /// Creates a new HTTP header item with the specified field and value.
     /// - Parameters:
     ///   - field: The HTTP header item’s field.
@@ -69,7 +68,7 @@ extension URLRequest {
         addHTTPHeaderValue(item.value, for: item.field)
     }
 
-    
+
     /// Sets the specified HTTP header item on the request.
     ///
     /// - Parameter item: The HTTP header item to set.

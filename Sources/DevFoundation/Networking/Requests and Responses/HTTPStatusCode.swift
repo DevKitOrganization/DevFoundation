@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A type-safe representation of an HTTP status code.
 public struct HTTPStatusCode: TypedExtensibleEnum {
     public let rawValue: Int

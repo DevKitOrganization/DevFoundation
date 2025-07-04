@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// An HTTP response, which pairs an `HTTPURLResponse` with a type-safe representation of the response’s body.
 public struct HTTPResponse<Body> {
     /// The response’s HTTP URL response.
@@ -16,7 +15,7 @@ public struct HTTPResponse<Body> {
     /// The response’s body.
     public var body: Body
 
-    
+
     /// Creates a new HTTP response with the specified HTTP URL response and body.
     /// - Parameters:
     ///   - httpURLResponse: The response’s HTTP URL response.
@@ -32,7 +31,7 @@ public struct HTTPResponse<Body> {
         return httpURLResponse.httpStatusCode
     }
 
-    
+
     /// Returns a copy of the response whose body is the result of calling a closure.
     ///
     /// - Parameter transform: A closure to transform the response’s body.
@@ -47,9 +46,9 @@ public struct HTTPResponse<Body> {
 }
 
 
-extension HTTPResponse: Equatable where Body: Equatable { }
-extension HTTPResponse: Hashable where Body: Hashable { }
-extension HTTPResponse: Sendable where Body: Sendable { }
+extension HTTPResponse: Equatable where Body: Equatable {}
+extension HTTPResponse: Hashable where Body: Hashable {}
+extension HTTPResponse: Sendable where Body: Sendable {}
 
 
 // MARK: - Status Codes
@@ -61,7 +60,7 @@ extension HTTPResponse {
     /// For example, to throw if a status code indicates an error, you can write:
     ///
     ///     try httpResponse.throwIfStatusCode(\.isError)
-    /// 
+    ///
     /// The function returns `self` if it doesn’t throw, which allows you to chain it with calls to ``mapBody(_:)``.
     ///
     /// - Parameter shouldThrow: A predicate that returns whether the function should throw.

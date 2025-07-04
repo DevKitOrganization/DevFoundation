@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// An error indicating that a web service request was invalid.
 ///
 /// A web service request might be invalid because it couldn’t be used to construct a valid URL request or its HTTP body
@@ -19,7 +18,7 @@ public struct InvalidWebServiceRequestError: Error {
     /// The underlying error which caused this error, if any.
     public let underlyingError: (any Error)?
 
-    
+
     /// Creates a new invalid web service request error with the specified debug description and underyling error.
     ///
     /// - Parameters:

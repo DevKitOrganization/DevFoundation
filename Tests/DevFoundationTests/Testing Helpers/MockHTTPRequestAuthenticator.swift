@@ -9,7 +9,6 @@ import DevFoundation
 import DevTesting
 import Foundation
 
-
 final class MockHTTPRequestAuthenticator: HTTPRequestAuthenticator {
     enum Context: CaseIterable, Hashable, Sendable {
         case case1, case2, case3
@@ -30,17 +29,10 @@ final class MockHTTPRequestAuthenticator: HTTPRequestAuthenticator {
     }
 
 
-    nonisolated(unsafe)
-    var preparePrologue: (() async throws -> Void)?
-
-    nonisolated(unsafe)
-    var prepareStub: ThrowingStub<PrepareArguments, URLRequest?, any Error>!
-
-    nonisolated(unsafe)
-    var throwPrologue: (() throws -> Void)?
-
-    nonisolated(unsafe)
-    var throwStub: ThrowingStub<ThrowArguments, Void, any Error>!
+    nonisolated(unsafe) var preparePrologue: (() async throws -> Void)?
+    nonisolated(unsafe) var prepareStub: ThrowingStub<PrepareArguments, URLRequest?, any Error>!
+    nonisolated(unsafe) var throwPrologue: (() throws -> Void)?
+    nonisolated(unsafe) var throwStub: ThrowingStub<ThrowArguments, Void, any Error>!
 
 
     func prepare(

@@ -6,12 +6,12 @@
 //
 
 import DevFoundation
-@testable import enum DevFoundation.DataDeobfuscationError
-@testable import enum DevFoundation.DataObfuscationError
 import DevTesting
 import Foundation
 import Testing
 
+@testable import enum DevFoundation.DataDeobfuscationError
+@testable import enum DevFoundation.DataObfuscationError
 
 struct Data_ObfuscationTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()

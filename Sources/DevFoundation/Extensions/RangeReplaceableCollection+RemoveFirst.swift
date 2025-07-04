@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 extension RangeReplaceableCollection {
     /// Removes the first element in the collection that satisfies the given predicate.
     ///

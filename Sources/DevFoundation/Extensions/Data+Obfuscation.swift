@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 extension Data {
     /// Returns an obfuscated form of the data instance.
     ///
@@ -25,8 +24,9 @@ extension Data {
         keySizeType: KeySize.Type,
         messageSizeType: MessageSize.Type
     ) throws -> Data
-    where KeySize : FixedWidthInteger,
-          MessageSize : FixedWidthInteger
+    where
+        KeySize: FixedWidthInteger,
+        MessageSize: FixedWidthInteger
     {
         guard count <= MessageSize.max else {
             throw DataObfuscationError.messageSizeExceedsMaximum
@@ -57,8 +57,9 @@ extension Data {
         keySizeType: KeySize.Type,
         messageSizeType: MessageSize.Type
     ) throws -> Data
-    where KeySize : FixedWidthInteger,
-          MessageSize : FixedWidthInteger
+    where
+        KeySize: FixedWidthInteger & Sendable,
+        MessageSize: FixedWidthInteger & Sendable
     {
         guard let (message, keyStartIndex) = extractFieldData(at: 0, sizeType: messageSizeType) else {
             throw DataDeobfuscationError.invalidMessage
@@ -89,16 +90,16 @@ extension Data {
         at index: Int,
         sizeType: FieldSize.Type
     ) -> (Data, Int)?
-    where FieldSize : FixedWidthInteger
-    {
+    where FieldSize: FixedWidthInteger & Sendable {
         let fieldSizeEndIndex = index + FieldSize.byteWidth
         guard endIndex >= fieldSizeEndIndex else {
             return nil
         }
 
         let fieldSizeData = self[index ..< fieldSizeEndIndex]
-        guard let fieldSize = FieldSize(bigEndianData: fieldSizeData).flatMap(Int.init(exactly:)),
-              fieldSize > 0
+        guard
+            let fieldSize = FieldSize(bigEndianData: fieldSizeData).flatMap(Int.init(exactly:)),
+            fieldSize > 0
         else {
             return nil
         }
@@ -124,7 +125,7 @@ extension Data {
     /// - Parameters:
     ///   - lhs: A data instance.
     ///   - rhs: Another data instance. Must not be empty.
-    fileprivate static func ^(lhs: Data, rhs: Data) -> Data {
+    fileprivate static func ^ (lhs: Data, rhs: Data) -> Data {
         precondition(!rhs.isEmpty, "rhs must be non-empty")
         return Data(
             lhs.enumerated().map { (i, byte) in
@@ -136,7 +137,7 @@ extension Data {
 
 
 /// Errors that can be thrown during data obfuscation.
-enum DataObfuscationError : Error {
+enum DataObfuscationError: Error {
     /// Indicates that the key is too large to be stored using the given key size type.
     case keySizeExceedsMaximum
 
@@ -146,7 +147,7 @@ enum DataObfuscationError : Error {
 
 
 /// Errors that can be thrown during data deobfuscation.
-enum DataDeobfuscationError : Error {
+enum DataDeobfuscationError: Error {
     /// Indicates that a key could not be extracted from the obfuscated data.
     case invalidKey
 

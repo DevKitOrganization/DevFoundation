@@ -9,7 +9,6 @@ import DevFoundation
 import Foundation
 import Testing
 
-
 struct UnauthorizedHTTPRequestErrorTests {
     @Test
     func initDoesNothing() {

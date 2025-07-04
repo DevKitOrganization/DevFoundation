@@ -9,12 +9,11 @@ import ArgumentParser
 import DevFoundation
 import Foundation
 
-
 /// A command for obfuscating and deobfuscating data.
 @main
-struct ObfuscateCommand : AsyncParsableCommand {
+struct ObfuscateCommand: AsyncParsableCommand {
     /// The action that the command should take.
-    enum Action : EnumerableFlag {
+    enum Action: EnumerableFlag {
         /// Indicates that the command should obfuscate.
         case obfuscate
 
@@ -77,8 +76,9 @@ struct ObfuscateCommand : AsyncParsableCommand {
             return FileHandle.standardOutput
         }
 
-        guard FileManager.default.createFile(atPath: outputPath, contents: nil),
-              let fileHandle = FileHandle(forWritingAtPath: outputPath)
+        guard
+            FileManager.default.createFile(atPath: outputPath, contents: nil),
+            let fileHandle = FileHandle(forWritingAtPath: outputPath)
         else {
             fatalError("Could not open output file at \(outputPath).")
         }

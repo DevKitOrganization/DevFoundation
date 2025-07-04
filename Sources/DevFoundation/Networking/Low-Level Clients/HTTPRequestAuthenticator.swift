@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A type that authenticates requests on behalf of an authenticating HTTP client.
 public protocol HTTPRequestAuthenticator: Sendable {
     /// A type that contains contextual information for the authenticator.

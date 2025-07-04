@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A reverse-DNS identifier for a software component.
 ///
 /// The term _software component_ is intentionally vaguely defined. It could be a function, type, subsystem, module or

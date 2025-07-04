@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A component in a URL path.
 ///
 /// URL path components are used by ``WebServiceRequest``s to perform some basic sanitization of URLs. Instead of
@@ -21,7 +20,7 @@ public struct URLPathComponent: ExpressibleByStringLiteral, Hashable, RawReprese
     /// The URL path component’s raw value.
     public let rawValue: String
 
-    
+
     /// Creates a new URL path component with the specified raw value.
     ///
     /// Any `"/"` characters are removed from `rawValue` before storing it.
@@ -35,7 +34,7 @@ public struct URLPathComponent: ExpressibleByStringLiteral, Hashable, RawReprese
     public init(rawValue: String) {
         self.init(rawValue)
     }
-    
+
 
     public init(stringLiteral: StringLiteralType) {
         self.init(stringLiteral)

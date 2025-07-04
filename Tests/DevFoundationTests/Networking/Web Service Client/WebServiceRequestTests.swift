@@ -10,7 +10,6 @@ import DevTesting
 import Foundation
 import Testing
 
-
 struct WebServiceRequestTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()
 
@@ -160,7 +159,7 @@ struct WebServiceRequestTests: RandomValueGenerating {
     @Test
     mutating func urlRequestCreationFailsWhenHTTPBodyThrows() throws {
         let expectedError = randomError()
-        
+
         let request = MockWebServiceRequest(
             httpMethod: randomHTTPMethod(),
             headerItems: [],
@@ -171,11 +170,11 @@ struct WebServiceRequestTests: RandomValueGenerating {
             queryItems: [],
             httpBodyResult: .failure(expectedError)
         )
-        
+
         let baseURLConfiguration = MockBaseURLConfiguration()
         let url = randomURL(includeFragment: false, includeQueryItems: false)
         baseURLConfiguration.urlStub = Stub(defaultReturnValue: url)
-        
+
         do {
             _ = try request.urlRequest(with: baseURLConfiguration)
             Issue.record("does not throw error")
@@ -213,7 +212,7 @@ private struct DefaultWebServiceRequest: WebServiceRequest {
     }
 
 
-    func mapResponse(_ response: HTTPResponse<Data>) throws -> Void {
+    func mapResponse(_ response: HTTPResponse<Data>) throws {
         // Intentionally empty
     }
 }

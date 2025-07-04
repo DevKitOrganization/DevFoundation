@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// An error indicating that an HTTP request failed because it was unauthorized.
 ///
 /// An error of this type is thrown by

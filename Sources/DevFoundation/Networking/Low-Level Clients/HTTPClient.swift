@@ -7,19 +7,18 @@
 
 import Foundation
 
-
 /// A simple client for loading URL requests and returning an HTTP response.
 public final class HTTPClient: Sendable {
     /// The client’s underlying URL request loader.
     public let urlRequestLoader: any URLRequestLoader
-    
+
     /// The client’s request interceptors.
     public let requestInterceptors: [any HTTPClientRequestInterceptor]
 
     /// The client’s response interceptors.
     public let responseInterceptors: [any HTTPClientResponseInterceptor]
 
-    
+
     /// Creates a new HTTP client.
     /// - Parameters:
     ///   - urlRequestLoader: The client’s underlying URL request loader.
@@ -35,7 +34,7 @@ public final class HTTPClient: Sendable {
         self.responseInterceptors = responseInterceptors
     }
 
-    
+
     /// Loads the specified URL request and asynchronously returns its HTTP response.
     ///
     /// Before loading the request, the client first allows its request interceptors the option to return it unchanged,
@@ -72,11 +71,13 @@ public final class HTTPClient: Sendable {
         var interceptedResponse = HTTPResponse(httpURLResponse: httpURLResponse, body: data)
         for responseInterceptor in responseInterceptors {
             // If the interceptor returns nil, load the original request
-            guard let nextResponse = try await responseInterceptor.intercept(
-                interceptedResponse,
-                from: self,
-                for: interceptedRequest
-            ) else {
+            guard
+                let nextResponse = try await responseInterceptor.intercept(
+                    interceptedResponse,
+                    from: self,
+                    for: interceptedRequest
+                )
+            else {
                 try Task.checkCancellation()
                 return try await load(urlRequest)
             }

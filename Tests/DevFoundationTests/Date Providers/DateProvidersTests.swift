@@ -5,11 +5,11 @@
 //  Created by Prachi Gauriar on 6/16/25.
 //
 
-@testable import DevFoundation
 import DevTesting
 import Foundation
 import Testing
 
+@testable import DevFoundation
 
 @Suite(.serialized)
 struct DateProvidersTests: RandomValueGenerating {

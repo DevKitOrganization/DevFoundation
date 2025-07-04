@@ -8,8 +8,22 @@ on:
     branches: [ $default-branch ]
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: macos-15
+    if: ${{ github.event_name == 'pull_request' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Select Xcode 16.4
+        run: |
+          sudo xcode-select -s /Applications/Xcode_16.4.0.app
+      - name: Lint
+        run: |
+          Scripts/lint
   build-and-test:
     name: Build and Test (${{ matrix.platform }})
+    needs: lint
     runs-on: macos-15
     strategy:
       fail-fast: false

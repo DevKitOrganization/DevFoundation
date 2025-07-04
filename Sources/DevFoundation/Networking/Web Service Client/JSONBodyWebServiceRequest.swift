@@ -7,14 +7,13 @@
 
 import Foundation
 
-
 /// A web service request with a JSON body.
 ///
 /// Types that conform to `JSONBodyWebServiceRequest`s provide a JSON body as an encodable type.
 public protocol JSONBodyWebServiceRequest: WebServiceRequest {
     /// The type of the request’s body expressed as an encodable type.
     associatedtype JSONBody: Encodable
-    
+
     /// The JSON encoder to use when creating the body’s data.
     ///
     /// This defaults to `JSONEncoder()`, but requests with specific needs can customize it.

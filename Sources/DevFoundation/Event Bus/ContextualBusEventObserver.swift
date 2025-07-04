@@ -8,7 +8,6 @@
 import Foundation
 import Synchronization
 
-
 /// A bus event observer that enables handling events with closures that share some common context.
 public final class ContextualBusEventObserver<Context>: BusEventObserver where Context: Sendable {
     /// A struct representing the type’s internal mutable state.
@@ -35,7 +34,7 @@ public final class ContextualBusEventObserver<Context>: BusEventObserver where C
     /// The instance’s internal mutable state, protected by a mutex.
     private let state: Mutex<State> = Mutex(.init())
 
-    
+
     /// Creates a new contextual bus event observer with the specified context.
     ///
     /// - Parameter context: The context that stores state and behavior common to the observer’s handlers.
@@ -43,7 +42,7 @@ public final class ContextualBusEventObserver<Context>: BusEventObserver where C
         self.dispatcher = Dispatcher(context: context)
     }
 
-    
+
     /// Adds a new handler for the specified event type.
     ///
     /// - Parameters:
@@ -89,7 +88,7 @@ public final class ContextualBusEventObserver<Context>: BusEventObserver where C
         return handler
     }
 
-    
+
     /// Removes the specified handler.
     ///
     /// Does nothing if the handler was not previously added.
@@ -230,7 +229,7 @@ extension ContextualBusEventObserver {
         }
     }
 
-    
+
     /// A wrapper for a registered handler.
     ///
     /// Instances of this type are used as values in `ContextualBusEventObserver.State`’s dictionaries.
@@ -265,7 +264,7 @@ extension ContextualBusEventObserver {
             body(event, &context)
         }
 
-        
+
         var eventTypeID: ObjectIdentifier {
             return ObjectIdentifier(Event.self)
         }
@@ -276,7 +275,7 @@ extension ContextualBusEventObserver {
     private final class Dispatcher: Sendable {
         /// The shared context that can be mutated by handlers.
         nonisolated(unsafe)
-        private var context: Context
+            private var context: Context
 
         /// The dispatch queue that handlers are executed on.
         private let queue = DispatchQueue(
@@ -292,7 +291,7 @@ extension ContextualBusEventObserver {
             self.context = context
         }
 
-        
+
         /// Sends an event to an array of handlers, passing them the instance’s shared context.
         ///
         /// - Parameters:

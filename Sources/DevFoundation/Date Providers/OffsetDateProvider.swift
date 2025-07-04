@@ -7,12 +7,11 @@
 
 import Foundation
 
-
 /// A date provider that returns a date that is offset from a base provider’s by some fixed time interval.
 struct OffsetDateProvider<Base>: DateProvider where Base: DateProvider {
     /// The base date provider whose dates this provider’s dates are relative to.
     private let base: Base
-    
+
     /// The time interval that this provider adds to the base provider’s dates.
     private let offset: TimeInterval
 
@@ -26,7 +25,7 @@ struct OffsetDateProvider<Base>: DateProvider where Base: DateProvider {
         self.base = base
         self.offset = offset
     }
-    
+
 
     var now: Date {
         return base.now + offset

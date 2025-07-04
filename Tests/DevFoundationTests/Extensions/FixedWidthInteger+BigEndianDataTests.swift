@@ -5,11 +5,11 @@
 //  Created by Prachi Gauriar on 4/28/25.
 //
 
-@testable import DevFoundation
 import DevTesting
 import Foundation
 import Testing
 
+@testable import DevFoundation
 
 struct FixedWidthInteger_BigEndianDataTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()

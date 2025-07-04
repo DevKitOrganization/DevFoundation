@@ -10,7 +10,6 @@ import DevTesting
 import Foundation
 import Testing
 
-
 struct ExpiringValueTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()
 

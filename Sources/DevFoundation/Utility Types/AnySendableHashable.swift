@@ -7,12 +7,10 @@
 
 import Foundation
 
-
 /// A type-erased sendable, hashable value.
 public struct AnySendableHashable: Hashable, Sendable {
     /// The ``AnyHashable`` that this instance wraps.
-    nonisolated(unsafe)
-    let _base: AnyHashable
+    nonisolated(unsafe) let _base: AnyHashable
 
 
     /// Creates a type-erased sendable, hashable value that wraps the given instance.

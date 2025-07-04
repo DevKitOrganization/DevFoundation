@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct MockCodable: Codable, Hashable, Sendable {
     enum CodingKeys: String, CodingKey {
         case array

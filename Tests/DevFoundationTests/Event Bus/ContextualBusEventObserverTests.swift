@@ -10,7 +10,6 @@ import DevTesting
 import Foundation
 import Testing
 
-
 struct ContextualBusEventObserverTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()
 
@@ -48,7 +47,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
             observer.addHandler(for: MockBusEvent.self) { (_, _) in didCallHandler() }
             observer.addHandler(
                 for: MockIdentifiableBusEvent.self,
-                id: random(Int.self, in: .min  ..< 0)
+                id: random(Int.self, in: .min ..< 0)
             ) { (_, _) in
                 didCallHandler()
             }

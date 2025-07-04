@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// A type that provides a way to refer to a web service’s base URLs symbolically and to get the real URLs for those
 /// symbols.
 ///
