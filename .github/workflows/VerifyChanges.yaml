@@ -67,6 +67,9 @@ jobs:
             xcode-cache-deriveddata-${{ github.workflow }}-${{ matrix.platform }}-
             xcode-cache-deriveddata-
           deriveddata-directory: .build/DerivedData
+          sourcepackages-directory: .build/DerivedData/SourcePackages
+          swiftpm-package-resolved-file: Package.resolved
+          verbose: true
       - name: Select Xcode 16.4
         run: |
           sudo xcode-select -s /Applications/Xcode_16.4.0.app
