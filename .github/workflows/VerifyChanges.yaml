@@ -62,7 +62,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: irgaly/xcode-cache@v1
         with:
-          key: xcode-cache-deriveddata-${{ github.workflow }}-${{ matrix.platform }}-${{ hashFiles('**/Package.swift', '**/Package.resolved') }}
+          key: xcode-cache-deriveddata-${{ github.workflow }}-${{ matrix.platform }}-${{ github.sha }}
           restore-keys: |
             xcode-cache-deriveddata-${{ github.workflow }}-${{ matrix.platform }}-
             xcode-cache-deriveddata-
