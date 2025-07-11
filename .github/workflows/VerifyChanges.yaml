@@ -5,13 +5,12 @@ on:
   pull_request:
     branches: "**"
   push:
-    branches: [ $default-branch ]
+    branches: ["main"]
 
 jobs:
   lint:
     name: Lint
     runs-on: macos-15
-    if: ${{ github.event_name == 'pull_request' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -39,7 +38,7 @@ jobs:
             xcode_destination: "platform=watchOS Simulator,name=Apple Watch Series 10 (46mm)"
     env:
       DEV_BUILDS: DevBuilds/Sources
-      XCCOV_PRETTY_VERSION: 1.1.0
+      XCCOV_PRETTY_VERSION: 1.2.0
       XCODE_SCHEME: DevFoundation-Package
       XCODE_DESTINATION: ${{ matrix.xcode_destination }}
       XCODE_TEST_PLAN: AllTests
@@ -51,24 +50,23 @@ jobs:
         with:
           repository: DevKitOrganization/DevBuilds
           path: DevBuilds
-      - name: Checkout xccovPretty
-        uses: actions/checkout@v4
-        with:
-          repository: DevKitOrganization/xccovPretty
-          ref: ${{ env.XCCOV_PRETTY_VERSION }}
-          path: xccovPretty
+      - name: Download xccovPretty
+        if: github.event_name != 'push'
+        run: |
+          gh release download ${{ env.XCCOV_PRETTY_VERSION }} \
+              --repo DevKitOrganization/xccovPretty \
+              --pattern "xccovPretty-macos.tar.gz" \
+              -O - | tar -xz
+          chmod +x xccovPretty
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: irgaly/xcode-cache@v1
         with:
-          key: xcode-cache-deriveddata-${{ github.workflow }}-${{ github.sha }}
-          restore-keys: xcode-cache-deriveddata-${{ github.workflow }}-
-          deriveddata-directory: .build/DerivedData
-      - name: xccovPretty cache
-        uses: actions/cache@v4
-        with:
-          path: xccovPretty/.build
-          key: ${{ runner.os }}-spm-${{ env.XCCOV_PRETTY_VERSION }}
+          key: xcode-cache-deriveddata-${{ github.workflow }}-${{ matrix.platform }}-${{ hashFiles('**/Package.swift', '**/Package.resolved') }}
           restore-keys: |
-            ${{ runner.os }}-spm-
+            xcode-cache-deriveddata-${{ github.workflow }}-${{ matrix.platform }}-
+            xcode-cache-deriveddata-
+          deriveddata-directory: .build/DerivedData
       - name: Select Xcode 16.4
         run: |
           sudo xcode-select -s /Applications/Xcode_16.4.0.app
@@ -76,15 +74,14 @@ jobs:
         run: |
           "$DEV_BUILDS"/build_and_test.sh --action build-for-testing
       - name: Test
+        if: github.event_name != 'push'
         run: |
           "$DEV_BUILDS"/build_and_test.sh --action test
-      - name: Build xccovPretty
-        run: |
-          swift build --package-path xccovPretty --disable-automatic-resolution
       - name: Log Code Coverage
+        if: github.event_name != 'push'
         run: |
           xcrun xccov view --report .build/DevFoundation-Package_test.xcresult --json \
-              | swift run --quiet --skip-build --package-path xccovPretty xccovPretty --github-comment \
+              | ./xccovPretty --github-comment \
               > .build/xccovPretty-${{ matrix.platform }}.output
       - name: Upload Logs
         uses: actions/upload-artifact@v4
@@ -101,6 +98,7 @@ jobs:
           path: .build/*.xcresult
           include-hidden-files: true
       - name: Upload xccovPretty output
+        if: github.event_name != 'push'
         uses: actions/upload-artifact@v4
         with:
           name: xccovPrettyOutput-${{ matrix.platform }}
