@@ -81,7 +81,7 @@ public final class ExecutionGroup: Sendable {
     ///   - operation: The operation to perform.
     public func addTask(
         priority: TaskPriority? = nil,
-        operation: sending @escaping @isolated(any) () async -> Void
+        operation: @escaping @Sendable @isolated(any) () async -> Void
     ) {
         let didStart = taskCount.withLock { (count) in
             count += 1
