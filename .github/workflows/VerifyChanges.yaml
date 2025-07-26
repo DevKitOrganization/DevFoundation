@@ -29,13 +29,13 @@ jobs:
       matrix:
         include:
           - platform: iOS
-            xcode_destination: "platform=iOS Simulator,name=iPhone 16 Pro"
+            xcode_destination: "platform=iOS Simulator,name=iPhone SE (3rd generation)"
           - platform: macOS
             xcode_destination: "platform=macOS,arch=arm64"
           - platform: tvOS
-            xcode_destination: "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)"
+            xcode_destination: "platform=tvOS Simulator,name=Apple TV 4K (3rd generation) (at 1080p)"
           - platform: watchOS
-            xcode_destination: "platform=watchOS Simulator,name=Apple Watch Series 10 (46mm)"
+            xcode_destination: "platform=watchOS Simulator,name=Apple Watch SE (40mm) (2nd generation)"
     env:
       DEV_BUILDS: DevBuilds/Sources
       XCCOV_PRETTY_VERSION: 1.2.0
