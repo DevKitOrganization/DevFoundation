@@ -30,14 +30,19 @@ jobs:
         include:
           - platform: iOS
             xcode_destination: "platform=iOS Simulator,name=iPhone SE (3rd generation)"
+            other_xcode_flags: "-parallel-testing-enabled NO"
           - platform: macOS
             xcode_destination: "platform=macOS,arch=arm64"
+            other_xcode_flags: ""
           - platform: tvOS
             xcode_destination: "platform=tvOS Simulator,name=Apple TV 4K (3rd generation) (at 1080p)"
+            other_xcode_flags: ""
           - platform: watchOS
             xcode_destination: "platform=watchOS Simulator,name=Apple Watch SE (40mm) (2nd generation)"
+            other_xcode_flags: "-parallel-testing-enabled NO"
     env:
       DEV_BUILDS: DevBuilds/Sources
+      OTHER_XCODE_FLAGS: ${{ matrix.other_xcode_flags }}
       XCCOV_PRETTY_VERSION: 1.2.0
       XCODE_SCHEME: DevFoundation-Package
       XCODE_DESTINATION: ${{ matrix.xcode_destination }}
