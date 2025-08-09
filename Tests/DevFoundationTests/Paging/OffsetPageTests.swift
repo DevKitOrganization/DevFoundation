@@ -18,7 +18,7 @@ struct OffsetPageTests: RandomValueGenerating {
     mutating func nextPageOffsetIsCorrect() {
         for _ in 0 ..< 10 {
             let mockPage = MockOffsetPage()
-            let offset = random(Int.self, in: .min ..< .max)
+            let offset = randomInt(in: .min ..< .max)
             mockPage.pageOffsetStub = Stub(defaultReturnValue: offset)
             #expect(mockPage.nextPageOffset == offset + 1)
         }

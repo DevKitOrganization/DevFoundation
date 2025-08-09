@@ -16,26 +16,26 @@ struct HashableByIDTests: RandomValueGenerating {
 
     @Test
     mutating func hashableConformance() {
-        let equalID = random(Int.self, in: -100 ..< 100)
+        let equalID = randomInt(in: -100 ..< 100)
 
         let equal1 = MockHashableByID(
             id: equalID,
             irrelevantBool: randomBool(),
-            irrelevantInt: random(Int.self, in: .min ... .max),
+            irrelevantInt: randomInt(in: .min ... .max),
             irrelevantString: randomBasicLatinString()
         )
 
         let equal2 = MockHashableByID(
             id: equalID,
             irrelevantBool: randomBool(),
-            irrelevantInt: random(Int.self, in: .min ... .max),
+            irrelevantInt: randomInt(in: .min ... .max),
             irrelevantString: randomBasicLatinString()
         )
 
         let unequal = MockHashableByID(
             id: equalID + 1,
             irrelevantBool: randomBool(),
-            irrelevantInt: random(Int.self, in: .min ... .max),
+            irrelevantInt: randomInt(in: .min ... .max),
             irrelevantString: randomBasicLatinString()
         )
 

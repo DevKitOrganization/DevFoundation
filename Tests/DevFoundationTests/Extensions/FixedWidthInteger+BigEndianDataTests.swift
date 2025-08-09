@@ -94,16 +94,16 @@ struct FixedWidthInteger_BigEndianDataTests: RandomValueGenerating {
 
     @Test
     mutating func bigEndianConversionReturnsNilWhenDataIsIncorrectSize() {
-        #expect(Int(bigEndianData: randomData(count: random(Int.self, in: 9 ... 16))) == nil)
-        #expect(Int8(bigEndianData: randomData(count: random(Int.self, in: 2 ... 8))) == nil)
-        #expect(Int16(bigEndianData: randomData(count: random(Int.self, in: 3 ... 8))) == nil)
-        #expect(Int32(bigEndianData: randomData(count: random(Int.self, in: 1 ... 3))) == nil)
-        #expect(Int64(bigEndianData: randomData(count: random(Int.self, in: 1 ... 7))) == nil)
+        #expect(Int(bigEndianData: randomData(count: randomInt(in: 9 ... 16))) == nil)
+        #expect(Int8(bigEndianData: randomData(count: randomInt(in: 2 ... 8))) == nil)
+        #expect(Int16(bigEndianData: randomData(count: randomInt(in: 3 ... 8))) == nil)
+        #expect(Int32(bigEndianData: randomData(count: randomInt(in: 1 ... 3))) == nil)
+        #expect(Int64(bigEndianData: randomData(count: randomInt(in: 1 ... 7))) == nil)
 
-        #expect(UInt(bigEndianData: randomData(count: random(Int.self, in: 9 ... 16))) == nil)
-        #expect(UInt8(bigEndianData: randomData(count: random(Int.self, in: 2 ... 8))) == nil)
-        #expect(UInt16(bigEndianData: randomData(count: random(Int.self, in: 3 ... 8))) == nil)
-        #expect(UInt32(bigEndianData: randomData(count: random(Int.self, in: 1 ... 3))) == nil)
-        #expect(UInt64(bigEndianData: randomData(count: random(Int.self, in: 1 ... 7))) == nil)
+        #expect(UInt(bigEndianData: randomData(count: randomInt(in: 9 ... 16))) == nil)
+        #expect(UInt8(bigEndianData: randomData(count: randomInt(in: 2 ... 8))) == nil)
+        #expect(UInt16(bigEndianData: randomData(count: randomInt(in: 3 ... 8))) == nil)
+        #expect(UInt32(bigEndianData: randomData(count: randomInt(in: 1 ... 3))) == nil)
+        #expect(UInt64(bigEndianData: randomData(count: randomInt(in: 1 ... 7))) == nil)
     }
 }

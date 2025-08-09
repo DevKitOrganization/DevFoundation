@@ -18,8 +18,8 @@ struct IdentifiableBySelfTests: RandomValueGenerating {
     mutating func identifiableConformance() {
         let value = MockIdentifiableBySelf(
             bool: randomBool(),
-            int: random(Int.self, in: .min ... .max),
-            float64: random(Float64.self, in: -10_000 ... 10_000),
+            int: randomInt(in: .min ... .max),
+            float64: randomFloat64(in: -10_000 ... 10_000),
             string: randomAlphanumericString()
         )
 

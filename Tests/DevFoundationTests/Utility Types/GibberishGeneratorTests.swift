@@ -97,7 +97,7 @@ struct GibberishGeneratorTests: RandomValueGenerating {
     mutating func generateParagraphProducesCorrectSentenceCountWhenSentenceCountIsNonNil() throws {
         let generator = self.generator
 
-        let expectedSentenceCount = random(Int.self, in: 10 ... 15)
+        let expectedSentenceCount = randomInt(in: 10 ... 15)
         let paragraph = generator.generateParagraph(sentenceCount: expectedSentenceCount)
 
         var sentenceCount = 0
@@ -155,7 +155,7 @@ struct GibberishGeneratorTests: RandomValueGenerating {
     @Test
     mutating func generateParagraphUsingRNGProducesCorrectSentenceCountWhenSentenceCountIsNonNil() throws {
         let generator = self.generator
-        let expectedSentenceCount = random(Int.self, in: 10 ... 15)
+        let expectedSentenceCount = randomInt(in: 10 ... 15)
 
         var localRNG = randomNumberGenerator
         let paragraph1 = generator.generateParagraph(using: &localRNG, sentenceCount: expectedSentenceCount)

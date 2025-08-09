@@ -32,7 +32,7 @@ struct TopLevelCodingTests: RandomValueGenerating {
         let mockCodable = MockCodable(
             array: [],
             bool: randomBool(),
-            int: random(Int.self, in: .min ... .max),
+            int: randomInt(in: .min ... .max),
             string: expectedString
         )
 

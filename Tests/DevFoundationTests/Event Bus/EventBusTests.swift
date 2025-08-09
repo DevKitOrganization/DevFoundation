@@ -20,7 +20,7 @@ struct EventBusTests: RandomValueGenerating {
         let eventBus = EventBus()
 
         // Add some observers
-        let observers = Array(count: random(Int.self, in: 3 ... 5)) {
+        let observers = Array(count: randomInt(in: 3 ... 5)) {
             let observer = MockBusEventObserver()
             observer.observeStub = .init()
             observer.observeIdentifiableStub = .init()
@@ -32,7 +32,7 @@ struct EventBusTests: RandomValueGenerating {
         }
 
         // Post some (non-Identifiable) events
-        let busEvents = Array(count: random(Int.self, in: 3 ... 5)) {
+        let busEvents = Array(count: randomInt(in: 3 ... 5)) {
             MockBusEvent(string: randomAlphanumericString())
         }
 
@@ -46,9 +46,9 @@ struct EventBusTests: RandomValueGenerating {
         }
 
         // Post some identifiable bus events
-        let identifiableBusEvents = Array(count: random(Int.self, in: 3 ... 5)) {
+        let identifiableBusEvents = Array(count: randomInt(in: 3 ... 5)) {
             MockIdentifiableBusEvent(
-                id: random(Int.self, in: 0 ... .max),
+                id: randomInt(in: 0 ... .max),
                 string: randomAlphanumericString()
             )
         }
@@ -90,7 +90,7 @@ struct EventBusTests: RandomValueGenerating {
         observer.observeStub = .init()
         observer.observeIdentifiableStub = .init()
 
-        let duplicateObservationCount = random(Int.self, in: 3 ... 5)
+        let duplicateObservationCount = randomInt(in: 3 ... 5)
         for _ in 0 ..< duplicateObservationCount {
             eventBus.addObserver(observer)
         }
@@ -103,7 +103,7 @@ struct EventBusTests: RandomValueGenerating {
 
         // Post an event and make sure the same event is received multiple times
         let identifiableEvent = MockIdentifiableBusEvent(
-            id: random(Int.self, in: .min ... .max),
+            id: randomInt(in: .min ... .max),
             string: randomAlphanumericString()
         )
         eventBus.post(identifiableEvent)

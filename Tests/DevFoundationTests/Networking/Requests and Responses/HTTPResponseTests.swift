@@ -98,9 +98,9 @@ struct HTTPResponseTests: RandomValueGenerating {
     @Test
     mutating func decodeMapsBody() throws {
         let mockCodable = MockCodable(
-            array: Array(count: 5) { random(Float64.self, in: 0 ... 100) },
+            array: Array(count: 5) { randomFloat64(in: 0 ... 100) },
             bool: randomBool(),
-            int: random(Int.self, in: -100 ... 100),
+            int: randomInt(in: -100 ... 100),
             string: randomBasicLatinString()
         )
 
@@ -127,9 +127,9 @@ struct HTTPResponseTests: RandomValueGenerating {
     @Test
     mutating func decodeTopLevelKeyMapsBody() throws {
         let mockCodable = MockCodable(
-            array: Array(count: 5) { random(Float64.self, in: 0 ... 100) },
+            array: Array(count: 5) { randomFloat64(in: 0 ... 100) },
             bool: randomBool(),
-            int: random(Int.self, in: -100 ... 100),
+            int: randomInt(in: -100 ... 100),
             string: randomBasicLatinString()
         )
 

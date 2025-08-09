@@ -45,7 +45,7 @@ struct ExpiringValueTests: RandomValueGenerating {
     @Test
     mutating func expireMarksValueAsExpired() {
         var expiringValue = ExpiringValue(
-            random(Int.self, in: .min ... .max),
+            randomInt(in: .min ... .max),
             lifetimeRange: .distantPast ... .distantFuture
         )
 

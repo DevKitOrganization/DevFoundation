@@ -33,11 +33,11 @@ struct WebServiceRequestTests: RandomValueGenerating {
     @Test
     mutating func urlRequestCreationWhenQueryItemsIsNonEmpty() throws {
         let httpMethod = randomHTTPMethod()
-        let headerItems = Array(count: random(Int.self, in: 0 ... 5)) { randomHTTPHeaderItem() }
-        let baseURL = random(Int.self, in: .min ... .max)
-        let pathComponents = Array(count: random(Int.self, in: 1 ... 5)) { randomURLPathComponent() }
+        let headerItems = Array(count: randomInt(in: 0 ... 5)) { randomHTTPHeaderItem() }
+        let baseURL = randomInt(in: .min ... .max)
+        let pathComponents = Array(count: randomInt(in: 1 ... 5)) { randomURLPathComponent() }
         let fragment = randomOptional(randomAlphanumericString())
-        let queryItems = Array(count: random(Int.self, in: 1 ... 5)) { randomURLQueryItem() }
+        let queryItems = Array(count: randomInt(in: 1 ... 5)) { randomURLQueryItem() }
         let httpBody = randomHTTPBody()
 
         let request = MockWebServiceRequest(
@@ -75,8 +75,8 @@ struct WebServiceRequestTests: RandomValueGenerating {
     @Test
     mutating func urlRequestCreationWhenQueryItemsIsEmpty() throws {
         let httpMethod = randomHTTPMethod()
-        let headerItems = Array(count: random(Int.self, in: 0 ... 5)) { randomHTTPHeaderItem() }
-        let baseURL = random(Int.self, in: .min ... .max)
+        let headerItems = Array(count: randomInt(in: 0 ... 5)) { randomHTTPHeaderItem() }
+        let baseURL = randomInt(in: .min ... .max)
         let fragment = randomOptional(randomAlphanumericString())
         let httpBody = randomHTTPBody()
 
@@ -111,10 +111,10 @@ struct WebServiceRequestTests: RandomValueGenerating {
     @Test
     mutating func urlRequestCreationWhenQueryItemsIsAlreadyPercentEncoded() throws {
         let httpMethod = randomHTTPMethod()
-        let headerItems = Array(count: random(Int.self, in: 0 ... 5)) { randomHTTPHeaderItem() }
-        let baseURL = random(Int.self, in: .min ... .max)
+        let headerItems = Array(count: randomInt(in: 0 ... 5)) { randomHTTPHeaderItem() }
+        let baseURL = randomInt(in: .min ... .max)
         let fragment = randomOptional(randomAlphanumericString())
-        let queryItems = Array(count: random(Int.self, in: 1 ... 5)) {
+        let queryItems = Array(count: randomInt(in: 1 ... 5)) {
             URLQueryItem(
                 name: randomQueryString().addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!,
                 value: randomQueryString().addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
@@ -164,7 +164,7 @@ struct WebServiceRequestTests: RandomValueGenerating {
             httpMethod: randomHTTPMethod(),
             headerItems: [],
             authenticatorContext: randomAuthenticatorContext(),
-            baseURL: random(Int.self, in: .min ... .max),
+            baseURL: randomInt(in: .min ... .max),
             pathComponents: [],
             fragment: nil,
             queryItems: [],

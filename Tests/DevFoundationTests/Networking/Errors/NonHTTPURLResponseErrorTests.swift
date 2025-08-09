@@ -23,7 +23,7 @@ struct NonHTTPURLResponseErrorTests: RandomValueGenerating {
         let urlResponse = URLResponse(
             url: ftpURL,
             mimeType: nil,
-            expectedContentLength: random(Int.self, in: 256 ... 1024),
+            expectedContentLength: randomInt(in: 256 ... 1024),
             textEncodingName: nil
         )
 

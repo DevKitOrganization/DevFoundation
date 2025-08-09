@@ -16,7 +16,7 @@ struct InvalidHTTPStatusCodeErrorTests: RandomValueGenerating {
 
     @Test
     mutating func propertiesAreCorrect() {
-        let statusCode = random(Int.self, in: 100 ..< 600)
+        let statusCode = randomInt(in: 100 ..< 600)
         let httpURLResponse = randomHTTPURLResponse(statusCode: statusCode)
         let error = InvalidHTTPStatusCodeError(httpURLResponse: httpURLResponse)
         #expect(error.httpURLResponse == httpURLResponse)
