@@ -18,10 +18,10 @@ struct WebServiceClientTests: RandomValueGenerating {
     mutating func initSetsProperties() {
         let urlRequestLoader = MockURLRequestLoader()
         let authenticator = MockHTTPRequestAuthenticator()
-        let requestInterceptors = Array(count: random(Int.self, in: 3 ... 5)) {
+        let requestInterceptors = Array(count: randomInt(in: 3 ... 5)) {
             MockHTTPClientRequestInterceptor()
         }
-        let responseInterceptors = Array(count: random(Int.self, in: 3 ... 5)) {
+        let responseInterceptors = Array(count: randomInt(in: 3 ... 5)) {
             MockHTTPClientResponseInterceptor()
         }
         let baseURLConfiguration = MockBaseURLConfiguration()
@@ -61,7 +61,7 @@ struct WebServiceClientTests: RandomValueGenerating {
             httpMethod: randomHTTPMethod(),
             headerItems: [],
             authenticatorContext: randomAuthenticatorContext(),
-            baseURL: random(Int.self, in: .min ... .max),
+            baseURL: randomInt(in: .min ... .max),
             pathComponents: [],
             fragment: nil,
             queryItems: [],
@@ -101,7 +101,7 @@ struct WebServiceClientTests: RandomValueGenerating {
             httpMethod: randomHTTPMethod(),
             headerItems: [],
             authenticatorContext: randomAuthenticatorContext(),
-            baseURL: random(Int.self, in: .min ... .max),
+            baseURL: randomInt(in: .min ... .max),
             pathComponents: [],
             fragment: nil,
             queryItems: [],
@@ -155,7 +155,7 @@ struct WebServiceClientTests: RandomValueGenerating {
             httpMethod: randomHTTPMethod(),
             headerItems: [],
             authenticatorContext: randomAuthenticatorContext(),
-            baseURL: random(Int.self, in: .min ... .max),
+            baseURL: randomInt(in: .min ... .max),
             pathComponents: [],
             fragment: nil,
             queryItems: [],
@@ -215,12 +215,12 @@ struct WebServiceClientTests: RandomValueGenerating {
         // Set up a request that can be used to construct a URL request and succeeds at mapping a response
         let request = MockWebServiceRequest(
             httpMethod: randomHTTPMethod(),
-            headerItems: Array(count: random(Int.self, in: 0 ... 5)) { randomHTTPHeaderItem() },
+            headerItems: Array(count: randomInt(in: 0 ... 5)) { randomHTTPHeaderItem() },
             authenticatorContext: randomAuthenticatorContext(),
-            baseURL: random(Int.self, in: .min ... .max),
-            pathComponents: Array(count: random(Int.self, in: 1 ... 5)) { randomURLPathComponent() },
+            baseURL: randomInt(in: .min ... .max),
+            pathComponents: Array(count: randomInt(in: 1 ... 5)) { randomURLPathComponent() },
             fragment: randomOptional(randomAlphanumericString()),
-            queryItems: Array(count: random(Int.self, in: 1 ... 5)) { randomURLQueryItem() },
+            queryItems: Array(count: randomInt(in: 1 ... 5)) { randomURLQueryItem() },
             httpBodyResult: .success(randomHTTPBody())
         )
         let expectedMappedResponse = randomBasicLatinString()
@@ -233,7 +233,7 @@ struct WebServiceClientTests: RandomValueGenerating {
         authenticator.throwStub = .init(defaultError: nil)
 
         // Set up request interceptors
-        let interceptedRequests = Array(count: random(Int.self, in: 4 ... 6)) {
+        let interceptedRequests = Array(count: randomInt(in: 4 ... 6)) {
             randomURLRequest()
         }
         let requestInterceptors = interceptedRequests.map { (request) in
@@ -243,7 +243,7 @@ struct WebServiceClientTests: RandomValueGenerating {
         }
 
         // Set up response interceptors
-        let interceptedResponses = Array(count: random(Int.self, in: 4 ... 6)) {
+        let interceptedResponses = Array(count: randomInt(in: 4 ... 6)) {
             randomHTTPResponse()
         }
         let responseInterceptors = interceptedResponses.map { (response) in

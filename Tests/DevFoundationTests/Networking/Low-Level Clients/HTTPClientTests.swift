@@ -17,10 +17,10 @@ struct HTTPClientTests: RandomValueGenerating {
     @Test
     mutating func initSetsProperties() {
         let urlRequestLoader = MockURLRequestLoader()
-        let requestInterceptors = Array(count: random(Int.self, in: 3 ... 5)) {
+        let requestInterceptors = Array(count: randomInt(in: 3 ... 5)) {
             MockHTTPClientRequestInterceptor()
         }
-        let responseInterceptors = Array(count: random(Int.self, in: 3 ... 5)) {
+        let responseInterceptors = Array(count: randomInt(in: 3 ... 5)) {
             MockHTTPClientResponseInterceptor()
         }
 
@@ -40,7 +40,7 @@ struct HTTPClientTests: RandomValueGenerating {
     mutating func loadThrowsWhenRequestInterceptorThrows() async throws {
         // Set up the original request as well as some for the interceptors to return
         let originalRequest = randomURLRequest()
-        let interceptedRequests = Array(count: random(Int.self, in: 4 ... 6)) {
+        let interceptedRequests = Array(count: randomInt(in: 4 ... 6)) {
             randomURLRequest()
         }
 
@@ -53,7 +53,7 @@ struct HTTPClientTests: RandomValueGenerating {
 
         // Pick an interceptor at random that will throw an error
         let expectedError = randomError()
-        let throwingInterceptorIndex = random(Int.self, in: 1 ..< interceptedRequests.count - 1)
+        let throwingInterceptorIndex = randomInt(in: 1 ..< interceptedRequests.count - 1)
         requestInterceptors[throwingInterceptorIndex].interceptStub.defaultResult = .failure(expectedError)
 
         // Set up the client
@@ -84,7 +84,7 @@ struct HTTPClientTests: RandomValueGenerating {
     @Test
     mutating func loadCancelsWhenCanceledDuringRequestInterception() async {
         // Set up the original request as well as some for the interceptors to return
-        let requestInterceptors = Array(count: random(Int.self, in: 3 ... 5)) {
+        let requestInterceptors = Array(count: randomInt(in: 3 ... 5)) {
             let interceptor = MockHTTPClientRequestInterceptor()
             interceptor.interceptStub = .init(defaultResult: .success(randomURLRequest()))
             return interceptor
@@ -107,7 +107,7 @@ struct HTTPClientTests: RandomValueGenerating {
     mutating func loadThrowsWhenURLRequestLoaderThrows() async throws {
         // Set up the original request as well as some for the interceptors to return
         let originalRequest = randomURLRequest()
-        let interceptedRequests = Array(count: random(Int.self, in: 4 ... 6)) {
+        let interceptedRequests = Array(count: randomInt(in: 4 ... 6)) {
             randomURLRequest()
         }
 
@@ -145,7 +145,7 @@ struct HTTPClientTests: RandomValueGenerating {
         let expectedResponse = URLResponse(
             url: randomURL(),
             mimeType: nil,
-            expectedContentLength: random(Int.self, in: 256 ... 1024),
+            expectedContentLength: randomInt(in: 256 ... 1024),
             textEncodingName: nil
         )
         urlRequestLoader.dataStub = .init(defaultResult: .success((randomData(), expectedResponse)))
@@ -181,7 +181,7 @@ struct HTTPClientTests: RandomValueGenerating {
 
     @Test
     mutating func loadThrowsWhenResponseInterceptorThrows() async throws {
-        let interceptedResponses = Array(count: random(Int.self, in: 4 ... 6)) {
+        let interceptedResponses = Array(count: randomInt(in: 4 ... 6)) {
             randomHTTPResponse()
         }
 
@@ -194,7 +194,7 @@ struct HTTPClientTests: RandomValueGenerating {
 
         // Pick a random interceptor that will throw an error
         let expectedError = randomError()
-        let throwingInterceptorIndex = random(Int.self, in: 1 ..< interceptedResponses.count - 1)
+        let throwingInterceptorIndex = randomInt(in: 1 ..< interceptedResponses.count - 1)
         responseInterceptors[throwingInterceptorIndex].interceptStub.defaultResult = .failure(expectedError)
 
         // Set up a URL request loader that succeeds
@@ -234,7 +234,7 @@ struct HTTPClientTests: RandomValueGenerating {
     @Test
     mutating func loadCancelsWhenCanceledDuringResponseInterception() async {
         // Set up some responses that will be returned by our response interceptors
-        let interceptedResponses = Array(count: random(Int.self, in: 4 ... 6)) {
+        let interceptedResponses = Array(count: randomInt(in: 4 ... 6)) {
             randomHTTPResponse()
         }
 
@@ -266,7 +266,7 @@ struct HTTPClientTests: RandomValueGenerating {
     @Test
     mutating func loadReturnsWhenAllResponseInterceptorsReturnNonNil() async throws {
         // Set up some responses that will be returned by our response interceptors
-        let interceptedResponses = Array(count: random(Int.self, in: 4 ... 6)) {
+        let interceptedResponses = Array(count: randomInt(in: 4 ... 6)) {
             randomHTTPResponse()
         }
 
@@ -294,7 +294,7 @@ struct HTTPClientTests: RandomValueGenerating {
     @Test
     mutating func loadRetriesWhenResponseInterceptorReturnsNil() async {
         // Set up some responses that will be returned by our response interceptors
-        let interceptedResponses = Array(count: random(Int.self, in: 4 ... 6)) {
+        let interceptedResponses = Array(count: randomInt(in: 4 ... 6)) {
             randomHTTPResponse()
         }
 
@@ -333,7 +333,7 @@ struct HTTPClientTests: RandomValueGenerating {
     @Test
     mutating func loadCancelsBeforeRetryingWhenCanceledWhileResponseInterceptorReturnsNil() async throws {
         // Set up some responses that will be returned by our response interceptors
-        let interceptedResponses = Array(count: random(Int.self, in: 4 ... 6)) {
+        let interceptedResponses = Array(count: randomInt(in: 4 ... 6)) {
             randomHTTPResponse()
         }
 

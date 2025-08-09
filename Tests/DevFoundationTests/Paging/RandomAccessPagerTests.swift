@@ -31,7 +31,7 @@ struct RandomAccessPagerTests: RandomValueGenerating {
         mockLoader.pageExistsStub = Stub(defaultReturnValue: true)
 
         let pager = RandomAccessPager(pageLoader: mockLoader)
-        let offset = random(Int.self, in: 0 ... 100)
+        let offset = randomInt(in: 0 ... 100)
 
         #expect(pager.pageExists(at: offset))
         #expect(mockLoader.pageExistsStub.callArguments == [offset])
@@ -43,7 +43,7 @@ struct RandomAccessPagerTests: RandomValueGenerating {
         let mockLoader = MockRandomAccessPageLoader<MockOffsetPage>()
         mockLoader.pageExistsStub = Stub(defaultReturnValue: false)
 
-        let pageOffset = random(Int.self, in: 0 ... 100)
+        let pageOffset = randomInt(in: 0 ... 100)
         let page = MockOffsetPage()
         page.pageOffsetStub = Stub(defaultReturnValue: pageOffset)
 
@@ -55,7 +55,7 @@ struct RandomAccessPagerTests: RandomValueGenerating {
     @Test
     mutating func loadPageAtLoadsPage() async throws {
         let mockLoader = MockRandomAccessPageLoader<MockOffsetPage>()
-        let offset = random(Int.self, in: 0 ... 100)
+        let offset = randomInt(in: 0 ... 100)
         let expectedPage = MockOffsetPage()
         expectedPage.pageOffsetStub = Stub(defaultReturnValue: offset)
         mockLoader.loadPageStub = ThrowingStub(defaultResult: .success(expectedPage))
@@ -75,7 +75,7 @@ struct RandomAccessPagerTests: RandomValueGenerating {
     @Test
     mutating func loadPageAfterWithPageUsesDefaultImplementation() async throws {
         let mockLoader = MockRandomAccessPageLoader<MockOffsetPage>()
-        let pageOffset = random(Int.self, in: 0 ... 100)
+        let pageOffset = randomInt(in: 0 ... 100)
         let nextOffset = pageOffset + 1
         let expectedPage = MockOffsetPage()
         expectedPage.pageOffsetStub = Stub(defaultReturnValue: nextOffset)
@@ -108,7 +108,7 @@ struct RandomAccessPagerTests: RandomValueGenerating {
     @Test
     mutating func loadPageAtReturnsCachedPage() async throws {
         let mockLoader = MockRandomAccessPageLoader<MockOffsetPage>()
-        let offset = random(Int.self, in: 0 ... 100)
+        let offset = randomInt(in: 0 ... 100)
         let page = MockOffsetPage()
         page.pageOffsetStub = Stub(defaultReturnValue: offset)
         mockLoader.loadPageStub = ThrowingStub(defaultResult: .success(page))
@@ -130,9 +130,9 @@ struct RandomAccessPagerTests: RandomValueGenerating {
     @Test
     mutating func loadPageAtMaintainsOrder() async throws {
         let mockLoader = MockRandomAccessPageLoader<MockOffsetPage>()
-        let offset0 = random(Int.self, in: 0 ... 30)
-        let offset1 = random(Int.self, in: 31 ... 60)
-        let offset2 = random(Int.self, in: 61 ... 100)
+        let offset0 = randomInt(in: 0 ... 30)
+        let offset1 = randomInt(in: 31 ... 60)
+        let offset2 = randomInt(in: 61 ... 100)
 
         let page0 = MockOffsetPage()
         page0.pageOffsetStub = Stub(defaultReturnValue: offset0)
@@ -162,7 +162,7 @@ struct RandomAccessPagerTests: RandomValueGenerating {
     @Test
     mutating func loadPageAtThrowsError() async {
         let mockLoader = MockRandomAccessPageLoader<MockOffsetPage>()
-        let offset = random(Int.self, in: 0 ... 100)
+        let offset = randomInt(in: 0 ... 100)
         let expectedError = randomError()
         mockLoader.loadPageStub = ThrowingStub(defaultResult: .failure(expectedError))
 
@@ -180,7 +180,7 @@ struct RandomAccessPagerTests: RandomValueGenerating {
     @Test
     mutating func loadPageAtHandlesConcurrentLoads() async throws {
         let mockLoader = MockRandomAccessPageLoader<MockOffsetPage>()
-        let offset = random(Int.self, in: 0 ... 100)
+        let offset = randomInt(in: 0 ... 100)
         let page1 = MockOffsetPage()
         page1.pageOffsetStub = Stub(defaultReturnValue: offset)
         let page2 = MockOffsetPage()

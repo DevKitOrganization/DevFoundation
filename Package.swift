@@ -31,7 +31,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.5.0"),
         .package(url: "https://github.com/apple/swift-numerics.git", from: "1.0.3"),
-        .package(url: "https://github.com/DevKitOrganization/DevTesting", from: "1.0.0-beta.7"),
+        .package(url: "https://github.com/DevKitOrganization/DevTesting", from: "1.0.0-beta.9"),
         .package(url: "https://github.com/prachigauriar/URLMock.git", from: "1.3.6"),
     ],
     targets: [

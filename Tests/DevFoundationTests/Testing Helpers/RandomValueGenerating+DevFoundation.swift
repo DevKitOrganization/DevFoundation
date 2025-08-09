@@ -21,7 +21,7 @@ extension RandomValueGenerating {
 
 
     mutating func randomError() -> MockError {
-        return MockError(id: random(Int.self, in: 0 ... .max))
+        return MockError(id: randomInt(in: 0 ... .max))
     }
 
 
@@ -56,9 +56,9 @@ extension RandomValueGenerating {
     mutating func randomHTTPURLResponse(statusCode: Int? = nil) -> HTTPURLResponse {
         return HTTPURLResponse(
             url: randomURL(),
-            statusCode: statusCode ?? random(Int.self, in: 100 ..< 600),
+            statusCode: statusCode ?? randomInt(in: 100 ..< 600),
             httpVersion: "1.1",
-            headerFields: Dictionary(count: random(Int.self, in: 3 ..< 10)) {
+            headerFields: Dictionary(count: randomInt(in: 3 ..< 10)) {
                 (randomAlphanumericString(), randomAlphanumericString())
             }
         )!

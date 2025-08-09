@@ -18,7 +18,7 @@ struct RangeReplaceableCollection_RemoveFirstTests: RandomValueGenerating {
     @Test
     mutating func rethrowsErrorWhenPredicateThrows() {
         // Create an array of random elements
-        var array = Array(count: random(Int.self, in: 3 ... 5)) { randomBool() }
+        var array = Array(count: randomInt(in: 3 ... 5)) { randomBool() }
         let copy = array
 
         // Try to remove an element with an unsatisfiable predicate and expect removeFirst to return nil
@@ -35,7 +35,7 @@ struct RangeReplaceableCollection_RemoveFirstTests: RandomValueGenerating {
     @Test
     mutating func removeFirstReturnsNilIfNoElementsAreRemoved() {
         // Create an array of random elements
-        var array = Array(count: random(Int.self, in: 3 ... 5)) { randomAlphanumericString() }
+        var array = Array(count: randomInt(in: 3 ... 5)) { randomAlphanumericString() }
         let copy = array
 
         // Try to remove an element with an unsatisfiable predicate and expect removeFirst to return nil
@@ -48,10 +48,10 @@ struct RangeReplaceableCollection_RemoveFirstTests: RandomValueGenerating {
     @Test
     mutating func removeFirstReturnsTheElementThatWasRemoved() {
         // Create an array with random elements
-        var array = Array(count: random(Int.self, in: 3 ... 5)) { randomAlphanumericString() }
+        var array = Array(count: randomInt(in: 3 ... 5)) { randomAlphanumericString() }
 
         // Duplicate elements in the array an arbitrary number of times
-        for _ in 0 ..< random(Int.self, in: 1 ... 3) {
+        for _ in 0 ..< randomInt(in: 1 ... 3) {
             array += array
         }
 

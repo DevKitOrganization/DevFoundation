@@ -16,7 +16,7 @@ struct HTTPStatusCodeTests: RandomValueGenerating {
 
     @Test
     mutating func initSetsValue() {
-        let rawValue = random(Int.self, in: 100 ..< 600)
+        let rawValue = randomInt(in: 100 ..< 600)
         #expect(HTTPStatusCode(rawValue).rawValue == rawValue)
     }
 
@@ -24,7 +24,7 @@ struct HTTPStatusCodeTests: RandomValueGenerating {
     @Test
     mutating func isInformational() {
         for _ in 0 ..< 10 {
-            let statusCode = HTTPStatusCode(random(Int.self, in: 100 ..< 200))
+            let statusCode = HTTPStatusCode(randomInt(in: 100 ..< 200))
             #expect(statusCode.isInformational)
             #expect(!statusCode.isSuccessful)
             #expect(!statusCode.isRedirection)
@@ -38,7 +38,7 @@ struct HTTPStatusCodeTests: RandomValueGenerating {
     @Test
     mutating func isSuccessful() {
         for _ in 0 ..< 10 {
-            let statusCode = HTTPStatusCode(random(Int.self, in: 200 ..< 300))
+            let statusCode = HTTPStatusCode(randomInt(in: 200 ..< 300))
             #expect(!statusCode.isInformational)
             #expect(statusCode.isSuccessful)
             #expect(!statusCode.isRedirection)
@@ -52,7 +52,7 @@ struct HTTPStatusCodeTests: RandomValueGenerating {
     @Test
     mutating func isRedirection() {
         for _ in 0 ..< 10 {
-            let statusCode = HTTPStatusCode(random(Int.self, in: 300 ..< 400))
+            let statusCode = HTTPStatusCode(randomInt(in: 300 ..< 400))
             #expect(!statusCode.isInformational)
             #expect(!statusCode.isSuccessful)
             #expect(statusCode.isRedirection)
@@ -66,7 +66,7 @@ struct HTTPStatusCodeTests: RandomValueGenerating {
     @Test
     mutating func isClientError() {
         for _ in 0 ..< 10 {
-            let statusCode = HTTPStatusCode(random(Int.self, in: 400 ..< 500))
+            let statusCode = HTTPStatusCode(randomInt(in: 400 ..< 500))
             #expect(!statusCode.isInformational)
             #expect(!statusCode.isSuccessful)
             #expect(!statusCode.isRedirection)
@@ -80,7 +80,7 @@ struct HTTPStatusCodeTests: RandomValueGenerating {
     @Test
     mutating func isServerError() {
         for _ in 0 ..< 10 {
-            let statusCode = HTTPStatusCode(random(Int.self, in: 500 ..< 600))
+            let statusCode = HTTPStatusCode(randomInt(in: 500 ..< 600))
             #expect(!statusCode.isInformational)
             #expect(!statusCode.isSuccessful)
             #expect(!statusCode.isRedirection)
@@ -94,8 +94,8 @@ struct HTTPStatusCodeTests: RandomValueGenerating {
     @Test
     mutating func invalidStatusCode() {
         for _ in 0 ..< 10 {
-            let smallStatusCode = HTTPStatusCode(random(Int.self, in: .min ..< 100))
-            let largeStatusCode = HTTPStatusCode(random(Int.self, in: 600 ... .max))
+            let smallStatusCode = HTTPStatusCode(randomInt(in: .min ..< 100))
+            let largeStatusCode = HTTPStatusCode(randomInt(in: 600 ... .max))
 
             for statusCode in [smallStatusCode, largeStatusCode] {
                 #expect(!statusCode.isInformational)
@@ -111,7 +111,7 @@ struct HTTPStatusCodeTests: RandomValueGenerating {
 
     @Test
     mutating func httpURLResponseStatusCode() {
-        let statusCode = random(Int.self, in: 100 ..< 600)
+        let statusCode = randomInt(in: 100 ..< 600)
         let response = randomHTTPURLResponse(statusCode: statusCode)
         #expect(response.httpStatusCode == HTTPStatusCode(statusCode))
     }

@@ -18,10 +18,10 @@ struct AuthenticatingHTTPClientTests: RandomValueGenerating {
     mutating func initSetsProperties() {
         let urlRequestLoader = MockURLRequestLoader()
         let authenticator = MockHTTPRequestAuthenticator()
-        let requestInterceptors = Array(count: random(Int.self, in: 3 ... 5)) {
+        let requestInterceptors = Array(count: randomInt(in: 3 ... 5)) {
             MockHTTPClientRequestInterceptor()
         }
-        let responseInterceptors = Array(count: random(Int.self, in: 3 ... 5)) {
+        let responseInterceptors = Array(count: randomInt(in: 3 ... 5)) {
             MockHTTPClientResponseInterceptor()
         }
 

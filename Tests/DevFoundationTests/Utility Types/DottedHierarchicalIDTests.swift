@@ -120,7 +120,7 @@ struct DottedHierarchicalIDTests: RandomValueGenerating {
 
 
     private mutating func randomRawValue() -> String {
-        Array(count: random(Int.self, in: 3 ... 5)) {
+        Array(count: randomInt(in: 3 ... 5)) {
             randomAlphanumericString()
         }.joined(separator: ".")
     }

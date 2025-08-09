@@ -141,7 +141,7 @@ struct JSONValueTests: RandomValueGenerating {
         #expect(key.stringValue == stringValue)
         #expect(key.intValue == nil)
 
-        #expect(JSONCodingKey(intValue: random(Int.self, in: .min ... .max)) == nil)
+        #expect(JSONCodingKey(intValue: randomInt(in: .min ... .max)) == nil)
     }
 
 
@@ -269,7 +269,7 @@ struct JSONValueTests: RandomValueGenerating {
 
     @Test
     mutating func jsonValueNumberHashableWhenLHSIsFloatingPoint() {
-        let float64 = random(Float64.self, in: 0 ... 100)
+        let float64 = randomFloat64(in: 0 ... 100)
         let roundedFloat64 = float64.rounded(.towardZero)
 
         // Equal
@@ -363,7 +363,7 @@ struct JSONValueTests: RandomValueGenerating {
 
         // Float64
         #expect(JSONValue.ifPresent(nil as Float64?) == .ifPresent(nil as JSONValue?))
-        let float64 = random(Float64.self, in: -100 ... 100)
+        let float64 = randomFloat64(in: -100 ... 100)
         #expect(JSONValue.ifPresent(float64) == .ifPresent(.number(float64)))
     }
 
@@ -372,7 +372,7 @@ struct JSONValueTests: RandomValueGenerating {
     mutating func ifPresentSignedInteger() {
         // Int
         #expect(JSONValue.ifPresent(nil as Int?) == .ifPresent(nil as JSONValue?))
-        let int = random(Int.self, in: .min ... .max)
+        let int = randomInt(in: .min ... .max)
         #expect(JSONValue.ifPresent(int) == .ifPresent(.number(int)))
 
         // Int8
@@ -433,7 +433,7 @@ struct JSONValueTests: RandomValueGenerating {
         #expect(JSONValue.number(float32) == .number(.floatingPoint(Float64(float32))))
 
         // Float64
-        let float64 = random(Float64.self, in: -100 ... 100)
+        let float64 = randomFloat64(in: -100 ... 100)
         #expect(JSONValue.number(float64) == .number(.floatingPoint(float64)))
     }
 
@@ -441,7 +441,7 @@ struct JSONValueTests: RandomValueGenerating {
     @Test
     mutating func numberSignedInteger() {
         // Int
-        let int = random(Int.self, in: .min ... .max)
+        let int = randomInt(in: .min ... .max)
         #expect(JSONValue.number(int) == .number(.integer(Int64(int))))
 
         // Int8
@@ -579,7 +579,7 @@ struct JSONValueTests: RandomValueGenerating {
         let notPresent = JSONValue.ifPresent(.ifPresent(nil as JSONValue?))
         #expect(notPresent.value == nil)
 
-        let integer = random(Int.self, in: .min ... .max)
+        let integer = randomInt(in: .min ... .max)
         let present = JSONValue.ifPresent(.ifPresent(.ifPresent(integer)))
         #expect(present.value as? Int64 == Int64(integer))
     }
@@ -594,7 +594,7 @@ struct JSONValueTests: RandomValueGenerating {
         #expect(float32JSONValue.value as? Float64 == Float64(float32))
 
         // Float64
-        let float64 = random(Float64.self, in: -100 ... 100)
+        let float64 = randomFloat64(in: -100 ... 100)
         let float64JSONValue = try #require(JSONValue(value: float64))
         #expect(float64JSONValue == JSONValue.number(float64))
         #expect(float64JSONValue.value as? Float64 == float64)
@@ -611,7 +611,7 @@ struct JSONValueTests: RandomValueGenerating {
     @Test
     mutating func signedIntegerAnyConversion() throws {
         // Int
-        let int = random(Int.self, in: .min ... .max)
+        let int = randomInt(in: .min ... .max)
         let intJSONValue = try #require(JSONValue(value: int))
         #expect(intJSONValue == JSONValue.number(int))
         #expect(intJSONValue.value as? Int64 == Int64(int))

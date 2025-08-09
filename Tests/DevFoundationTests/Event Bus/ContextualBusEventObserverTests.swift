@@ -30,7 +30,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
         try await confirmation("handler is not called", expectedCount: 0) { (didCallHandler) in
             observer.addHandler(
                 for: MockIdentifiableBusEvent.self,
-                id: random(Int.self, in: .min ... .max)
+                id: randomInt(in: .min ... .max)
             ) { (_, _) in
                 didCallHandler()
             }
@@ -47,14 +47,14 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
             observer.addHandler(for: MockBusEvent.self) { (_, _) in didCallHandler() }
             observer.addHandler(
                 for: MockIdentifiableBusEvent.self,
-                id: random(Int.self, in: .min ..< 0)
+                id: randomInt(in: .min ..< 0)
             ) { (_, _) in
                 didCallHandler()
             }
 
             eventBus.post(
                 MockIdentifiableBusEvent(
-                    id: random(Int.self, in: 0 ... .max),
+                    id: randomInt(in: 0 ... .max),
                     string: randomAlphanumericString()
                 )
             )
@@ -66,7 +66,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
     @Test
     mutating func postingHandledEventCallsAllHandlers() async throws {
         let expectedString = randomAlphanumericString()
-        let handlerCount = random(Int.self, in: 3 ... 5)
+        let handlerCount = randomInt(in: 3 ... 5)
 
         try await confirmation("handlers are called", expectedCount: handlerCount) { (didCallHandler) in
             for i in 0 ..< handlerCount {
@@ -86,9 +86,9 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
 
     @Test
     mutating func postingHandledIdentifiableEventCallsAllHandlers() async throws {
-        let expectedID = random(Int.self, in: 0 ... 100)
+        let expectedID = randomInt(in: 0 ... 100)
         let expectedString = randomAlphanumericString()
-        let handlerCount = random(Int.self, in: 3 ... 5)
+        let handlerCount = randomInt(in: 3 ... 5)
 
         try await confirmation("handlers are called", expectedCount: handlerCount * 2) { (didCallHandler) in
             for i in 0 ..< handlerCount {
@@ -137,14 +137,14 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
         try await confirmation("removed handler is not called", expectedCount: 0) { (didCallHandler) in
             let handler = observer.addHandler(
                 for: MockIdentifiableBusEvent.self,
-                id: random(Int.self, in: .min ... .max)
+                id: randomInt(in: .min ... .max)
             ) { (event, context) in
                 didCallHandler()
             }
             observer.removeHandler(handler)
             eventBus.post(
                 MockIdentifiableBusEvent(
-                    id: random(Int.self, in: .min ... .max),
+                    id: randomInt(in: .min ... .max),
                     string: randomAlphanumericString()
                 )
             )

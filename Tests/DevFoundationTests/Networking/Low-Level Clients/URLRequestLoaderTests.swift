@@ -45,7 +45,7 @@ struct URLRequestLoaderTests: RandomValueGenerating {
         defer { disableURLMock() }
 
         let request = randomURLRequest()
-        let expectedStatusCode = random(Int.self, in: 200 ..< 300)
+        let expectedStatusCode = randomInt(in: 200 ..< 300)
         let expectedBody = randomData()
 
         let mockRequest = UMKMockHTTPRequest(
@@ -74,7 +74,7 @@ struct URLRequestLoaderTests: RandomValueGenerating {
         defer { disableURLMock() }
 
         let request = randomURLRequest()
-        let expectedStatusCode = random(Int.self, in: 200 ..< 300)
+        let expectedStatusCode = randomInt(in: 200 ..< 300)
 
         let mockRequest = UMKMockHTTPRequest(
             httpMethod: request.httpMethod!,
