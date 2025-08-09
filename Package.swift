@@ -37,7 +37,7 @@ let package = Package(
     targets: [
         .target(
             name: "DevFoundation",
-            swiftSettings: swiftSettings
+            swiftSettings: swiftSettings,
         ),
         .testTarget(
             name: "DevFoundationTests",
