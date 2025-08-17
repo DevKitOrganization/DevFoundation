@@ -47,7 +47,7 @@ extension Data {
 
     /// Returns a deobfuscated form of the data instance.
     ///
-    /// The data is assumed to have been obfuscated using ``obfuscated(withKey:messageSizeType:keySizeType:)`` using the
+    /// The data is assumed to have been obfuscated using ``obfuscated(withKey:keySizeType:messageSizeType:)`` using the
     /// same values of `keySizeType` and `messageSizeType`.
     ///
     /// - Parameters:

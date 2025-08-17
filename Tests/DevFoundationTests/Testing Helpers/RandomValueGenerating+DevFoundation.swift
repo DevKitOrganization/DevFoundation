@@ -10,11 +10,6 @@ import DevTesting
 import Foundation
 
 extension RandomValueGenerating {
-    mutating func randomAuthenticatorContext() -> MockHTTPRequestAuthenticator.Context {
-        return randomCase(of: MockHTTPRequestAuthenticator.Context.self)!
-    }
-
-
     mutating func randomDate() -> Date {
         return Date(timeIntervalSinceNow: random(TimeInterval.self, in: -10_000 ... 10_000))
     }
