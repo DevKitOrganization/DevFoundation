@@ -16,7 +16,7 @@ import Foundation
 ///
 ///   - An HTTP method.
 ///   - An array of HTTP header items.
-///   - Contextual information to enable an authenticator to the authenticate the request.
+///   - Contextual information about the request.
 ///   - A base URL.
 ///   - An array of path components used to create a path relative to the base URL.
 ///   - An optional URL fragment.
@@ -29,8 +29,8 @@ import Foundation
 /// DevFoundation provides ``JSONBodyWebServiceRequest`` to conveniently create web service requests with JSON bodies.
 /// Similar protocols can be created for other body types, e.g., Protobuf or XML.
 public protocol WebServiceRequest: Sendable {
-    /// The type of authenticator the web service request requires.
-    associatedtype Authenticator: HTTPRequestAuthenticator
+    /// The type of request context that the web service request requires.
+    associatedtype Context: Sendable
 
     /// The base URL configuration the web service request requires.
     associatedtype BaseURLConfiguration: BaseURLConfiguring
@@ -48,10 +48,10 @@ public protocol WebServiceRequest: Sendable {
     /// Defaults to `[]`
     var headerItems: [HTTPHeaderItem] { get }
 
-    /// Contextual information that an authenticator needs to authenticate the request.
+    /// Contextual information about the request.
     ///
-    /// A default implementation of this function is provided if `Authenticator.Context` is `Void`.
-    var authenticatorContext: Authenticator.Context { get }
+    /// A default implementation of this function is provided if `Context` is `Void`.
+    var context: Context { get }
 
     /// The web service request’s base URL.
     ///
@@ -127,8 +127,8 @@ extension WebServiceRequest where BaseURLConfiguration.BaseURL == Void {
 }
 
 
-extension WebServiceRequest where Authenticator.Context == Void {
-    public var authenticatorContext: Void {
+extension WebServiceRequest where Context == Void {
+    public var context: Void {
         return ()
     }
 }

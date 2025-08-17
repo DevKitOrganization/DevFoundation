@@ -330,7 +330,7 @@ extension JSONValue {
     ///
     /// This is equivalent to `.ifPresent(value.map(JSONValue.number(_:)))`.
     ///
-    /// - Parameter value: The optional binary floating point to wrap.
+    /// - Parameter integer: The optional signed integer to wrap.
     public static func ifPresent(_ integer: (some SignedInteger & Sendable)?) -> JSONValue {
         return .ifPresent(integer.map(JSONValue.number(_:)))
     }
@@ -340,7 +340,7 @@ extension JSONValue {
     ///
     /// This is equivalent to `.ifPresent(value.map(JSONValue.number(_:)))`.
     ///
-    /// - Parameter value: The optional unsigned integer to wrap.
+    /// - Parameter string: The optional string to wrap.
     public static func ifPresent(_ string: String?) -> JSONValue {
         return .ifPresent(string.map(JSONValue.string(_:)))
     }

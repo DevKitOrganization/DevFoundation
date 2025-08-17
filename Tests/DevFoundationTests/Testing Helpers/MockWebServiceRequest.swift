@@ -10,12 +10,12 @@ import DevTesting
 import Foundation
 
 final class MockWebServiceRequest: WebServiceRequest {
-    typealias Authenticator = MockHTTPRequestAuthenticator
+    typealias Context = String
     typealias BaseURLConfiguration = MockBaseURLConfiguration
 
     nonisolated(unsafe) var httpMethod: HTTPMethod
     nonisolated(unsafe) var headerItems: [HTTPHeaderItem]
-    nonisolated(unsafe) var authenticatorContext: MockHTTPRequestAuthenticator.Context
+    nonisolated(unsafe) var context: Context
     nonisolated(unsafe) var baseURL: Int
     nonisolated(unsafe) var pathComponents: [URLPathComponent]
     nonisolated(unsafe) var fragment: String?
@@ -28,7 +28,7 @@ final class MockWebServiceRequest: WebServiceRequest {
     init(
         httpMethod: HTTPMethod,
         headerItems: [HTTPHeaderItem],
-        authenticatorContext: MockHTTPRequestAuthenticator.Context,
+        context: Context,
         baseURL: Int,
         pathComponents: [URLPathComponent],
         fragment: String?,
@@ -38,7 +38,7 @@ final class MockWebServiceRequest: WebServiceRequest {
     ) {
         self.httpMethod = httpMethod
         self.headerItems = headerItems
-        self.authenticatorContext = authenticatorContext
+        self.context = context
         self.baseURL = baseURL
         self.pathComponents = pathComponents
         self.fragment = fragment

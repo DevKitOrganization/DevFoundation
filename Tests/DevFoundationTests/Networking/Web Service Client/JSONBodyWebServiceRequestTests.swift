@@ -79,7 +79,7 @@ private struct MockJSONBody: Codable, Hashable {
 
 
 private struct DefaultJSONBodyWebServiceRequest: JSONBodyWebServiceRequest {
-    typealias Authenticator = MockHTTPRequestAuthenticator
+    typealias Context = String
     typealias BaseURLConfiguration = SingleBaseURLConfiguration
 
     var jsonBody: MockJSONBody
@@ -90,7 +90,7 @@ private struct DefaultJSONBodyWebServiceRequest: JSONBodyWebServiceRequest {
     }
 
 
-    var authenticatorContext: MockHTTPRequestAuthenticator.Context {
+    var context: Context {
         fatalError("not implemented")
     }
 
@@ -108,7 +108,7 @@ private struct DefaultJSONBodyWebServiceRequest: JSONBodyWebServiceRequest {
 
 private struct MockJSONBodyWebServiceRequest<JSONBody>: JSONBodyWebServiceRequest
 where JSONBody: Encodable & Sendable {
-    typealias Authenticator = MockHTTPRequestAuthenticator
+    typealias Context = String
     typealias BaseURLConfiguration = SingleBaseURLConfiguration
 
     var jsonBody: JSONBody
@@ -120,7 +120,7 @@ where JSONBody: Encodable & Sendable {
     }
 
 
-    var authenticatorContext: MockHTTPRequestAuthenticator.Context {
+    var context: Context {
         fatalError("not implemented")
     }
 

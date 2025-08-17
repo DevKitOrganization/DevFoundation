@@ -26,7 +26,7 @@ struct WebServiceRequestTests: RandomValueGenerating {
 
         #expect(request.automaticallyPercentEncodesQueryItems)
         #expect(request.baseURL as Any is Void)
-        #expect(request.authenticatorContext as Any is Void)
+        #expect(request.context as Any is Void)
     }
 
 
@@ -43,7 +43,7 @@ struct WebServiceRequestTests: RandomValueGenerating {
         let request = MockWebServiceRequest(
             httpMethod: httpMethod,
             headerItems: headerItems,
-            authenticatorContext: randomAuthenticatorContext(),
+            context: randomAlphanumericString(),
             baseURL: baseURL,
             pathComponents: pathComponents,
             fragment: fragment,
@@ -83,7 +83,7 @@ struct WebServiceRequestTests: RandomValueGenerating {
         let request = MockWebServiceRequest(
             httpMethod: httpMethod,
             headerItems: headerItems,
-            authenticatorContext: randomAuthenticatorContext(),
+            context: randomAlphanumericString(),
             baseURL: baseURL,
             pathComponents: [],
             fragment: fragment,
@@ -125,7 +125,7 @@ struct WebServiceRequestTests: RandomValueGenerating {
         let request = MockWebServiceRequest(
             httpMethod: httpMethod,
             headerItems: headerItems,
-            authenticatorContext: randomAuthenticatorContext(),
+            context: randomAlphanumericString(),
             baseURL: baseURL,
             pathComponents: [],
             fragment: fragment,
@@ -163,7 +163,7 @@ struct WebServiceRequestTests: RandomValueGenerating {
         let request = MockWebServiceRequest(
             httpMethod: randomHTTPMethod(),
             headerItems: [],
-            authenticatorContext: randomAuthenticatorContext(),
+            context: randomAlphanumericString(),
             baseURL: randomInt(in: .min ... .max),
             pathComponents: [],
             fragment: nil,
@@ -198,7 +198,7 @@ struct WebServiceRequestTests: RandomValueGenerating {
 // MARK: - Supporting Types
 
 private struct DefaultWebServiceRequest: WebServiceRequest {
-    typealias Authenticator = VoidAuthenticator
+    typealias Context = Void
     typealias BaseURLConfiguration = SingleBaseURLConfiguration
 
 
@@ -214,19 +214,5 @@ private struct DefaultWebServiceRequest: WebServiceRequest {
 
     func mapResponse(_ response: HTTPResponse<Data>) throws {
         // Intentionally empty
-    }
-}
-
-
-private struct VoidAuthenticator: HTTPRequestAuthenticator {
-    typealias Context = Void
-
-
-    func prepare(
-        _ request: URLRequest,
-        context: Void,
-        previousFailures: [HTTPRequestAuthenticationFailure]
-    ) async throws -> URLRequest? {
-        fatalError("not implemented")
     }
 }

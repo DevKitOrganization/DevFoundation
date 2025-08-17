@@ -1,13 +1,38 @@
 # Test Mock Documentation
 
-This document outlines the patterns and conventions for writing test mocks in the Shopper iOS
-codebase.
+This document outlines the patterns and conventions for writing test mocks in Swift.
+
+Its helpful to read the [Dependency Injection guide](DependencyInjection.md) before reading this
+guide, as it introduces core principles for how we think about dependency injection.
 
 
 ## Overview
 
-The codebase uses a consistent approach to mocking based on the DevTesting framework's `Stub` type.
-All mocks follow standardized patterns that make them predictable, testable, and maintainable.
+We use a consistent approach to mocking based on the DevTesting package’s `Stub` and `ThrowingStub`
+types. All mocks follow standardized patterns that make them predictable, testable, and
+maintainable.
+
+
+## When to Mock vs. Use Types Directly
+
+Create mock protocols when
+
+  - The type has **non-deterministic behavior** (network calls, file I/O, time-dependent operations)
+  - You need to **control or observe the behavior** in tests
+  - The type’s behavior **varies across environments**
+
+Use types directly when
+
+  - The type has **deterministic, predictable behavior**
+  - Testing with the real implementation provides **sufficient coverage**
+  - Creating abstractions adds **complexity without testing benefits**
+
+It’s worth pointing out that the following foundational types should be used directly.
+
+  - **`NotificationCenter`**: Posting and observing notifications is predictable
+  - **`UserDefaults`**: Simple key-value storage with consistent behavior
+  - **`Bundle`**: Resource loading behavior is consistent and testable
+  - **`EventBus`**: Synchronous event dispatching with deterministic outcomes
 
 
 ## Core Mock Patterns
@@ -21,8 +46,7 @@ for function and property implementations:
 
 
     final class MockService: ServiceProtocol {
-        nonisolated(unsafe)
-        var performActionStub: Stub<String, Bool>!
+        nonisolated(unsafe) var performActionStub: Stub<String, Bool>!
 
 
         func performAction(_ input: String) -> Bool {
@@ -48,8 +72,7 @@ When functions have multiple parameters, create dedicated argument structures:
         }
 
 
-        nonisolated(unsafe)
-        var logErrorStub: Stub<LogErrorArguments, Void>!
+        nonisolated(unsafe) var logErrorStub: Stub<LogErrorArguments, Void>!
 
 
         func logError(_ error: some Error, attributes: [String : any Encodable]) {
@@ -70,11 +93,8 @@ For services that only expose properties (like `MockAppServices`), each property
 stub:
 
     final class MockAppServices: PlatformAppServices {
-        nonisolated(unsafe)
-        var stylesheetStub: Stub<Void, Stylesheet>!
-
-        nonisolated(unsafe)
-        var telemetryEventLoggerStub: Stub<Void, any TelemetryEventLogging>!
+        nonisolated(unsafe) var stylesheetStub: Stub<Void, Stylesheet>!
+        nonisolated(unsafe) var telemetryEventLoggerStub: Stub<Void, any TelemetryEventLogging>!
 
 
         var stylesheet: Stylesheet {
@@ -97,6 +117,7 @@ For protocols with associated types, create generic mocks:
         let name: TelemetryEventName
         var eventData: EventData
     }
+
 
     extension MockTelemetryEvent: Equatable where EventData: Equatable { }
     extension MockTelemetryEvent: Hashable where EventData: Hashable { }
@@ -128,20 +149,27 @@ For testing error scenarios, use simple enum-based errors:
 
 ## Mock Organization
 
-### File Structure
+### File Structure and Organization
 
+#### Directory Structure:
     Tests/
-    ├── AppPlatformTests/
-    │   └── Testing Support/
-    │       ├── MockAppServices.swift
-    │       ├── MockBootstrapper.swift
-    │       └── MockSubapp.swift
-    └── TelemetryTests/
-        └── Testing Support/
-            ├── MockTelemetryDestination.swift
-            ├── MockTelemetryEvent.swift
-            └── MockError.swift
+    ├── [PackageName]Tests/                     # Package-specific tests
+    │   ├── Unit Tests/
+    │   │   └── [ModuleName]                    # Feature-specific tests
+    │   │       └── [ProtocolName]Tests.swift   
+    │   └── Testing Support/                    # Mock objects and test utilities
+    │       ├── Mock[ProtocolName].swift        # Mock implementations
+    │       ├── MockError.swift                 # Test-specific error types
+    │       └── RandomValueGenerating+[ModuleName].swift # Random value extensions
 
+#### File Placement Guidelines:
+
+- **Unit Test files**: Place in `Tests/[PackageName]/Unit Tests/`, matching the path of the source file in 
+  the directory structure under `Sources/`
+- **Mock objects**: Always place in `Tests/[PackageName]/Testing Support/` directories
+- **One mock per file**: Each protocol should have its own dedicated mock file
+- **Sharing mocks**: Do not share mocks between Packages. If the same Mock is needed across 
+  multiple packages, duplicate it. 
 
 ### Naming Conventions
 
@@ -164,8 +192,7 @@ When mocking types with custom initializers, use static stubs:
         }
 
 
-        nonisolated(unsafe)
-        static var initStub: Stub<InitArguments, Void>!
+        nonisolated(unsafe) static var initStub: Stub<InitArguments, Void>!
 
 
         init(appConfiguration: AppConfiguration, subappServices: any SubappServices) async {
@@ -179,9 +206,11 @@ When mocking types with custom initializers, use static stubs:
 For functions that might not be called in every test, provide default stub values:
 
     final class MockSubapp: Subapp {
-        // Initialize to non-nil to avoid crashes in tests that don't configure this stub
-        nonisolated(unsafe)
-        var installTelemetryBusEventHandlersStub: Stub<TelemetryBusEventObserver, Void> = .init()
+        // Initialize to non-nil to avoid crashes in tests that don’t configure this stub
+        nonisolated(unsafe) var installTelemetryBusEventHandlersStub: Stub<
+            TelemetryBusEventObserver,
+            Void
+        > = .init()
     }
 
 
@@ -256,12 +285,11 @@ Import protocols under test with `@testable` when accessing internal details:
 
   1. **Always configure stubs**: Force-unwrapped stubs will crash if not configured
   2. **Use argument structures**: Simplifies complex parameter verification
-  3. **Maintain protocol fidelity**: Mocks should behave like real implementations
-  4. **Leverage DevTesting**: Use the framework's call tracking and verification capabilities
-  5. **Keep mocks simple**: Avoid complex logic in mock implementations
-  6. **Group related mocks**: Place mocks in appropriate Testing Support directories
-  7. **Follow naming conventions**: Consistent naming improves maintainability
-  8. **Use Swift Testing**: Leverage `@Test`, `#expect()`, and `#require()` for assertions
+  3. **Leverage DevTesting**: Use the package’s call tracking and verification capabilities
+  4. **Keep mocks simple**: Avoid complex logic in mock implementations
+  5. **Group related mocks**: Place mocks in appropriate Testing Support directories
+  6. **Follow naming conventions**: Consistent naming improves maintainability
+  7. **Use Swift Testing**: Leverage `@Test`, `#expect()`, and `#require()` for assertions
 
 
 ## Thread Safety
@@ -270,6 +298,6 @@ All mocks use `nonisolated(unsafe)` markings for Swift 6 compatibility. This ass
 
   - Tests run on a single thread or properly synchronize access
   - Stub configuration happens during test setup before concurrent access
-  - Mock usage patterns don't require additional synchronization
+  - Mock usage patterns don’t require additional synchronization
 
 When mocking concurrent code, consider additional synchronization mechanisms if needed.

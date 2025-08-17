@@ -43,10 +43,11 @@ A comprehensive utility library with the following major components:
 #### Networking Layer
 
   - **WebServiceClient**: Generic web service client with declarative request/response handling
-  - **AuthenticatingHTTPClient**: HTTP client with built-in authentication support
   - **HTTPClient**: Lower-level HTTP client with request/response interceptors
   - **WebServiceRequest**: Protocol for defining web service requests
   - **BaseURLConfiguring**: Protocol for managing different base URLs (staging, production, etc.)
+  - **HTTPClientInterceptor**: Protocol for request/response modification
+  - **URLRequestLoader**: Protocol for loading URL requests
 
 #### Event System
 
@@ -67,6 +68,14 @@ A comprehensive utility library with the following major components:
   - **ExecutionGroup**: Utility for managing concurrent operations
   - **DispatchQueue extensions**: Non-overcommitting and standard queue utilities
 
+#### Paging System
+
+  - **OffsetPage**: Protocol for pages with offset-based pagination
+  - **SequentialPageLoader**: Protocol for loading pages sequentially
+  - **SequentialPager**: Concrete pager for sequential page access
+  - **RandomAccessPageLoader**: Protocol for loading pages at specific offsets
+  - **RandomAccessPager**: Concrete pager for random access to pages
+
 #### Utility Types
 
   - **AnySendableHashable**: Type-erased sendable hashable wrapper
@@ -74,7 +83,10 @@ A comprehensive utility library with the following major components:
   - **ExpiringValue**: Value wrapper with expiration logic
   - **GibberishGenerator**: Random string generation
   - **HashableByID**: Protocol for hashable-by-identity types
+  - **IdentifiableBySelf**: Protocol for types identifiable by themselves
   - **JSONValue**: Unified JSON value representation
+  - **OptionalRepresentable**: Protocol for types with optional representations
+  - **RetryPolicy**: Configurable retry behavior for operations
   - **SoftwareComponentID**: Identifier for software components
   - **TopLevelCoding**: Protocol for top-level encoding/decoding
   - **TypedExtensibleEnum**: Type-safe extensible enumerations
