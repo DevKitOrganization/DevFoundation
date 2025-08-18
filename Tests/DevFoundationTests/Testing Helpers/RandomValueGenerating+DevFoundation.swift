@@ -15,6 +15,13 @@ extension RandomValueGenerating {
     }
 
 
+    mutating func randomDuration() -> Duration {
+        return Duration(
+            secondsComponent: random(Int64.self, in: 0 ... 10_000_000),
+            attosecondsComponent: random(Int64.self, in: 0 ... 999_999_999_999_999_999)
+        )
+    }
+
     mutating func randomError() -> MockError {
         return MockError(id: randomInt(in: 0 ... .max))
     }
