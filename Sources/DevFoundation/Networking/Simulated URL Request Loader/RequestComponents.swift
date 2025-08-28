@@ -9,14 +9,14 @@ import Foundation
 
 extension SimulatedURLRequestLoader {
     public struct RequestComponents: Hashable, Sendable {
-        let headerItems: Set<HTTPHeaderItem>
-        let httpMethod: HTTPMethod
-        let url: URL
-        let urlComponents: URLComponents
-        let urlRequest: URLRequest
+        public let headerItems: Set<HTTPHeaderItem>
+        public let httpMethod: HTTPMethod
+        public let url: URL
+        public let urlComponents: URLComponents
+        public let urlRequest: URLRequest
 
 
-        init?(urlRequest: URLRequest) {
+        public init?(urlRequest: URLRequest) {
             guard
                 let url = urlRequest.url?.absoluteURL,
                 let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
@@ -33,7 +33,7 @@ extension SimulatedURLRequestLoader {
         }
 
 
-        var body: Data {
+        public var body: Data {
             urlRequest.httpBody ?? Data()
         }
     }
