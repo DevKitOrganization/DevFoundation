@@ -71,4 +71,41 @@ struct HTTPHeaderItemTests: RandomValueGenerating {
             #expect(headerItems.contains(.init(field: .init(field), value: value)))
         }
     }
+
+
+    @Test
+    mutating func httpURLResponseAccessorWithNonStringHeaders() throws {
+        let response = NonStringHeadersHTTPURLResponse(
+            url: randomURL(),
+            statusCode: randomInt(in: 100 ..< 600),
+            httpVersion: "1.1",
+            headerFields: [:]
+        )!
+
+        let stringHeaders = Dictionary(count: randomInt(in: 3 ..< 10)) {
+            (randomAlphanumericString(), randomAlphanumericString())
+        }
+
+        var headerFields: [AnyHashable: Any] = stringHeaders
+        headerFields[randomInt(in: .min ... .max)] = randomAlphanumericString()
+        headerFields[randomAlphanumericString()] = randomBool()
+        response.headerFields = headerFields
+
+        let headerItems = response.httpHeaderItems
+
+        #expect(headerItems.count == stringHeaders.count)
+        for (field, value) in stringHeaders {
+            #expect(headerItems.contains(.init(field: .init(field), value: value)))
+        }
+    }
+}
+
+
+private final class NonStringHeadersHTTPURLResponse: HTTPURLResponse, @unchecked Sendable {
+    var headerFields: [AnyHashable: Any] = [:]
+
+
+    override var allHeaderFields: [AnyHashable: Any] {
+        headerFields
+    }
 }

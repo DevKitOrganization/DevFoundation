@@ -17,6 +17,20 @@ struct Data_ObfuscationTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()
 
 
+    #if os(macOS)
+    @Test
+    mutating func obfuscationHaltsWhenKeyIsEmpty() async {
+        await #expect(processExitsWith: .failure) {
+            _ = try Data().obfuscated(
+                withKey: Data(),
+                keySizeType: UInt8.self,
+                messageSizeType: UInt64.self
+            )
+        }
+    }
+    #endif
+
+
     @Test
     mutating func obfuscateRoundTripSucceeds() throws {
         let message = randomData(count: 512)
