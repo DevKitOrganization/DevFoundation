@@ -3,7 +3,8 @@
 import PackageDescription
 
 let swiftSettings: [SwiftSetting] = [
-    .enableUpcomingFeature("ExistentialAny")
+    .enableUpcomingFeature("ExistentialAny"),
+    .enableUpcomingFeature("MemberImportVisibility"),
 ]
 
 let package = Package(
@@ -31,7 +32,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.5.0"),
         .package(url: "https://github.com/apple/swift-numerics.git", from: "1.0.3"),
-        .package(url: "https://github.com/DevKitOrganization/DevTesting", from: "1.0.0-beta.9"),
+        .package(url: "https://github.com/DevKitOrganization/DevTesting", from: "1.0.0-beta.10"),
         .package(url: "https://github.com/prachigauriar/URLMock.git", from: "1.3.6"),
     ],
     targets: [
