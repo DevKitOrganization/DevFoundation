@@ -36,7 +36,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
             }
 
             eventBus.post(MockBusEvent(string: randomAlphanumericString()))
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(for: .seconds(1))
         }
     }
 
@@ -58,7 +58,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
                     string: randomAlphanumericString()
                 )
             )
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(for: .seconds(1))
         }
     }
 
@@ -79,7 +79,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
             }
 
             eventBus.post(MockBusEvent(string: expectedString))
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(for: .seconds(1))
         }
     }
 
@@ -114,7 +114,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
             }
 
             eventBus.post(MockIdentifiableBusEvent(id: expectedID, string: expectedString))
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(for: .seconds(1))
         }
     }
 
@@ -127,7 +127,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
             }
             observer.removeHandler(handler)
             eventBus.post(MockBusEvent(string: randomAlphanumericString()))
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(for: .seconds(1))
         }
     }
 
@@ -148,7 +148,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
                     string: randomAlphanumericString()
                 )
             )
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(for: .seconds(1))
         }
     }
 

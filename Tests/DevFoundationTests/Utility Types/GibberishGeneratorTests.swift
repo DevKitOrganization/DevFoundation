@@ -8,13 +8,89 @@
 import DevFoundation
 import DevTesting
 import Foundation
-import Synchronization
 import Testing
 
 struct GibberishGeneratorTests: RandomValueGenerating {
     var randomNumberGenerator = makeRandomNumberGenerator()
-
     let generator = GibberishGenerator.latin
+
+
+    #if os(macOS)
+    @Test
+    mutating func lexiconInitHaltsWhenPreferredSentencesPerParagraphHasNonPositiveLowerBound() async {
+        await #expect(processExitsWith: .failure) {
+            _ = GibberishGenerator.Lexicon(
+                capitalizesSentences: false,
+                localeIdentifier: "en",
+                preferredSentencesPerParagraphRange: 0 ... 1,
+                sentenceSeparator: ".",
+                sentenceTemplates: ["_"],
+                templateWordToken: "_",
+                words: ["a"]
+            )
+        }
+
+        await #expect(processExitsWith: .failure) {
+            _ = GibberishGenerator.Lexicon(
+                capitalizesSentences: false,
+                localeIdentifier: "en",
+                preferredSentencesPerParagraphRange: -1 ... 0,
+                sentenceSeparator: ".",
+                sentenceTemplates: ["_"],
+                templateWordToken: "_",
+                words: ["b"]
+            )
+        }
+    }
+
+
+    @Test
+    mutating func lexiconInitHaltsWhenSentenceTemplatesIsEmpty() async {
+        await #expect(processExitsWith: .failure) {
+            _ = GibberishGenerator.Lexicon(
+                capitalizesSentences: false,
+                localeIdentifier: "en",
+                preferredSentencesPerParagraphRange: 3 ... 5,
+                sentenceSeparator: ".",
+                sentenceTemplates: [],
+                templateWordToken: "_",
+                words: ["c"]
+            )
+        }
+    }
+
+
+    @Test
+    mutating func lexiconInitHaltsWhenTemplateWordTokenIsEmpty() async {
+        await #expect(processExitsWith: .failure) {
+            _ = GibberishGenerator.Lexicon(
+                capitalizesSentences: false,
+                localeIdentifier: "en",
+                preferredSentencesPerParagraphRange: 3 ... 5,
+                sentenceSeparator: ".",
+                sentenceTemplates: ["_"],
+                templateWordToken: "",
+                words: ["c"]
+            )
+        }
+    }
+
+
+    @Test
+    mutating func lexiconInitHaltsWhenWordsIsEmpty() async {
+        await #expect(processExitsWith: .failure) {
+            _ = GibberishGenerator.Lexicon(
+                capitalizesSentences: false,
+                localeIdentifier: "en",
+                preferredSentencesPerParagraphRange: 3 ... 5,
+                sentenceSeparator: ".",
+                sentenceTemplates: ["_"],
+                templateWordToken: "_",
+                words: []
+            )
+        }
+    }
+    #endif
 
 
     @Test

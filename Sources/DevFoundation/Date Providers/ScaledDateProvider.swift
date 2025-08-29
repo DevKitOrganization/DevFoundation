@@ -17,7 +17,7 @@ struct ScaledDateProvider<Base>: DateProvider where Base: DateProvider {
     /// For example, when this value is 2, time elapses twice as quickly for this date provider than its base provider.
     ///
     /// This value must be postive.
-    private let scale: Double
+    private let scale: Float64
 
     /// The base provider’s date when this provider was initialized.
     private let startDate: Date
@@ -28,7 +28,7 @@ struct ScaledDateProvider<Base>: DateProvider where Base: DateProvider {
     /// - Parameters:
     ///   - base: The base date provider whose dates this provider’s dates are relative to.
     ///   - scale: The scale at which time elapses on this date provider versus its base. Must be positive.
-    init(base: Base, scale: Double) {
+    init(base: Base, scale: Float64) {
         precondition(scale > 0, "Scale must be positive.")
         self.startDate = base.now
         self.base = base
@@ -54,7 +54,7 @@ extension DateProvider {
     ///
     /// - Parameter scale: The scale at which time elapses on this date provider versus its base. For example, when
     ///   scale is 2, time elapses twice as quickly for the new date provider than its base. Must be positive.
-    public func scalingRate(by scale: Double) -> some DateProvider {
+    public func scalingRate(by scale: Float64) -> some DateProvider {
         return ScaledDateProvider(base: self, scale: scale)
     }
 }

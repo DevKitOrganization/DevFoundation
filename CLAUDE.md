@@ -191,7 +191,7 @@ Follow the project's Markdown Style Guide:
 ## Development Notes
 
   - Follows Swift API Design Guidelines
-  - Uses Swift 6.1 with `ExistentialAny` feature enabled
+  - Uses Swift 6.2 with `ExistentialAny` and `MemberImportVisibility` features enabled
   - Minimum deployment targets: iOS 18+, macOS 15+, tvOS 18+, visionOS 2+, watchOS 11+
   - Reverse DNS prefix: `com.gauriar.devfoundation`
   - All public APIs are documented and tested
