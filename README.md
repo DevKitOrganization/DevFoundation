@@ -20,9 +20,24 @@ public interfaces are fully documented and tested. We aim for overall test cover
 
 To set up the development environment:
 
-  1. Run `Scripts/install-git-hooks` to install pre-commit hooks that automatically check code
-    formatting.
+  1. Run `Scripts/install-git-hooks` to install git hooks that automatically check code
+     formatting on commits and run comprehensive tests before pushing.
   2. Use `Scripts/lint` to manually check code formatting at any time.
+  3. Use `Scripts/test-all-platforms` to run tests on all supported platforms locally.
+
+
+## Continuous Integration
+
+DevFoundation uses GitHub Actions for continuous integration. The CI pipeline:
+
+  - **Linting**: Automatically checks code formatting on all pull requests using `swift format`
+  - **Testing**: Runs tests on macOS (iOS, tvOS, and watchOS testing disabled in CI due to
+    stability issues)
+  - **Coverage**: Generates code coverage reports using xccovPretty
+
+For comprehensive cross-platform testing, developers should run `Scripts/test-all-platforms`
+locally or rely on the pre-push git hook which automatically runs all platform tests before
+pushing changes.
 
 
 ## Bugs and Feature Requests
