@@ -26,9 +26,13 @@ The repository uses GitHub Actions for CI/CD with the workflow in
 `.github/workflows/VerifyChanges.yaml`. The workflow:
 
   - Lints code on PRs using `swift format`
-  - Builds and tests on multiple Apple platforms (iOS, macOS, tvOS, watchOS)
+  - Builds and tests on macOS only (iOS, tvOS, and watchOS builds disabled due to poor
+    stability and performance in GitHub Actions)
   - Generates code coverage reports using xccovPretty
   - Requires Xcode 16.4 and macOS 15 runners
+
+**Note**: For comprehensive cross-platform testing, use `Scripts/test-all-platforms` locally
+or the pre-push git hook which runs all platform tests before pushing.
 
 
 ## Architecture Overview

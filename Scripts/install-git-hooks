@@ -43,8 +43,41 @@ EOF
     echo "Pre-commit hook installed successfully!"
 }
 
+# Function to install the pre-push hook
+install_pre_push_hook() {
+    local pre_push_hook="$REPO_ROOT/.git/hooks/pre-push"
+
+    echo "Installing pre-push hook..."
+
+    cat > "$pre_push_hook" << 'EOF'
+#!/bin/bash
+
+# Get the directory where this hook is located
+HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Go to the repository root (two levels up from .git/hooks)
+REPO_ROOT="$(dirname "$(dirname "$HOOK_DIR")")"
+
+# Run the test-all-platforms script
+echo "Running tests on all platforms..."
+if ! "$REPO_ROOT/Scripts/test-all-platforms"; then
+    echo "Platform tests failed. Please fix issues before pushing."
+    exit 1
+fi
+
+echo "All platform tests passed."
+EOF
+
+    chmod +x "$pre_push_hook"
+    echo "Pre-push hook installed successfully!"
+}
+
 # Install the pre-commit hook
 install_pre_commit_hook
 
+# Install the pre-push hook
+install_pre_push_hook
+
 echo "All git hooks installed successfully!"
 echo "The pre-commit hook will run 'Scripts/lint' before each commit."
+echo "The pre-push hook will run 'Scripts/test-all-platforms' before each push."
