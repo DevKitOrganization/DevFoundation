@@ -50,6 +50,11 @@ extension RandomValueGenerating {
     }
 
 
+    mutating func randomHTTPStatusCode() -> HTTPStatusCode {
+        return HTTPStatusCode(rawValue: randomInt(in: 100 ..< 600))
+    }
+
+
     mutating func randomHTTPResponse() -> HTTPResponse<Data> {
         return HTTPResponse(httpURLResponse: randomHTTPURLResponse(), body: randomData())
     }
