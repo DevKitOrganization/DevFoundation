@@ -60,7 +60,7 @@ extension HTTPStatusCode {
     /// rejected by the server.
     public static let `continue` = HTTPStatusCode(100)
 
-    /// A 101 status code, which indicates that the server understands and is willing to comply with the client's
+    /// A 101 status code, which indicates that the server understands and is willing to comply with the client’s
     /// request for a change in the application protocol being used on this connection.
     public static let switchingProtocols = HTTPStatusCode(101)
 
@@ -179,7 +179,7 @@ extension HTTPStatusCode {
     /// number of small or overlapping ranges.
     public static let rangeNotSatisfiable = HTTPStatusCode(416)
 
-    /// A 417 status code, which indicates that the expectation given in the request's Expect header field could not be
+    /// A 417 status code, which indicates that the expectation given in the request’s Expect header field could not be
     /// met by at least one of the inbound servers.
     public static let expectationFailed = HTTPStatusCode(417)
 
