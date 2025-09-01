@@ -16,15 +16,15 @@ import Foundation
 /// how to intercept the request/response or whether a retry should occur. For example, if we had a logging interceptor,
 /// we could update our `RequestContext` to include information about whether the request should be logged or not.
 ///
-/// We can use all of these features to implement complex behaviors. For example,, to implement authentication, we could
+/// We can use all of these features to implement complex behaviors. For example, to implement authentication, we could
 /// use the request context, an interceptor, and a retry policy.
 ///
 ///   1. Our client’s `RequestContext` type could include the authentication level required, e.g., `anonymous` or
-///     `user`.
+///      `user`.
 ///   2. Our interceptor could work with an `Authenticator` type to get the correct bearer token for the authentication
-///     level and attach it to the request via an ``HTTPHeaderField/authorization`` header.
+///      level and attach it to the request via an ``HTTPHeaderField/authorization`` header.
 ///   3. If the HTTP response has an ``HTTPStatusCode/unauthorized`` status code, the interceptor could tell its
-///     `Authenticator` to invalidate its token.
+///      `Authenticator` to invalidate its token.
 ///   4. Our retry policy could automatically retry requests that failed with an `unauthorized` status code.
 ///
 public final class HTTPClient<RequestContext>: Sendable where RequestContext: Sendable {

@@ -13,7 +13,7 @@ import os.log
 let simulatedURLRequestLoaderLogger = Logger(subsystem: "DevFoundation", category: "simulatedURLRequestLoader")
 
 
-/// A URL request loader that simulates network requests for development and testing.
+/// A URL request loader that simulates network responses for development and testing.
 ///
 /// `SimulatedURLRequestLoader` provides a way to intercept and respond to network requests without making actual
 /// network calls. This is particularly useful for unit tests, development environments where backend services are

@@ -151,7 +151,7 @@ public struct GibberishGenerator: Sendable {
     }
 
 
-    /// Generates a sentence of gibberish using a specific random number generator.
+    /// Generates a sentence of gibberish.
     ///
     /// This function uses the system random number generator during generation.
     ///
