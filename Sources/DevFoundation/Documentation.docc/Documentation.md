@@ -32,7 +32,6 @@ for paging through data, and essential utility types for building robust applica
 
 - ``ExecutionGroup``
 - ``withTimeout(_:priority:operation:)``
-- ``TimeoutError``
 - ``Dispatch/DispatchQueue``
 - ``Swift/Result``
 

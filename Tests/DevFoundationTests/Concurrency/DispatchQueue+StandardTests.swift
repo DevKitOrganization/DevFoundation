@@ -14,7 +14,7 @@ struct DispatchQueue_StandardTests {
     @Test
     func utilityQueueHasCorrectProperties() {
         let queue = DispatchQueue.utility
-        #expect(queue.label == "com.gauriar.devfoundation.utility")
+        #expect(queue.label == "devfoundation.utility")
         #expect(queue.qos == .utility)
     }
 }

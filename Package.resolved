@@ -1,13 +1,13 @@
 {
-  "originHash" : "dcb9bd9341f00c03a7b79f663dcddcf92b230c5f3de0cc55b63bb16ac212879a",
+  "originHash" : "cbe8148ccc8ae0d6754fd7bb6da46a229bf19751ea52c22d097c6ce3b1dfb1c6",
   "pins" : [
     {
       "identity" : "devtesting",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DevKitOrganization/DevTesting",
       "state" : {
-        "revision" : "33c75ae23d0996a71b4ab2acdd8926d90dcbcd2e",
-        "version" : "1.0.0-beta.11"
+        "revision" : "002b19df9088ac23827bcb571ea2f010857ae5c4",
+        "version" : "1.0.0"
       }
     },
     {
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser.git",
       "state" : {
-        "revision" : "41982a3656a71c768319979febd796c6fd111d5c",
-        "version" : "1.5.0"
+        "revision" : "309a47b2b1d9b5e991f36961c983ecec72275be3",
+        "version" : "1.6.1"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-numerics.git",
       "state" : {
-        "revision" : "e0ec0f5f3af6f3e4d5e7a19d2af26b481acb6ba8",
-        "version" : "1.0.3"
+        "revision" : "bbadd4b853a33fd78c4ae977d17bb2af15eb3f2a",
+        "version" : "1.1.0"
       }
     },
     {

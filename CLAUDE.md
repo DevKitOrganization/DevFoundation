@@ -52,6 +52,7 @@ A comprehensive utility library with the following major components:
   - **BaseURLConfiguring**: Protocol for managing different base URLs (staging, production, etc.)
   - **HTTPClientInterceptor**: Protocol for request/response modification
   - **URLRequestLoader**: Protocol for loading URL requests
+  - **SimulatedURLRequestLoader**: Network request simulation framework for testing and development
 
 #### Event System
 
@@ -70,6 +71,7 @@ A comprehensive utility library with the following major components:
 #### Concurrency Utilities
 
   - **ExecutionGroup**: Utility for managing concurrent operations
+  - **WithTimeout**: Structured concurrency timeout utility with cancellation support
   - **DispatchQueue extensions**: Non-overcommitting and standard queue utilities
 
 #### Paging System
@@ -85,7 +87,7 @@ A comprehensive utility library with the following major components:
   - **AnySendableHashable**: Type-erased sendable hashable wrapper
   - **DottedHierarchicalID**: Hierarchical identifier with dot notation
   - **ExpiringValue**: Value wrapper with expiration logic
-  - **GibberishGenerator**: Random string generation
+  - **GibberishGenerator**: Lorem ipsum and placeholder text generation with customizable lexicons
   - **HashableByID**: Protocol for hashable-by-identity types
   - **IdentifiableBySelf**: Protocol for types identifiable by themselves
   - **JSONValue**: Unified JSON value representation
@@ -130,6 +132,25 @@ The event bus uses Swift's new Synchronization framework:
   - `Mutex<[any BusEventObserver]>` for thread-safe observer management
   - Type-safe event posting with generic constraints
   - Support for both regular and identifiable events
+
+
+#### Extensions
+
+  - **Data+Obfuscation**: Data obfuscation and deobfuscation utilities
+  - **FixedWidthInteger+BigEndianData**: Big-endian byte conversion utilities
+  - **RangeReplaceableCollection+RemoveFirst**: Collection manipulation utilities
+  - **Result+CatchingAsync**: Async result handling utilities
+
+#### Network Request Simulation
+
+The `SimulatedURLRequestLoader` provides a comprehensive framework for network request simulation:
+
+  - **RequestComponents**: Parse and analyze URL request components
+  - **RequestCondition**: Flexible request matching conditions (URL, method, headers, body)
+  - **Responder**: Configurable response generation with conditions and limits
+  - **ResponseGenerator**: Generate HTTP responses with customizable status, headers, and body
+  - **SuccessResponseTemplate**: Template-based successful response generation
+  - **UnfulfillableRequestError**: Error handling for unmatched requests
 
 
 ## Dependencies
