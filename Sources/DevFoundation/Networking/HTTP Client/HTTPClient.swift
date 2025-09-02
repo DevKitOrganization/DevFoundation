@@ -133,12 +133,10 @@ public final class HTTPClient<RequestContext>: Sendable where RequestContext: Se
         context: RequestContext,
         interceptorIndex: Int
     ) async throws -> HTTPResponse<Data> {
-        try Task.checkCancellation()
-
         // If we’re out of interceptors, load the data
         guard interceptorIndex < interceptors.endIndex else {
-            let (data, urlResponse) = try await urlRequestLoader.data(for: urlRequest)
             try Task.checkCancellation()
+            let (data, urlResponse) = try await urlRequestLoader.data(for: urlRequest)
             guard let httpURLResponse = urlResponse as? HTTPURLResponse else {
                 throw NonHTTPURLResponseError(urlResponse: urlResponse)
             }

@@ -29,11 +29,10 @@ struct WithTimeoutTests: RandomValueGenerating {
 
     @Test
     mutating func operationTimesOut() async throws {
-        let timeout = Duration.milliseconds(500)
         let result = randomInt(in: .min ... .max)
 
-        await #expect(throws: TimeoutError(timeout: timeout)) {
-            _ = try await withTimeout(timeout) {
+        await #expect(throws: CancellationError.self) {
+            _ = try await withTimeout(.milliseconds(500)) {
                 try await Task.sleep(for: .milliseconds(1000))
                 return result
             }
@@ -69,7 +68,7 @@ struct WithTimeoutTests: RandomValueGenerating {
     func operationIsCancelledOnTimeout() async throws {
         _ = await confirmation { (operationStarted) in
             await confirmation(expectedCount: 0) { (operationFinished) in
-                await #expect(throws: TimeoutError.self) {
+                await #expect(throws: CancellationError.self) {
                     try await withTimeout(.milliseconds(10)) {
                         operationStarted()
                         try await Task.sleep(for: .seconds(1))

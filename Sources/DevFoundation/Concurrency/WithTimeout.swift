@@ -10,20 +10,21 @@ import Foundation
 /// Runs an async operation with a timeout.
 ///
 /// This function creates a structured concurrency context where the provided operation races against a timeout. If the
-/// operation completes before the timeout expires, its result is returned. If the timeout expires first, a
-/// ``TimeoutError`` is thrown and the operation is cancelled.
+/// operation completes before the timeout expires, its result is returned. If the timeout expires first, the operation
+/// is canceled.
 ///
 ///     let result = try await withTimeout(.seconds(5)) {
 ///         try await someSlowOperation()
 ///     }
 ///
+/// - Note: It is up to the operation to check cancellation to honor the timeout. If the operation ignores cancellation,
+///   the timeout will not be effective.
+///
 /// - Parameters:
 ///   - timeout: The maximum duration to wait for the operation to complete.
 ///   - priority: The priority of the task that runs the operation. Pass `nil` to use the current task’s priority.
 ///   - operation: The async operation to perform.
-/// - Returns: The result of the operation if it completes within the timeout.
-/// - Throws: ``TimeoutError`` if the timeout expires before the operation completes, or any error thrown by the
-///   operation.
+/// - Returns: The result of the operation.
 public func withTimeout<Success, Failure>(
     _ timeout: Duration,
     priority: TaskPriority? = nil,
@@ -40,14 +41,29 @@ where Success: Sendable, Failure: Error {
         // Add the timeout task
         group.addTask(priority: .utility) {
             try await Task.sleep(until: deadline)
-            throw TimeoutError(timeout: timeout)
+            throw TimeoutError()
         }
 
-        // Return the first result and cancel remaining tasks
-        defer {
-            group.cancelAll()
-        }
-
-        return try await group.next()!
+        // Wait until the main task either finishes or cancels.
+        //
+        // This loop waits for the next task to complete. If the completed task is the main
+        // operation (either by returning or throwing), the value is returned or the error is
+        // thrown. If the completed task is the timeout task, the group (and all its children) are
+        // canceled, at which point it is the responsibility of the main operation to cooperatively
+        // cancel itself (or not).
+        repeat {
+            do {
+                while let next = try await group.next() {
+                    group.cancelAll()
+                    return next
+                }
+            } catch is TimeoutError {
+                group.cancelAll()
+            }
+        } while true
     }
 }
+
+
+/// An error indicating that an operation timed out.
+private struct TimeoutError: Error {}
