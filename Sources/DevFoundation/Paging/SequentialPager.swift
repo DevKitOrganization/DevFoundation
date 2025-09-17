@@ -64,14 +64,25 @@ public final class SequentialPager<Page>: SequentialPaging where Page: OffsetPag
     private let pageLoader: any SequentialPageLoader<Page>
 
     /// A mutex that synchronizes access to the instance’s loaded pages.
-    private let loadedPagesMutex = Mutex<[Page]>([])
+    private let loadedPagesMutex: Mutex<[Page]>
 
 
     /// Creates a new sequential pager with the specified page loader.
     ///
-    /// - Parameter pageLoader: The page loader to use to load pages.
-    public init(pageLoader: some SequentialPageLoader<Page>) {
+    /// - Parameters:
+    ///   - pageLoader: The page loader to use to load pages.
+    ///   - loadedPages: Any pages that have already been loaded. `[]` by default.
+    ///
+    ///     For each page in this array, the page’s offset must be the same as its index in the array. That is,
+    ///     `loadedPages[i].pageOffset` must be `i`.
+    public init(pageLoader: some SequentialPageLoader<Page>, loadedPages: [Page] = []) {
+        precondition(
+            loadedPages.enumerated().allSatisfy { (index, page) in page.pageOffset == index },
+            "loaded pages must start at offset 0 and be consecutive"
+        )
+
         self.pageLoader = pageLoader
+        self.loadedPagesMutex = .init(loadedPages)
     }
 
 
