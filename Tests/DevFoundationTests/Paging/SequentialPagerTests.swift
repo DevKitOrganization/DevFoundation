@@ -43,7 +43,7 @@ struct SequentialPagerTests: RandomValueGenerating {
         let mockLoader = MockSequentialPageLoader<MockOffsetPage>()
         let expectedPage = MockOffsetPage()
         expectedPage.pageOffsetStub = Stub(defaultReturnValue: 0)
-        mockLoader.loadPageStub = ThrowingStub(defaultResult: .success(expectedPage))
+        mockLoader.loadPageStub = ThrowingStub(defaultReturnValue: expectedPage)
 
         let pager = SequentialPager(pageLoader: mockLoader)
 
@@ -65,7 +65,7 @@ struct SequentialPagerTests: RandomValueGenerating {
         page2.pageOffsetStub = Stub(defaultReturnValue: 1)
 
         mockLoader.loadPageStub = ThrowingStub(
-            defaultResult: .success(page2),
+            defaultReturnValue: page2,
             resultQueue: [.success(page1)]
         )
 
@@ -88,7 +88,7 @@ struct SequentialPagerTests: RandomValueGenerating {
     mutating func loadPageThrowsError() async {
         let mockLoader = MockSequentialPageLoader<MockOffsetPage>()
         let expectedError = randomError()
-        mockLoader.loadPageStub = ThrowingStub(defaultResult: .failure(expectedError))
+        mockLoader.loadPageStub = ThrowingStub(defaultError: expectedError)
 
         let pager = SequentialPager(pageLoader: mockLoader)
 
@@ -110,7 +110,7 @@ struct SequentialPagerTests: RandomValueGenerating {
         page2.pageOffsetStub = Stub(defaultReturnValue: 0)
 
         mockLoader.loadPageStub = ThrowingStub(
-            defaultResult: .success(page2),
+            defaultReturnValue: page2,
             resultQueue: [.success(page1)]
         )
 
