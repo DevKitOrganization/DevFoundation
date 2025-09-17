@@ -1,13 +1,13 @@
 {
-  "originHash" : "cbe8148ccc8ae0d6754fd7bb6da46a229bf19751ea52c22d097c6ce3b1dfb1c6",
+  "originHash" : "6900337c066f271eafd142ee102022d6420563e3f0b1a82f516904f3fc771e74",
   "pins" : [
     {
       "identity" : "devtesting",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DevKitOrganization/DevTesting",
       "state" : {
-        "revision" : "002b19df9088ac23827bcb571ea2f010857ae5c4",
-        "version" : "1.0.0"
+        "revision" : "fe4ecf8f5d110496da792a3b8e4cabc27a590371",
+        "version" : "1.1.0"
       }
     },
     {

@@ -58,17 +58,19 @@ differ from regular `Stub`. Using incorrect initializers will cause compilation 
 #### Correct ThrowingStub Patterns:
 
     // For success cases:
-    ThrowingStub(defaultResult: .success(value))
+    ThrowingStub(defaultReturnValue: value)
 
     // For error cases:  
-    ThrowingStub(defaultResult: .failure(error))
-
-    // For void return types:
     ThrowingStub(defaultError: error)
+
+    // For cases where the value could be success or error:
+    ThrowingStub(defaultResult: result)
+
+    // For cases where the return type is Void and you don’t want to throw an error:
+    ThrowingStub(defaultError: nil)
 
 #### Common Mistakes to Avoid:
 
-  - ❌ `ThrowingStub(defaultReturnValue: value)` - This doesn't exist
   - ❌ `ThrowingStub(throwingError: error)` - This doesn't exist  
   - ❌ `ThrowingStub()` with separate configuration - Must provide default in initializer
 
@@ -252,7 +254,7 @@ otherwise you'll get "Errors thrown from here are not handled" compilation error
     mutating func methodThrowsWhenDependencyFails() {
         let mock = MockDependency()
         let error = MockError(description: "Test error")
-        mock.methodStub = ThrowingStub(defaultResult: .failure(error))
+        mock.methodStub = ThrowingStub(defaultError: error)
         
         let instance = ClassUnderTest(dependency: mock)
         

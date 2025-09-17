@@ -53,11 +53,9 @@ struct HTTPClientTests: RandomValueGenerating {
         let urlRequestLoader = MockURLRequestLoader()
         let expectedResponse = randomHTTPResponse()
         urlRequestLoader.dataStub = ThrowingStub(
-            defaultResult: .success(
-                (
-                    expectedResponse.body,
-                    expectedResponse.httpURLResponse
-                )
+            defaultReturnValue: (
+                expectedResponse.body,
+                expectedResponse.httpURLResponse
             )
         )
 
@@ -67,12 +65,12 @@ struct HTTPClientTests: RandomValueGenerating {
         let modifiedRequest1 = randomURLRequest()
         let modifiedContext1 = randomAlphanumericString()
         interceptor1.nextArguments = [.init(request: modifiedRequest1, context: modifiedContext1)]
-        interceptor1.interceptStub = ThrowingStub(defaultResult: .success(expectedResponse))
+        interceptor1.interceptStub = ThrowingStub(defaultReturnValue: expectedResponse)
 
         let modifiedRequest2 = randomURLRequest()
         let modifiedContext2 = randomAlphanumericString()
         interceptor2.nextArguments = [.init(request: modifiedRequest2, context: modifiedContext2)]
-        interceptor2.interceptStub = ThrowingStub(defaultResult: .success(expectedResponse))
+        interceptor2.interceptStub = ThrowingStub(defaultReturnValue: expectedResponse)
 
         let client = HTTPClient(urlRequestLoader: urlRequestLoader, interceptors: [interceptor1, interceptor2])
 
@@ -100,7 +98,7 @@ struct HTTPClientTests: RandomValueGenerating {
         let successResponse = randomHTTPResponse()
 
         urlRequestLoader.dataStub = ThrowingStub(
-            defaultResult: .success((successResponse.body, successResponse.httpURLResponse)),
+            defaultReturnValue: (successResponse.body, successResponse.httpURLResponse),
             resultQueue: [.failure(randomError())]
         )
 
@@ -132,12 +130,12 @@ struct HTTPClientTests: RandomValueGenerating {
     @Test
     mutating func testHTTPClientCancellationDuringInterceptor() async {
         let urlRequestLoader = MockURLRequestLoader()
-        urlRequestLoader.dataStub = ThrowingStub(defaultResult: .success((randomData(), randomHTTPURLResponse())))
+        urlRequestLoader.dataStub = ThrowingStub(defaultReturnValue: (randomData(), randomHTTPURLResponse()))
 
         let interceptor = MockHTTPClientInterceptor<String>()
         interceptor.interceptPrologue = { withUnsafeCurrentTask { $0?.cancel() } }
         interceptor.nextArguments = [.init(request: randomURLRequest(), context: randomAlphanumericString())]
-        interceptor.interceptStub = ThrowingStub(defaultResult: .success(randomHTTPResponse()))
+        interceptor.interceptStub = ThrowingStub(defaultReturnValue: randomHTTPResponse())
 
         let client = HTTPClient(urlRequestLoader: urlRequestLoader, interceptors: [interceptor])
 
@@ -151,7 +149,7 @@ struct HTTPClientTests: RandomValueGenerating {
     mutating func testHTTPClientURLRequestLoaderError() async {
         let urlRequestLoader = MockURLRequestLoader()
         let expectedError = randomError()
-        urlRequestLoader.dataStub = ThrowingStub(defaultResult: .failure(expectedError))
+        urlRequestLoader.dataStub = ThrowingStub(defaultError: expectedError)
 
         let client = HTTPClient<String>(urlRequestLoader: urlRequestLoader)
 
@@ -170,7 +168,7 @@ struct HTTPClientTests: RandomValueGenerating {
             expectedContentLength: randomInt(in: 100 ... 1000),
             textEncodingName: nil
         )
-        urlRequestLoader.dataStub = ThrowingStub(defaultResult: .success((randomData(), nonHTTPResponse)))
+        urlRequestLoader.dataStub = ThrowingStub(defaultReturnValue: (randomData(), nonHTTPResponse))
 
         let client = HTTPClient<String>(urlRequestLoader: urlRequestLoader)
 
@@ -185,7 +183,7 @@ struct HTTPClientTests: RandomValueGenerating {
         let urlRequestLoader = MockURLRequestLoader()
         let expectedResponse = randomHTTPResponse()
         urlRequestLoader.dataStub = ThrowingStub(
-            defaultResult: .success((expectedResponse.body, expectedResponse.httpURLResponse))
+            defaultReturnValue: (expectedResponse.body, expectedResponse.httpURLResponse)
         )
 
         let client = HTTPClient<Void>(urlRequestLoader: urlRequestLoader)

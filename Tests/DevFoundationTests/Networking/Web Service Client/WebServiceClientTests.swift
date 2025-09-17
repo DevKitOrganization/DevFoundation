@@ -84,7 +84,7 @@ struct WebServiceClientTests: RandomValueGenerating {
 
         let expectedError = randomError()
         let urlRequestLoader = MockURLRequestLoader()
-        urlRequestLoader.dataStub = ThrowingStub(defaultResult: .failure(expectedError))
+        urlRequestLoader.dataStub = ThrowingStub(defaultError: expectedError)
 
         let httpClient = HTTPClient<String>(urlRequestLoader: urlRequestLoader)
         let client = WebServiceClient(
@@ -118,11 +118,11 @@ struct WebServiceClientTests: RandomValueGenerating {
             httpBodyResult: .success(randomHTTPBody())
         )
         let expectedError = randomError()
-        request.mapResponseStub = ThrowingStub(defaultResult: .failure(expectedError))
+        request.mapResponseStub = ThrowingStub(defaultError: expectedError)
 
         let response = randomHTTPResponse()
         let urlRequestLoader = MockURLRequestLoader()
-        urlRequestLoader.dataStub = ThrowingStub(defaultResult: .success((response.body, response.httpURLResponse)))
+        urlRequestLoader.dataStub = ThrowingStub(defaultReturnValue: (response.body, response.httpURLResponse))
 
         let httpClient = HTTPClient<String>(urlRequestLoader: urlRequestLoader)
         let client = WebServiceClient(
@@ -157,12 +157,12 @@ struct WebServiceClientTests: RandomValueGenerating {
             httpBodyResult: .success(randomHTTPBody())
         )
         let expectedMappedResponse = randomBasicLatinString()
-        request.mapResponseStub = ThrowingStub(defaultResult: .success(expectedMappedResponse))
+        request.mapResponseStub = ThrowingStub(defaultReturnValue: expectedMappedResponse)
 
         let httpResponse = randomHTTPResponse()
         let urlRequestLoader = MockURLRequestLoader()
         urlRequestLoader.dataStub = ThrowingStub(
-            defaultResult: .success((httpResponse.body, httpResponse.httpURLResponse)))
+            defaultReturnValue: (httpResponse.body, httpResponse.httpURLResponse))
 
         let httpClient = HTTPClient<String>(urlRequestLoader: urlRequestLoader)
         let client = WebServiceClient(
