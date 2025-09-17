@@ -66,14 +66,23 @@ public final class RandomAccessPager<Page>: RandomAccessPaging where Page: Offse
     /// A mutex that synchronizes access to the instance’s loaded pages.
     ///
     /// This dictionary is ordered by loaded page’s page offsets.
-    private let loadedPagesMutex: Mutex<LoadedPages> = Mutex(.init())
+    private let loadedPagesMutex: Mutex<LoadedPages>
 
 
     /// Creates a new sequential pager with the specified page loader.
     ///
-    /// - Parameter pageLoader: The page loader to use to load pages.
-    public init(pageLoader: some RandomAccessPageLoader<Page>) {
+    /// - Parameters:
+    ///   - pageLoader: The page loader to use to load pages.
+    ///   - loadedPages: Any pages that have already been loaded. `[]` by default.
+    public init(pageLoader: some RandomAccessPageLoader<Page>, loadedPages: [Page] = []) {
         self.pageLoader = pageLoader
+
+        var pages = LoadedPages()
+        for page in loadedPages {
+            pages.loadedPagesByOffset[page.pageOffset] = page
+            pages.lastLoadedPageOffset = max(pages.lastLoadedPageOffset ?? .min, page.pageOffset)
+        }
+        self.loadedPagesMutex = .init(pages)
     }
 
 

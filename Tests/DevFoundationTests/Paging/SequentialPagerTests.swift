@@ -25,6 +25,23 @@ struct SequentialPagerTests: RandomValueGenerating {
 
 
     @Test
+    mutating func initializationWithLoadedPagesSetsUpPager() {
+        let mockLoader = MockSequentialPageLoader<MockOffsetPage>()
+
+        let loadedPages = Array(count: randomInt(in: 3 ... 5)) { (i) in
+            let page = MockOffsetPage()
+            page.pageOffsetStub = Stub(defaultReturnValue: i)
+            return page
+        }
+
+        let pager = SequentialPager(pageLoader: mockLoader, loadedPages: loadedPages)
+
+        #expect(pager.loadedPages == loadedPages)
+        #expect(pager.lastLoadedPage === loadedPages.last)
+    }
+
+
+    @Test
     func pageExistsDelegatesToLoader() {
         let mockLoader = MockSequentialPageLoader<MockOffsetPage>()
         mockLoader.pageExistsStub = Stub(defaultReturnValue: true)
@@ -102,6 +119,26 @@ struct SequentialPagerTests: RandomValueGenerating {
 
 
     @Test
+    mutating func loadPageReturnsPreLoadedPage() async throws {
+        let mockLoader = MockSequentialPageLoader<MockOffsetPage>()
+
+        let loadedPages = Array(count: randomInt(in: 3 ... 5)) { (i) in
+            let page = MockOffsetPage()
+            page.pageOffsetStub = Stub(defaultReturnValue: i)
+            return page
+        }
+
+        let pager = SequentialPager(pageLoader: mockLoader, loadedPages: loadedPages)
+
+        let previousPages: [MockOffsetPage?] = [nil] + loadedPages.dropLast()
+        for (previousPage, expectedPage) in zip(previousPages, loadedPages) {
+            let actualPage = try await pager.loadPage(after: previousPage)
+            #expect(actualPage === expectedPage)
+        }
+    }
+
+
+    @Test
     func loadPageHandlesConcurrentLoads() async throws {
         let mockLoader = MockSequentialPageLoader<MockOffsetPage>()
         let page1 = MockOffsetPage()
@@ -131,4 +168,33 @@ struct SequentialPagerTests: RandomValueGenerating {
         #expect(pager.loadedPages == [page1] || pager.loadedPages == [page2])
         #expect(mockLoader.loadPageStub.callArguments == [nil, nil])
     }
+
+
+    #if os(macOS)
+    @Test
+    func initializationWithNonConsecutivePagesTraps() async {
+        await #expect(processExitsWith: .failure) {
+            let mockLoader = MockSequentialPageLoader<MockOffsetPage>()
+
+            let page0 = MockOffsetPage()
+            page0.pageOffsetStub = Stub(defaultReturnValue: 0)
+            let page2 = MockOffsetPage()
+            page2.pageOffsetStub = Stub(defaultReturnValue: 2)
+            _ = SequentialPager(pageLoader: mockLoader, loadedPages: [page0, page2])
+        }
+    }
+
+
+    @Test
+    func initializationWithNonZeroStartingOffsetTraps() async {
+        await #expect(processExitsWith: .failure) {
+            let mockLoader = MockSequentialPageLoader<MockOffsetPage>()
+
+            let page1 = MockOffsetPage()
+            page1.pageOffsetStub = Stub(defaultReturnValue: 1)
+
+            _ = SequentialPager(pageLoader: mockLoader, loadedPages: [page1])
+        }
+    }
+    #endif
 }

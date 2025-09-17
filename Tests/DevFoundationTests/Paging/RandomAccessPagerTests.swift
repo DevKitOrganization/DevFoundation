@@ -26,6 +26,24 @@ struct RandomAccessPagerTests: RandomValueGenerating {
 
 
     @Test
+    mutating func initializationWithLoadedPagesSetsUpPager() {
+        let mockLoader = MockRandomAccessPageLoader<MockOffsetPage>()
+
+        let loadedPages = Array(count: randomInt(in: 3 ... 5)) { (i) in
+            let page = MockOffsetPage()
+            page.pageOffsetStub = Stub(defaultReturnValue: i)
+            return page
+        }
+
+        let pager = RandomAccessPager(pageLoader: mockLoader, loadedPages: loadedPages.shuffled())
+
+        #expect(pager.loadedPages == loadedPages)
+        #expect(pager.lastLoadedPage === loadedPages.last)
+        #expect(pager.lastLoadedPageOffset == loadedPages.count - 1)
+    }
+
+
+    @Test
     mutating func pageExistsDelegatesToLoader() {
         let mockLoader = MockRandomAccessPageLoader<MockOffsetPage>()
         mockLoader.pageExistsStub = Stub(defaultReturnValue: true)
@@ -174,6 +192,25 @@ struct RandomAccessPagerTests: RandomValueGenerating {
 
         #expect(pager.loadedPages.isEmpty)
         #expect(pager.lastLoadedPageOffset == nil)
+    }
+
+
+    @Test
+    mutating func loadPageAtReturnsPreLoadedPage() async throws {
+        let mockLoader = MockRandomAccessPageLoader<MockOffsetPage>()
+
+        let loadedPages = Array(count: randomInt(in: 3 ... 5)) { (i) in
+            let page = MockOffsetPage()
+            page.pageOffsetStub = Stub(defaultReturnValue: i)
+            return page
+        }
+
+        let pager = RandomAccessPager(pageLoader: mockLoader, loadedPages: loadedPages)
+
+        for (i, expectedPage) in loadedPages.enumerated() {
+            let actualPage = try await pager.loadPage(at: i)
+            #expect(actualPage === expectedPage)
+        }
     }
 
 
