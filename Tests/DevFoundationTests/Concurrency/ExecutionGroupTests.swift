@@ -16,8 +16,8 @@ struct ExecutionGroupTests {
         let group = ExecutionGroup()
         #expect(!group.isExecuting)
 
-        await confirmation("task is executed", expectedCount: 2) { (didExecute) in
-            await confirmation("emits isExecuting observation events", expectedCount: 2) { (didObserve) in
+        try await confirmation("task is executed", expectedCount: 2) { (didExecute) in
+            try await confirmation("emits isExecuting observation events", expectedCount: 2) { (didObserve) in
                 withObservationTracking {
                     // Is executing should initially be false
                     #expect(!group.isExecuting)
@@ -34,23 +34,23 @@ struct ExecutionGroupTests {
                 }
 
                 // Start two tasks
-                group.addTask {
+                let task1 = group.addTask {
                     // While the task is running, isExecuting should be true
                     didExecute()
                     #expect(group.isExecuting)
-                    try? await Task.sleep(for: .seconds(0.5))
+                    try? await Task.sleep(for: .milliseconds(250))
 
                 }
 
-                group.addTask {
+                let task2 = group.addTask {
                     // While the task is running, isExecuting should be true
                     didExecute()
                     #expect(group.isExecuting)
-                    try? await Task.sleep(for: .seconds(0.5))
+                    try await Task.sleep(for: .milliseconds(250))
                 }
 
                 // Wait for the tasks to finish
-                try? await Task.sleep(for: .seconds(1.1))
+                let _ = (await task1.value, try await task2.value)
 
                 // When the tasks are finished, isExecuting should be false
                 #expect(!group.isExecuting)

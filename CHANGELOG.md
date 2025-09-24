@@ -1,5 +1,16 @@
 # DevFoundation Changelog
 
+
+## 1.2.0: September 24, 2025
+
+This release contains updates to `ExecutionGroup` to enable greater flexibility and testability.
+
+There are now two variants of `addTask(priority:operation:)`: the original version for non-throwing
+operations, and a new version for throwing operations. Both functions now have a generic parameter
+for the operation’s return type. Together, these changes allow us to return the created `Task`,
+which you can use to monitor its progress, get its result, or cancel it.
+
+
 ## 1.1.0: September 17, 2025
 
 This release adds support for initializing `SequentialPager`s and `RandomAccessPager`s with loaded
