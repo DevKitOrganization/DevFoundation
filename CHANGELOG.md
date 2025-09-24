@@ -3,12 +3,17 @@
 
 ## 1.2.0: September 24, 2025
 
-This release contains updates to `ExecutionGroup` to enable greater flexibility and testability.
+This release introduces the `ObservableReference` type and updates `ExecutionGroup` to enable
+greater flexibility and testability.
 
-There are now two variants of `addTask(priority:operation:)`: the original version for non-throwing
-operations, and a new version for throwing operations. Both functions now have a generic parameter
-for the operation’s return type. Together, these changes allow us to return the created `Task`,
-which you can use to monitor its progress, get its result, or cancel it.
+  - This version updates the minimum supported versions of Apple’s OSes to 26.
+  - `ObservableReference` is a simple reference type that conforms to `Observable`. This enables
+    easily observing changes to the value.
+  - There are now two variants of `ExecutionGroup.addTask(priority:operation:)`: the original
+    version for non-throwing operations, and a new version for throwing operations. Both functions
+    now have a generic parameter for the operation’s return type. Together, these changes allow us
+    to return the created `Task`, which you can use to monitor its progress, get its result, or
+    cancel it.
 
 
 ## 1.1.0: September 17, 2025
