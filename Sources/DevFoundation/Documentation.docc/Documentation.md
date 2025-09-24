@@ -28,6 +28,10 @@ for paging through data, and essential utility types for building robust applica
 
 - ``ExpiringValue``
 
+### Observing Changes
+
+- ``ObservableReference``
+
 ### Concurrency Utilities
 
 - ``ExecutionGroup``

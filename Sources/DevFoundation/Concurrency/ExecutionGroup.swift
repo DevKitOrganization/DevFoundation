@@ -116,26 +116,16 @@ public final class ExecutionGroup: Sendable {
 
     /// Increments the group’s task count and mutates its execution state if needed.
     private func incrementTaskCount() {
-        let isFirstTask = taskCount.withLock { (count) in
-            count += 1
-            return count == 1
-        }
-
-        if isFirstTask {
-            withMutation(keyPath: \.isExecuting) { () }
+        withMutation(keyPath: \.isExecuting) {
+            taskCount.withLock { $0 += 1 }
         }
     }
 
 
     /// Decrements the group’s task count and mutates its execution state if needed.
     private func decrementTaskCount() {
-        let isLastTask = taskCount.withLock { (count) in
-            count -= 1
-            return count == 0
-        }
-
-        if isLastTask {
-            withMutation(keyPath: \.isExecuting) { () }
+        withMutation(keyPath: \.isExecuting) {
+            taskCount.withLock { $0 -= 1 }
         }
     }
 }

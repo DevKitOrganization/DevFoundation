@@ -1,5 +1,4 @@
 name: Verify Changes
-
 on:
   merge_group:
   pull_request:
@@ -10,7 +9,7 @@ on:
 jobs:
   lint:
     name: Lint
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -20,10 +19,11 @@ jobs:
       - name: Lint
         run: |
           Scripts/lint
+
   build-and-test:
     name: Build and Test (${{ matrix.platform }})
     needs: lint
-    runs-on: macos-15
+    runs-on: macos-26
     strategy:
       fail-fast: false
       matrix:
@@ -44,31 +44,40 @@ jobs:
 #             xcode_destination: "platform=watchOS Simulator,name=GitHub_Actions_Simulator"
 #             simulator_device_type: "com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-10-46mm"
 #             simulator_runtime: "com.apple.CoreSimulator.SimRuntime.watchOS-26-0"
+
     env:
       DEV_BUILDS: DevBuilds/Sources
+      OTHER_XCBEAUTIFY_FLAGS: --renderer github-actions
       XCCOV_PRETTY_VERSION: 1.2.0
       XCODE_SCHEME: DevFoundation-Package
       XCODE_DESTINATION: ${{ matrix.xcode_destination }}
       XCODE_TEST_PLAN: AllTests
+      XCODE_TEST_PRODUCTS_PATH: .build/DevFoundation.xctestproducts
+
     steps:
+      - name: Select Xcode 26.0.0
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.0.0.app
+
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Checkout DevBuilds
         uses: actions/checkout@v4
         with:
           repository: DevKitOrganization/DevBuilds
           path: DevBuilds
-      - name: Download xccovPretty
+
+      - name: Restore XCTestProducts
         if: github.event_name != 'push'
-        run: |
-          gh release download ${{ env.XCCOV_PRETTY_VERSION }} \
-              --repo DevKitOrganization/xccovPretty \
-              --pattern "xccovPretty-macos.tar.gz" \
-              -O - | tar -xz
-          chmod +x xccovPretty
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        id: cache-xctestproducts-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ env.XCODE_TEST_PRODUCTS_PATH }}
+          key: cache-xctestproducts-${{ github.workflow }}-${{ matrix.platform }}-${{ github.sha }}
+
       - uses: irgaly/xcode-cache@v1
+        if: steps.cache-xctestproducts-restore.outputs.cache-hit != 'true'
         with:
           key: xcode-cache-deriveddata-${{ github.workflow }}-${{ matrix.platform }}-${{ github.sha }}
           restore-keys: |
@@ -78,42 +87,50 @@ jobs:
           sourcepackages-directory: .build/DerivedData/SourcePackages
           swiftpm-package-resolved-file: Package.resolved
           verbose: true
-      - name: Select Xcode 26.0.0
-        run: |
-          sudo xcode-select -s /Applications/Xcode_26.0.0.app
-      - name: Create Simulator
-        if: ${{ matrix.platform != 'macOS' }}
-        run: |
-          xcrun simctl create GitHub_Actions_Simulator \
-            ${{ matrix.simulator_device_type }} \
-            ${{ matrix.simulator_runtime }}
+
       - name: Build for Testing
-        run: |
-          "$DEV_BUILDS"/build_and_test.sh --action build-for-testing
-      - name: Test
+        id: build-for-testing
+        if: steps.cache-xctestproducts-restore.outputs.cache-hit != 'true'
+        run: ${{ env.DEV_BUILDS }}/build_and_test.sh --action build-for-testing
+
+      - name: Test Without Building
+        id: test-without-building
         if: github.event_name != 'push'
-        run: |
-          "$DEV_BUILDS"/build_and_test.sh --action test
+        run: ${{ env.DEV_BUILDS }}/build_and_test.sh --action test-without-building
+
+      - name: Save XCTestProducts
+        if: failure() && steps.cache-xctestproducts-restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ env.XCODE_TEST_PRODUCTS_PATH }}
+          key: ${{ steps.cache-xctestproducts-restore.outputs.cache-primary-key }}
+
       - name: Log Code Coverage
         if: github.event_name != 'push'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          xcrun xccov view --report .build/DevFoundation-Package_test.xcresult --json \
-              | ./xccovPretty --github-comment \
-              > .build/xccovPretty-${{ matrix.platform }}.output
-      - name: Upload Logs
-        uses: actions/upload-artifact@v4
+          gh release download ${{ env.XCCOV_PRETTY_VERSION }} \
+              --repo DevKitOrganization/xccovPretty \
+              --pattern "xccovPretty-macos.tar.gz" \
+              -O - \
+          | tar -xz
+          chmod +x xccovPretty
+
+          xcrun xccov view --report .build/${XCODE_SCHEME}_test-without-building.xcresult --json \
+          | ./xccovPretty --github-comment \
+          > .build/xccovPretty-${{ matrix.platform }}.output
+
+      - name: Upload Logs and XCResults
         if: success() || failure()
-        with:
-          name: Logs-${{ matrix.platform }}
-          path: .build/*.log
-          include-hidden-files: true
-      - name: Upload XCResults
         uses: actions/upload-artifact@v4
-        if: success() || failure()
         with:
-          name: XCResults-${{ matrix.platform }}
-          path: .build/*.xcresult
+          name: Logs_and_XCResults-${{ matrix.platform }}
+          path: |
+            .build/*.log
+            .build/*.xcresult
           include-hidden-files: true
+
       - name: Upload xccovPretty output
         if: github.event_name != 'push'
         uses: actions/upload-artifact@v4
@@ -121,18 +138,21 @@ jobs:
           name: xccovPrettyOutput-${{ matrix.platform }}
           path: .build/xccovPretty-${{ matrix.platform }}.output
           include-hidden-files: true
+
   post-pr-comments:
     name: Post PR Comments
     needs: build-and-test
+    if: ${{ github.event_name == 'pull_request' }}
     permissions:
       pull-requests: write
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' }}
+
     steps:
       - name: Download xccovPretty output
         uses: actions/download-artifact@v4
         with:
           name: xccovPrettyOutput-macOS
+
       - name: Post Code Coverage Comment
         uses: thollander/actions-comment-pull-request@v3
         with:

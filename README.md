@@ -4,8 +4,8 @@ DevFoundation is a Swift 6 package that provides useful types and protocols for 
 and apps on Apple platforms. It makes it easy to consume web services, mock web service responses,
 page through data, post and handle type-safe events across multiple modules, and more.
 
-DevFoundation is fully documented and tested and supports iOS 18+, macOS 15+, tvOS 18+, visionOS 2+,
-and watchOS 11+.
+DevFoundation is fully documented and tested and supports iOS 26+, macOS 26+, tvOS 26+, visionOS 26+,
+and watchOS 26+.
 
 View our [changelog](CHANGELOG.md) to see what’s new.
 
