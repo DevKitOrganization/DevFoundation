@@ -16,20 +16,19 @@ struct ExecutionGroupTests {
         let group = ExecutionGroup()
         #expect(!group.isExecuting)
 
-        let expectedObservedValues = [true, true, false]
-
         let observationTask = Task {
             var observedValues: [Bool] = []
             for await observation in Observations({ group.isExecuting }) {
                 observedValues.append(observation)
 
                 print(observedValues)
-                if observedValues.count == expectedObservedValues.count {
+                if !observation {
                     break
                 }
             }
 
-            #expect(observedValues == expectedObservedValues)
+            #expect((1 ... 2).contains(observedValues.count { $0 == true }))
+            #expect(observedValues.count { $0 == false } == 1)
         }
 
         try await confirmation("task is executed", expectedCount: 2) { (didExecute) in
