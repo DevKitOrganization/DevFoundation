@@ -74,35 +74,68 @@ public final class ExecutionGroup: Sendable {
     }
 
 
-    /// Runs the given non-throwing operation asynchronously as part of a new top-level task in the execution group.
+    /// Runs the given non-throwing operation asynchronously as part of a new _unstructured_ top-level task in the
+    /// execution group.
     ///
     /// - Parameters:
     ///   - priority: The priority of the task. Pass `nil` to use the priority from `Task.currentPriority`.
     ///   - operation: The operation to perform.
-    public func addTask(
+    @discardableResult
+    public func addTask<Success>(
         priority: TaskPriority? = nil,
-        operation: @escaping @Sendable @isolated(any) () async -> Void
-    ) {
-        let didStart = taskCount.withLock { (count) in
+        operation: @escaping @Sendable @isolated(any) () async -> Success
+    ) -> Task<Success, Never> {
+        incrementTaskCount()
+
+        return Task(priority: priority) {
+            defer { decrementTaskCount() }
+            return await operation()
+        }
+    }
+
+
+    /// Runs the given throwing operation asynchronously as part of a new _unstructured_ top-level task in the execution
+    /// group.
+    ///
+    /// - Parameters:
+    ///   - priority: The priority of the task. Pass `nil` to use the priority from `Task.currentPriority`.
+    ///   - operation: The throwing operation to perform.
+    @discardableResult
+    public func addTask<Success>(
+        priority: TaskPriority? = nil,
+        operation: @escaping @Sendable @isolated(any) () async throws -> Success
+    ) -> Task<Success, any Error> where Success: Sendable {
+        incrementTaskCount()
+
+        return Task(priority: priority) {
+            defer { decrementTaskCount() }
+            return try await operation()
+        }
+    }
+
+
+    /// Increments the group’s task count and mutates its execution state if needed.
+    private func incrementTaskCount() {
+        let isFirstTask = taskCount.withLock { (count) in
             count += 1
             return count == 1
         }
 
-        if didStart {
+        if isFirstTask {
             withMutation(keyPath: \.isExecuting) { () }
         }
+    }
 
-        Task(priority: priority) {
-            await operation()
 
-            let didFinish = taskCount.withLock { (count) in
-                count -= 1
-                return count == 0
-            }
+    /// Decrements the group’s task count and mutates its execution state if needed.
+    private func decrementTaskCount() {
+        let isLastTask = taskCount.withLock { (count) in
+            count -= 1
+            return count == 0
+        }
 
-            if didFinish {
-                withMutation(keyPath: \.isExecuting) { () }
-            }
+        if isLastTask {
+            withMutation(keyPath: \.isExecuting) { () }
         }
     }
 }
