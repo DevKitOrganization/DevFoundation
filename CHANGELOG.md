@@ -1,6 +1,12 @@
 # DevFoundation Changelog
 
 
+## 1.3.0: TBD
+
+  - We’ve updated the internal implementation of `ContextualEventBusObserver` to use an actor
+    instead of a class with a dispatch queue. This should have no impact on consumers.
+
+
 ## 1.2.0: September 24, 2025
 
 This release introduces the `ObservableReference` type and updates `ExecutionGroup` to enable
