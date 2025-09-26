@@ -118,7 +118,9 @@ public final class ContextualBusEventObserver<Context>: BusEventObserver where C
             return
         }
 
-        dispatcher.dispatch(event, to: handlers)
+        Task.immediate {
+            await dispatcher.dispatch(event, to: handlers)
+        }
     }
 
 
@@ -136,7 +138,9 @@ public final class ContextualBusEventObserver<Context>: BusEventObserver where C
             return
         }
 
-        dispatcher.dispatch(event, to: handlers)
+        Task.immediate {
+            await dispatcher.dispatch(event, to: handlers)
+        }
     }
 }
 
@@ -272,13 +276,12 @@ extension ContextualBusEventObserver {
 
 
     /// A class that stores context and dispatches events to handlers.
-    private final class Dispatcher: Sendable {
+    private actor Dispatcher {
         /// The shared context that can be mutated by handlers.
-        nonisolated(unsafe)
-            private var context: Context
+        private var context: Context
 
-        /// The dispatch queue that handlers are executed on.
-        private let queue = DispatchQueue(
+        /// The serial executor on which this actor’s jobs are executed.
+        private let serialExecutor = DispatchSerialQueue(
             label: reverseDNSPrefixed("contextual-bus-event-observer"),
             target: .utility
         )
@@ -298,11 +301,14 @@ extension ContextualBusEventObserver {
         ///   - event: The event to handle.
         ///   - handlers: The handlers that are registered to handle the event.
         func dispatch<Event>(_ event: Event, to handlers: [Handler<Event>]) {
-            queue.async { [self] in
-                for handler in handlers {
-                    handler.handle(event, with: &context)
-                }
+            for handler in handlers {
+                handler.handle(event, with: &context)
             }
+        }
+
+
+        nonisolated var unownedExecutor: UnownedSerialExecutor {
+            return .init(serialExecutor)
         }
     }
 }

@@ -91,6 +91,7 @@ A comprehensive utility library with the following major components:
   - **HashableByID**: Protocol for hashable-by-identity types
   - **IdentifiableBySelf**: Protocol for types identifiable by themselves
   - **JSONValue**: Unified JSON value representation
+  - **ObservableReference**: Reference wrapper for observable objects
   - **OptionalRepresentable**: Protocol for types with optional representations
   - **RetryPolicy**: Configurable retry behavior for operations
   - **SoftwareComponentID**: Identifier for software components
