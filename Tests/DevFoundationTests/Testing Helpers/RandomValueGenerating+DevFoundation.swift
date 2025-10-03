@@ -10,11 +10,6 @@ import DevTesting
 import Foundation
 
 extension RandomValueGenerating {
-    mutating func randomDate() -> Date {
-        return Date(timeIntervalSinceNow: random(TimeInterval.self, in: -10_000 ... 10_000))
-    }
-
-
     mutating func randomDuration() -> Duration {
         return Duration(
             secondsComponent: random(Int64.self, in: 0 ... 10_000_000),
