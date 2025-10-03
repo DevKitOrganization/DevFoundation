@@ -16,7 +16,7 @@ struct JSONBodyWebServiceRequestTests: RandomValueGenerating {
 
     @Test
     mutating func jsonEncoderReturnsUncustomizedJSONEncoder() throws {
-        let jsonBody = MockJSONBody(dataProperty: randomData(), dateProperty: Date(timeIntervalSinceReferenceDate: 0))
+        let jsonBody = MockJSONBody(dataProperty: randomData(), dateProperty: randomDate())
         let request = DefaultJSONBodyWebServiceRequest(jsonBody: jsonBody)
         let jsonEncoder = request.jsonEncoder
 
@@ -37,7 +37,7 @@ struct JSONBodyWebServiceRequestTests: RandomValueGenerating {
 
     @Test
     mutating func httpBodyEncodesJSONBody() throws {
-        let jsonBody = MockJSONBody(dataProperty: randomData(), dateProperty: Date(timeIntervalSinceReferenceDate: 0))
+        let jsonBody = MockJSONBody(dataProperty: randomData(), dateProperty: randomDate())
 
         let jsonEncoder = JSONEncoder()
         jsonEncoder.outputFormatting = [.prettyPrinted, .sortedKeys]
