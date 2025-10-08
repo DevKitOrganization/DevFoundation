@@ -61,8 +61,9 @@ for paging through data, and essential utility types for building robust applica
 
 - ``Foundation/Data``
 
-### Providing Dates for Testing
+### Working with Dates
 
+- ``Swift/Duration``
 - ``DateProvider``
 - ``DateProviders``
 
