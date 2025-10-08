@@ -36,15 +36,25 @@ public struct ExpiringValue<Value> {
 
     /// Creates a new expiring value with the specified value and lifetime duration.
     ///
+    /// - Parameters:
+    ///   - value: The value.
+    ///   - lifetimeDuration: The length of the value’s lifetime.
+    public init(_ value: Value, lifetimeDuration: Duration) {
+        let now = DateProviders.current.now
+        self.value = value
+        self.lifetimeRange = now ... (now + lifetimeDuration.timeInterval)
+    }
+
+
+    /// Creates a new expiring value with the specified value and lifetime duration.
+    ///
     /// The value’s lifetime starts now and ends `lifetimeDuration` seconds in the future.
     ///
     /// - Parameters:
     ///   - value: The value.
     ///   - lifetimeDuration: The length of the value’s lifetime.
     public init(_ value: Value, lifetimeDuration: TimeInterval) {
-        let now = DateProviders.current.now
-        self.value = value
-        self.lifetimeRange = now ... (now + lifetimeDuration)
+        self.init(value, lifetimeDuration: .seconds(lifetimeDuration))
     }
 
 
