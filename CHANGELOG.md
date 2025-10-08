@@ -1,6 +1,15 @@
 # DevFoundation Changelog
 
 
+## 1.4.0: October 8, 2025
+
+  - We’ve added `Duration`-based alternatives to all APIs that take a `TimeInterval`. Specifically,
+
+      - We’ve added an overload of `DateProvider.offset(by:)` that takes a `Duration`.
+      - We’ve added an overload of `ExpiringValue.init(_:lifetimeDuration:)` that takes a
+        `Duration`.
+
+
 ## 1.3.0: October 8, 2025
 
   - We’ve added a computed property spelled `timeInterval` to `Duration`, which returns the
