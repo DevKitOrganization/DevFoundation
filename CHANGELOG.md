@@ -1,8 +1,10 @@
 # DevFoundation Changelog
 
 
-## 1.3.0: TBD
+## 1.3.0: October 8, 2025
 
+  - We’ve added a computed property spelled `timeInterval` to `Duration`, which returns the
+    duration as a `TimeInterval`.
   - We’ve updated the internal implementation of `ContextualEventBusObserver` to use an actor
     instead of a class with a dispatch queue. This should have no impact on consumers.
 
