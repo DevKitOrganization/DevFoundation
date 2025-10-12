@@ -43,10 +43,15 @@ public func observableFulfillment<ReturnType>(
     of condition: @escaping @Sendable () -> Bool,
     whileExecuting body: @Sendable () async -> ReturnType
 ) async -> ReturnType {
-    async let observationCondition = await Observations { condition() }.first { $0 }
-    let returnValue = await body()
-    _ = await observationCondition
-    return returnValue
+    let observationTask = Task.immediate {
+        for await value in Observations({ condition() }) where value {
+            break
+        }
+    }
+
+    async let returnValue = body()
+    _ = await observationTask.value
+    return await returnValue
 }
 
 
@@ -113,10 +118,15 @@ public func observableFulfillment<ReturnType>(
     of condition: @escaping @Sendable () throws -> Bool,
     whileExecuting body: @Sendable () async throws -> ReturnType
 ) async throws -> ReturnType {
-    async let observationCondition = await Observations { try condition() }.first { $0 }
-    let returnValue = try await body()
-    _ = try await observationCondition
-    return returnValue
+    let observationTask = Task.immediate {
+        for try await value in Observations({ try condition() }) where value {
+            break
+        }
+    }
+
+    async let returnValue = body()
+    _ = try await observationTask.value
+    return try await returnValue
 }
 
 
