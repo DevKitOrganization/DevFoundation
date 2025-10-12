@@ -41,10 +41,13 @@ import Foundation
 /// `performDataProcessing()`, and both operations complete before returning the result.
 public func observableFulfillment<ReturnType>(
     of condition: @escaping @Sendable () -> Bool,
-    whileExecuting body: @Sendable () async -> ReturnType
-) async -> ReturnType {
+    @_inheritActorContext whileExecuting body: @isolated(any) @Sendable () async -> ReturnType,
+    isolation: isolated (any Actor)? = #isolation
+) async -> ReturnType where ReturnType: Sendable {
+    let observations = Observations { condition() }
+
     let observationTask = Task.immediate {
-        for await value in Observations({ condition() }) where value {
+        for await value in observations where value {
             break
         }
     }
@@ -75,9 +78,10 @@ public func observableFulfillment<ReturnType>(
 ///     }
 public func observableFulfillment<ReturnType>(
     of condition: @escaping @autoclosure @Sendable () -> Bool,
-    whileExecuting body: @Sendable () async -> ReturnType
-) async -> ReturnType {
-    return await observableFulfillment(of: condition, whileExecuting: body)
+    @_inheritActorContext whileExecuting body: @isolated(any) @Sendable () async -> ReturnType,
+    isolation: isolated (any Actor)? = #isolation
+) async -> ReturnType where ReturnType: Sendable {
+    return await observableFulfillment(of: condition, whileExecuting: body, isolation: isolation)
 }
 
 
@@ -116,10 +120,13 @@ public func observableFulfillment<ReturnType>(
 /// both operations complete before returning the result.
 public func observableFulfillment<ReturnType>(
     of condition: @escaping @Sendable () throws -> Bool,
-    whileExecuting body: @Sendable () async throws -> ReturnType
-) async throws -> ReturnType {
+    @_inheritActorContext whileExecuting body: @isolated(any) @Sendable () async throws -> ReturnType,
+    isolation: isolated (any Actor)? = #isolation
+) async throws -> ReturnType where ReturnType: Sendable {
+    let observations = Observations { try condition() }
+
     let observationTask = Task.immediate {
-        for try await value in Observations({ try condition() }) where value {
+        for try await value in observations where value {
             break
         }
     }
@@ -151,7 +158,8 @@ public func observableFulfillment<ReturnType>(
 ///     }
 public func observableFulfillment<ReturnType>(
     of condition: @escaping @autoclosure @Sendable () throws -> Bool,
-    whileExecuting body: @Sendable () async throws -> ReturnType
-) async throws -> ReturnType {
-    return try await observableFulfillment(of: condition, whileExecuting: body)
+    @_inheritActorContext whileExecuting body: @isolated(any) @Sendable () async throws -> ReturnType,
+    isolation: isolated (any Actor)? = #isolation
+) async throws -> ReturnType where ReturnType: Sendable {
+    return try await observableFulfillment(of: condition, whileExecuting: body, isolation: isolation)
 }
