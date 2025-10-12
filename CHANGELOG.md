@@ -1,6 +1,31 @@
 # DevFoundation Changelog
 
 
+## 1.5.0: October 12, 2025
+
+We’ve added a family of free functions, all spelled `observableFulfillment(of:whileExecuting:)`,
+which enable awaiting for some side effect to occur while executing some operation. The functions
+uses the Observation framework to detect changes. The four variants are for
+
+  1. A **non-throwing body** with a **closure condition**
+  2. A **non-throwing body** with an **autoclosure condition**
+  3. A **throwing body** with a **throwing closure condition**
+  4. A **throwing body** with a **throwing autoclosure condition**
+
+We think this function will be useful when writing tests with Swift Testing, but it may be useful
+in other cases as well, so we’ve added it here instead of in DevTesting.
+
+        let eventBus = EventBus()
+        …
+        let event = SomeEvent()
+
+        await observableFulfillment(of: !someObject.someStub.calls.isEmpty) {
+            appServices.eventBus.post(event)
+        }
+        #expect(someObject.someStub.callArguments as? [SomeEvent] == [event])
+
+
+
 ## 1.4.0: October 8, 2025
 
   - We’ve added `Duration`-based alternatives to all APIs that take a `TimeInterval`. Specifically,

@@ -23,6 +23,9 @@ install_pre_commit_hook() {
     cat > "$pre_commit_hook" << 'EOF'
 #!/bin/bash
 
+# Exit immediately on Ctrl-C
+trap 'exit 130' INT
+
 # Get the directory where this hook is located
 HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -51,6 +54,9 @@ install_pre_push_hook() {
 
     cat > "$pre_push_hook" << 'EOF'
 #!/bin/bash
+
+# Exit immediately on Ctrl-C
+trap 'exit 130' INT
 
 # Get the directory where this hook is located
 HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
