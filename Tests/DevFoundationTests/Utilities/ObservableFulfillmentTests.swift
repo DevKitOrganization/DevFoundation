@@ -26,14 +26,13 @@ struct ObservationFulfillmentTests: RandomValueGenerating {
         let expectedValue = randomInt(in: .min ... .max)
 
         // exercise the function with a condition that is already true
-        let result = await observableFulfillment {
+        let returnValue = await #observableFulfillment {
             state.flag
         } whileExecuting: {
             expectedValue
         }
 
-        // expect the function to return the body's result
-        #expect(result == expectedValue)
+        #expect(returnValue == expectedValue)
     }
 
 
@@ -44,7 +43,7 @@ struct ObservationFulfillmentTests: RandomValueGenerating {
         let expectedValue = randomInt(in: .min ... .max)
 
         // exercise the function with a body that changes the condition to true
-        let result = await observableFulfillment {
+        let result = await #observableFulfillment {
             state.flag
         } whileExecuting: {
             try? await Task.sleep(for: .milliseconds(100))
@@ -66,7 +65,7 @@ struct ObservationFulfillmentTests: RandomValueGenerating {
         let expectedValue = randomInt(in: .min ... .max)
 
         // exercise the function with a condition that becomes true after multiple changes
-        let result = await observableFulfillment {
+        let result = await #observableFulfillment {
             state.value >= threshold
         } whileExecuting: {
             for i in 1 ... threshold {
@@ -93,7 +92,7 @@ struct ObservationFulfillmentTests: RandomValueGenerating {
 
         // exercise the function with a condition that is already true
         let error = randomError()
-        let result = try await observableFulfillment {
+        let result = try await #observableFulfillment {
             state.flag
         } whileExecuting: {
             // This will never happen
@@ -116,7 +115,7 @@ struct ObservationFulfillmentTests: RandomValueGenerating {
         let expectedValue = randomInt(in: .min ... .max)
 
         // exercise the function with a body that changes the condition to true
-        let result = try await observableFulfillment {
+        let result = try await #observableFulfillment {
             state.flag
         } whileExecuting: {
             try await Task.sleep(for: .milliseconds(100))
@@ -138,7 +137,7 @@ struct ObservationFulfillmentTests: RandomValueGenerating {
 
         // exercise the function with a body that throws an error
         await #expect(throws: expectedError) {
-            try await observableFulfillment {
+            try await #observableFulfillment {
                 state.flag
             } whileExecuting: {
                 try await Task.sleep(for: .milliseconds(100))
@@ -159,7 +158,7 @@ struct ObservationFulfillmentTests: RandomValueGenerating {
 
         // exercise the function with a condition that throws an error
         await #expect(throws: expectedError) {
-            try await observableFulfillment {
+            try await #observableFulfillment {
                 try state.throwingFlag
             } whileExecuting: {
                 // This will never happen
@@ -170,48 +169,6 @@ struct ObservationFulfillmentTests: RandomValueGenerating {
                 return expectedValue
             }
         }
-    }
-
-
-    // MARK: - Autoclosure Variants
-
-    @Test
-    mutating func autoclosureNonThrowingVariant() async {
-        // set up an observable state with condition already true
-        let state = ObservableState()
-        state.flag = true
-        let expectedValue = randomInt(in: .min ... .max)
-
-        // exercise the autoclosure variant
-        let result = await observableFulfillment(of: state.flag) {
-            expectedValue
-        }
-
-        // expect the function to return the body's result
-        #expect(result == expectedValue)
-    }
-
-
-    @Test
-    mutating func autoclosureThrowingVariant() async throws {
-        // set up an observable state with condition already true
-        let state = ObservableState()
-        state.flag = true
-        let expectedValue = randomInt(in: 0 ... .max)
-
-        // exercise the autoclosure variant
-        let error = randomError()
-        let result = try await observableFulfillment(of: state.throwingFlag) {
-            // This will never happen
-            if expectedValue < 0 {
-                throw error
-            }
-
-            return expectedValue
-        }
-
-        // expect the function to return the body's result
-        #expect(result == expectedValue)
     }
 }
 

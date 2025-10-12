@@ -7,159 +7,47 @@
 
 import Foundation
 
-// MARK: Non-Throwing
-
-/// Executes a closure while observing a condition, ensuring the condition becomes true before returning.
+/// Executes a closure while observing a condition, ensuring the condition becomes true.
 ///
-/// This function runs the provided body concurrently with an observation of the specified condition. The function waits
-/// for both the body to complete and the condition to become true before returning the result. This is useful for
-/// scenarios where you need to ensure a certain state is reached while performing an operation.
-///
-/// The observation mechanism relies on the Swift Observation framework to detect changes to observable properties
-/// referenced within the condition. The condition will be evaluated whenever any observed properties change.
+/// This macro expands to inline code that creates an `Observations` instance in the caller's context,
+/// ensuring proper actor isolation and avoiding timing issues with observation setup.
 ///
 /// - Parameters:
-///   - condition: A closure that returns a Boolean value to observe. The function will wait for this condition to
-///     become `true` at least once during execution. The condition should reference observable properties for change
-///     detection to work properly.
-///   - body: A closure that performs the main work and returns a value of type `ReturnType`.
-///
-/// - Returns: The value returned by the `body` closure.
-///
-/// - Note: The observation begins immediately when the function is called. If the condition is already `true` at the
-///   start, the observation will complete immediately.
+///   - condition: A closure that returns a Boolean value to observe.
+///   - body: A closure that performs the work.
 ///
 /// ## Example
 ///
-///     let result = await observableFulfillment {
-///         observableModel.isDataLoaded
+///     await #observableFulfillment {
+///         state.isReady
 ///     } whileExecuting: {
-///         await observableModel.performDataProcessing()
+///         state.performWork()
 ///     }
+@freestanding(expression)
+public macro observableFulfillment<ReturnType>(
+    of condition: @Sendable () -> Bool,
+    whileExecuting body: @Sendable () async -> ReturnType
+) -> ReturnType = #externalMacro(module: "DevFoundationMacros", type: "ObservableFulfillmentMacro")
+
+
+/// Executes a throwing closure while observing a condition, ensuring the condition becomes true.
 ///
-/// This ensures that `observableModel.isDataLoaded` becomes `true` at some point during the execution of
-/// `performDataProcessing()`, and both operations complete before returning the result.
-public func observableFulfillment<ReturnType>(
-    of condition: @escaping @Sendable () -> Bool,
-    @_inheritActorContext whileExecuting body: @isolated(any) @Sendable () async -> ReturnType,
-    isolation: isolated (any Actor)? = #isolation
-) async -> ReturnType where ReturnType: Sendable {
-    let observations = Observations { condition() }
-
-    let observationTask = Task.immediate {
-        for await value in observations where value {
-            break
-        }
-    }
-
-    async let returnValue = body()
-    _ = await observationTask.value
-    return await returnValue
-}
-
-
-/// Executes a closure while observing a condition, ensuring the condition becomes true before returning.
-///
-/// This function is a convenience for ``observableFulfillment(of:whileExecuting:)`` which takes an autoclosure instead
-/// of a closure.
+/// This macro expands to inline code that creates an `Observations` instance in the caller's context,
+/// ensuring proper actor isolation and avoiding timing issues with observation setup.
 ///
 /// - Parameters:
-///   - condition: An autoclosure that returns a Boolean value to observe. The function will wait for this condition to
-///     become `true` at least once during execution. The condition should reference observable properties for change
-///     detection to work properly.
-///   - body: A closure that performs the main work and returns a value of type `ReturnType`.
-///
-/// - Returns: The value returned by the `body` closure.
+///   - condition: A closure that returns a Boolean value to observe.
+///   - body: A closure that performs the work.
 ///
 /// ## Example
 ///
-///     let result = await observableFulfillment(of: observableModel.isDataLoaded) {
-///         await observableModel.performDataProcessing()
-///     }
-public func observableFulfillment<ReturnType>(
-    of condition: @escaping @autoclosure @Sendable () -> Bool,
-    @_inheritActorContext whileExecuting body: @isolated(any) @Sendable () async -> ReturnType,
-    isolation: isolated (any Actor)? = #isolation
-) async -> ReturnType where ReturnType: Sendable {
-    return await observableFulfillment(of: condition, whileExecuting: body, isolation: isolation)
-}
-
-
-// MARK: - Throwing
-
-/// Executes a throwing closure while observing a condition, ensuring the condition becomes true before returning.
-///
-/// This function runs the provided body concurrently with an observation of the specified condition. The function waits
-/// for both the body to complete and the condition to become true before returning the result. This is useful for
-/// scenarios where you need to ensure a certain state is reached while performing an operation.
-///
-/// The observation mechanism relies on the Swift Observation framework to detect changes to observable properties
-/// referenced within the condition. The condition will be evaluated whenever any observed properties change.
-///
-/// - Parameters:
-///   - condition: A closure that returns a Boolean value to observe. The function will wait for this condition to
-///     become `true` at least once during execution. The condition should reference observable properties for change
-///     detection to work properly.
-///   - body: A closure that performs the main work and returns a value of type `ReturnType`.
-///
-/// - Returns: The value returned by the `body` closure.
-/// - Throws: Any errors thrown by evaluating `condition` or executing `body`.
-///
-/// - Note: The observation begins immediately when the function is called. If the condition is already `true` at the
-///   start, the observation will complete immediately.
-///
-/// ## Example
-///
-///     let result = try await observableFulfillment {
-///         observableModel.isDataLoaded
+///     try await #observableFulfillment {
+///         try state.isReady
 ///     } whileExecuting: {
-///         try await observableModel.performDataProcessing()
+///         try await state.performWork()
 ///     }
-///
-/// This ensures that `isDataLoaded` becomes `true` at some point during the execution of `performDataProcessing()`, and
-/// both operations complete before returning the result.
-public func observableFulfillment<ReturnType>(
-    of condition: @escaping @Sendable () throws -> Bool,
-    @_inheritActorContext whileExecuting body: @isolated(any) @Sendable () async throws -> ReturnType,
-    isolation: isolated (any Actor)? = #isolation
-) async throws -> ReturnType where ReturnType: Sendable {
-    let observations = Observations { try condition() }
-
-    let observationTask = Task.immediate {
-        for try await value in observations where value {
-            break
-        }
-    }
-
-    async let returnValue = body()
-    _ = try await observationTask.value
-    return try await returnValue
-}
-
-
-/// Executes a throwing closure while observing a condition, ensuring the condition becomes true before returning.
-///
-/// This function is a convenience for ``observableFulfillment(of:whileExecuting:)-3g68o`` which takes an autoclosure
-/// instead of a closure.
-///
-/// - Parameters:
-///   - condition: An autoclosure that returns a Boolean value to observe. The function will wait for this condition to
-///     become `true` at least once during execution. The condition should reference observable properties for change
-///     detection to work properly.
-///   - body: A closure that performs the main work and returns a value of type `ReturnType`.
-///
-/// - Returns: The value returned by the `body` closure.
-/// - Throws: Any errors thrown by evaluating `condition` or executing `body`.
-///
-/// ## Example
-///
-///     let result = try await observableFulfillment(of: observableModel.isDataLoaded) {
-///         try await observableModel.performDataProcessing()
-///     }
-public func observableFulfillment<ReturnType>(
-    of condition: @escaping @autoclosure @Sendable () throws -> Bool,
-    @_inheritActorContext whileExecuting body: @isolated(any) @Sendable () async throws -> ReturnType,
-    isolation: isolated (any Actor)? = #isolation
-) async throws -> ReturnType where ReturnType: Sendable {
-    return try await observableFulfillment(of: condition, whileExecuting: body, isolation: isolation)
-}
+@freestanding(expression)
+public macro observableFulfillment<ReturnType>(
+    of condition: @Sendable () throws -> Bool,
+    whileExecuting body: @Sendable () async throws -> ReturnType
+) -> ReturnType = #externalMacro(module: "DevFoundationMacros", type: "ThrowingObservableFulfillmentMacro")
