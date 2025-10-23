@@ -117,7 +117,7 @@ struct SimulatedURLRequestLoaderTests: RandomValueGenerating {
 
         let (actualData, response) = try await loader.data(for: urlRequest)
 
-        // Should return second responder's data since first doesn't match
+        // Should return second responder’s data since first doesn’t match
         #expect(actualData == data2)
         let httpResponse = try #require(response as? HTTPURLResponse)
         #expect(httpResponse.httpStatusCode == statusCode2)

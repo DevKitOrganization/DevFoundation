@@ -1,6 +1,14 @@
 # DevFoundation Changelog
 
 
+## 1.5.0: October 22, 2025
+
+This release adds the `UserSelection` type, a generic structure that manages a user’s selection with
+a fallback to a default value. This type prioritizes explicit user choices over programmatic
+defaults while maintaining separate tracking of both values, ensuring user preferences are never
+accidentally overwritten by programmatic updates to defaults.
+
+
 ## 1.4.0: October 8, 2025
 
   - We’ve added `Duration`-based alternatives to all APIs that take a `TimeInterval`. Specifically,

@@ -36,7 +36,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
             }
 
             eventBus.post(MockBusEvent(string: randomAlphanumericString()))
-            try await Task.sleep(for: .seconds(1))
+            try await Task.sleep(for: .milliseconds(500))
         }
     }
 
@@ -58,7 +58,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
                     string: randomAlphanumericString()
                 )
             )
-            try await Task.sleep(for: .seconds(1))
+            try await Task.sleep(for: .milliseconds(500))
         }
     }
 
@@ -68,6 +68,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
         let expectedString = randomAlphanumericString()
         let handlerCount = randomInt(in: 3 ... 5)
 
+        let (signalStream, signaler) = AsyncStream<Void>.makeStream()
         try await confirmation("handlers are called", expectedCount: handlerCount) { (didCallHandler) in
             for i in 0 ..< handlerCount {
                 observer.addHandler(for: MockBusEvent.self) { (event, context) in
@@ -75,11 +76,12 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
                     #expect(context == i)
                     context += 1
                     didCallHandler()
+                    signaler.yield()
                 }
             }
 
             eventBus.post(MockBusEvent(string: expectedString))
-            try await Task.sleep(for: .seconds(1))
+            for try await _ in signalStream.prefix(handlerCount) {}
         }
     }
 
@@ -90,6 +92,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
         let expectedString = randomAlphanumericString()
         let handlerCount = randomInt(in: 3 ... 5)
 
+        let (signalStream, signaler) = AsyncStream<Void>.makeStream()
         try await confirmation("handlers are called", expectedCount: handlerCount * 2) { (didCallHandler) in
             for i in 0 ..< handlerCount {
                 observer.addHandler(for: MockIdentifiableBusEvent.self) { (event, context) in
@@ -100,6 +103,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
                     #expect(context == i)
                     context += 1
                     didCallHandler()
+                    signaler.yield()
                 }
 
                 observer.addHandler(for: MockIdentifiableBusEvent.self, id: expectedID) { (event, context) in
@@ -110,11 +114,12 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
                     #expect(context == handlerCount + i)
                     context += 1
                     didCallHandler()
+                    signaler.yield()
                 }
             }
 
             eventBus.post(MockIdentifiableBusEvent(id: expectedID, string: expectedString))
-            try await Task.sleep(for: .seconds(1))
+            for try await _ in signalStream.prefix(handlerCount * 2) {}
         }
     }
 
@@ -127,7 +132,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
             }
             observer.removeHandler(handler)
             eventBus.post(MockBusEvent(string: randomAlphanumericString()))
-            try await Task.sleep(for: .seconds(1))
+            try await Task.sleep(for: .milliseconds(500))
         }
     }
 
@@ -148,7 +153,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
                     string: randomAlphanumericString()
                 )
             )
-            try await Task.sleep(for: .seconds(1))
+            try await Task.sleep(for: .milliseconds(500))
         }
     }
 
