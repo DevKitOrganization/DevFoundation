@@ -23,14 +23,13 @@ print_error() {
 
 # Platforms to test
 PLATFORMS=(
-    "iOS Simulator,name=iPhone 16 Pro"
+    "iOS Simulator,name=iPhone 17 Pro"
     "macOS"
     "tvOS Simulator,name=Apple TV 4K"
     "watchOS Simulator,name=Apple Watch Series 10"
 )
 
 SCHEME="DevFoundation-Package"
-FAILED_PLATFORMS=()
 
 print_status "Starting tests on all platforms..."
 echo
@@ -41,19 +40,14 @@ for platform in "${PLATFORMS[@]}"; do
 
     if xcodebuild test -scheme "$SCHEME" -destination "platform=$platform"; then
         print_success "$platform_name tests passed"
+        echo
     else
         print_error "$platform_name tests failed"
-        FAILED_PLATFORMS+=("$platform_name")
+        exit 1
     fi
-    echo
 done
 
 # Summary
 echo "=========================="
-if [ ${#FAILED_PLATFORMS[@]} -eq 0 ]; then
-    print_success "All platform tests passed!"
-    exit 0
-else
-    print_error "Tests failed on: ${FAILED_PLATFORMS[*]}"
-    exit 1
-fi
+print_success "All platform tests passed!"
+exit 0

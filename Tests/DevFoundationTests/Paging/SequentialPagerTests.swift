@@ -153,7 +153,7 @@ struct SequentialPagerTests: RandomValueGenerating {
 
         // Add delay to allow both calls to get past cache check
         mockLoader.loadPagePrologue = {
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(for: .milliseconds(500))
         }
 
         let pager = SequentialPager(pageLoader: mockLoader)

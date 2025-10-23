@@ -35,7 +35,7 @@ struct OffsetDateProvider<Base>: DateProvider where Base: DateProvider {
 
 extension OffsetDateProvider: CustomStringConvertible {
     public var description: String {
-        return "\(base).offset(by: \(offset.timeInterval))"
+        return "\(base).offset(by: \(offset))"
     }
 }
 

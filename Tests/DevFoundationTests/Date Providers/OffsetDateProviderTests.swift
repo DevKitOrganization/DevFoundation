@@ -27,10 +27,10 @@ struct OffsetDateProviderTests: RandomValueGenerating {
 
     @Test
     mutating func descriptionIsCorrect() {
-        let base = MockDateProvider()
-        let offset = random(TimeInterval.self, in: -1000 ... 1000)
+        let base = MockDateProvider(now: randomDate())
+        let offset = Duration.milliseconds(randomInt(in: 1 ... 1000))
         let offsetProvider = base.offset(by: offset)
-
+        print(offsetProvider)
         #expect(String(describing: offsetProvider) == "\(String(describing: base)).offset(by: \(offset))")
     }
 }
