@@ -24,6 +24,12 @@ for paging through data, and essential utility types for building robust applica
 
 - <doc:PagingThroughData>
 
+### Live Queries
+
+- ``LiveQuery``
+- ``LiveQueryResultsProducer``
+- ``LiveQuerySchedulingStrategy``
+
 ### Caching
 
 - ``ExpiringValue``
@@ -56,6 +62,10 @@ for paging through data, and essential utility types for building robust applica
 ### Generating Gibberish
 
 - ``GibberishGenerator``
+
+### Handling User Inputs
+
+- ``UserSelection``
 
 ### Obfuscating and Deobfuscating Data
 

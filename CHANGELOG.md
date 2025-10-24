@@ -1,6 +1,26 @@
 # DevFoundation Changelog
 
 
+## 1.6.0: October 24, 2025
+
+This release introduces the `LiveQuery` subsystem, a set of types for managing search-as-you-type
+functionality and other query-based operations. Live queries automatically handle scheduling,
+deduplication, and caching as query fragments change.
+
+  - `LiveQuery` is an `Observable` type that produces results as its query fragment changes. It
+    coordinates between user input and result production, managing debouncing, duplicate removal,
+    and error handling.
+  - `LiveQueryResultsProducer` is a protocol that defines how to generate results for query
+    fragments. Conforming types specify their scheduling strategy and implement result production
+    logic.
+  - `LiveQuerySchedulingStrategy` determines when results are generated: `.passthrough` for
+    immediate results (best for cheap operations like local filtering), or `.debounce(_:)` to wait
+    for typing to pause (best for expensive operations like network requests).
+
+The live query subsystem is fully thread-safe, `Sendable`, and integrates seamlessly with SwiftUI
+through the Observation framework.
+
+
 ## 1.5.0: October 22, 2025
 
 This release adds the `UserSelection` type, a generic structure that manages a user’s selection with
