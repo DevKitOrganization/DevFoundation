@@ -31,6 +31,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.6.1"),
+        .package(url: "https://github.com/apple/swift-async-algorithms.git", from: "1.0.4"),
         .package(url: "https://github.com/apple/swift-numerics.git", from: "1.1.0"),
         .package(url: "https://github.com/DevKitOrganization/DevTesting", from: "1.5.0"),
         .package(url: "https://github.com/prachigauriar/URLMock.git", from: "1.3.6"),
@@ -38,7 +39,10 @@ let package = Package(
     targets: [
         .target(
             name: "DevFoundation",
-            swiftSettings: swiftSettings,
+            dependencies: [
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
+            ],
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "DevFoundationTests",

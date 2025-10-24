@@ -67,6 +67,11 @@ extension RandomValueGenerating {
     }
 
 
+    mutating func randomLiveQuerySchedulingStrategy() -> LiveQuerySchedulingStrategy {
+        return randomBool() ? .passthrough : .debounce(.milliseconds(randomInt(in: 10 ... 10_000)))
+    }
+
+
     mutating func randomMediaType() -> MediaType {
         return MediaType("\(randomAlphanumericString())/\(randomAlphanumericString())")
     }
