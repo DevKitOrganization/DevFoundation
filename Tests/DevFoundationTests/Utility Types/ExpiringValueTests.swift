@@ -29,16 +29,30 @@ struct ExpiringValueTests: RandomValueGenerating {
     @Test
     mutating func durationInitSetsValuesCorrectly() {
         let value = randomUUID()
-        let duration = random(TimeInterval.self, in: 1 ... 10_000)
+        let duration = Duration.milliseconds(randomInt(in: 0 ... 10_000))
 
-        let date = Date()
-        let expiringValue = ExpiringValue(value, lifetimeDuration: duration)
+        let now = randomDate()
+        let dateProvider = MockDateProvider(now: now)
+        let expiringValue = ExpiringValue(value, dateProvider: dateProvider, lifetimeDuration: duration)
 
         #expect(expiringValue.value == value)
-        #expect(expiringValue.lifetimeRange.lowerBound.isApproximatelyEqual(to: date, absoluteTolerance: 0.01))
-        #expect(
-            expiringValue.lifetimeRange.upperBound.isApproximatelyEqual(to: date + duration, absoluteTolerance: 0.01)
-        )
+        #expect(expiringValue.lifetimeRange.lowerBound == now)
+        #expect(expiringValue.lifetimeRange.upperBound == now + duration.timeInterval)
+    }
+
+
+    @Test
+    mutating func timeIntervalDurationInitSetsValuesCorrectly() {
+        let value = randomUUID()
+        let duration = random(TimeInterval.self, in: 1 ... 10_000)
+
+        let now = randomDate()
+        let dateProvider = MockDateProvider(now: now)
+        let expiringValue = ExpiringValue(value, dateProvider: dateProvider, lifetimeDuration: duration)
+
+        #expect(expiringValue.value == value)
+        #expect(expiringValue.lifetimeRange.lowerBound == now)
+        #expect(expiringValue.lifetimeRange.upperBound == now + duration)
     }
 
 

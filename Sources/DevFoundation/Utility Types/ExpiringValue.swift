@@ -38,9 +38,14 @@ public struct ExpiringValue<Value> {
     ///
     /// - Parameters:
     ///   - value: The value.
+    ///   - dateProvider: The date provider to use to determine the current date.
     ///   - lifetimeDuration: The length of the value’s lifetime.
-    public init(_ value: Value, lifetimeDuration: Duration) {
-        let now = DateProviders.current.now
+    public init(
+        _ value: Value,
+        dateProvider: any DateProvider = DateProviders.current,
+        lifetimeDuration: Duration
+    ) {
+        let now = dateProvider.now
         self.value = value
         self.lifetimeRange = now ... (now + lifetimeDuration.timeInterval)
     }
@@ -52,9 +57,14 @@ public struct ExpiringValue<Value> {
     ///
     /// - Parameters:
     ///   - value: The value.
+    ///   - dateProvider: The date provider to use to determine the current date.
     ///   - lifetimeDuration: The length of the value’s lifetime.
-    public init(_ value: Value, lifetimeDuration: TimeInterval) {
-        self.init(value, lifetimeDuration: .seconds(lifetimeDuration))
+    public init(
+        _ value: Value,
+        dateProvider: any DateProvider = DateProviders.current,
+        lifetimeDuration: TimeInterval
+    ) {
+        self.init(value, dateProvider: dateProvider, lifetimeDuration: .seconds(lifetimeDuration))
     }
 
 
