@@ -1,6 +1,14 @@
 # DevFoundation Changelog
 
 
+## 1.7.0: October 27, 2025
+
+This is a small release that updates `ExpiringValue` to work better with `DateProvider`.
+Specifically, the two initializers spelled `ExpiringValue.init(_:lifetimeDuration:)` have been
+updated to include an `any DateProvider` parameter that defaults to `DateProviders.current`. The new
+initializers are spelled `ExpiringValue.init(_:dateProvider:lifetimeDuration:)`.
+
+
 ## 1.6.0: October 24, 2025
 
 This release introduces the `LiveQuery` subsystem, a set of types for managing search-as-you-type
