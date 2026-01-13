@@ -1,5 +1,6 @@
 // swift-tools-version: 6.2
 
+import CompilerPluginSupport
 import PackageDescription
 
 let swiftSettings: [SwiftSetting] = [
@@ -34,13 +35,15 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-async-algorithms.git", from: "1.0.4"),
         .package(url: "https://github.com/apple/swift-numerics.git", from: "1.1.0"),
         .package(url: "https://github.com/DevKitOrganization/DevTesting", from: "1.5.0"),
+        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "602.0.0"),
         .package(url: "https://github.com/prachigauriar/URLMock.git", from: "1.3.6"),
     ],
     targets: [
         .target(
             name: "DevFoundation",
             dependencies: [
-                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
+                "RemoteLocalizationMacros",
             ],
             swiftSettings: swiftSettings
         ),
@@ -54,6 +57,16 @@ let package = Package(
             ],
             swiftSettings: swiftSettings
         ),
+        .macro(
+           name: "RemoteLocalizationMacros",
+           dependencies: [
+               .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+               .product(name: "SwiftSyntax", package: "swift-syntax"),
+               .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
+               .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+           ],
+           swiftSettings: swiftSettings
+       ),
 
         .executableTarget(
             name: "dfob",

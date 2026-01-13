@@ -1,6 +1,16 @@
 # DevFoundation Changelog
 
 
+## 1.8.0: January 13, 2026
+
+This release adds helpers for using remote content for localization.
+
+  - Create a remote content bundle using `Bundle.makeRemoteContentBundle(at:localizedStrings:)`
+  - Set the default remote content bundle using `Bundle.defaultRemoteContentBundle`
+  - Access your remote localized strings (with a local fallback) using
+    `#remoteLocalizedString(_:bundle:)` and `#remoteLocalizedString(format:bundle:_:)`
+
+
 ## 1.7.0: October 27, 2025
 
 This is a small release that updates `ExpiringValue` to work better with `DateProvider`.

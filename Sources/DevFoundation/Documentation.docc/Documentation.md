@@ -30,6 +30,13 @@ for paging through data, and essential utility types for building robust applica
 - ``LiveQueryResultsProducer``
 - ``LiveQuerySchedulingStrategy``
 
+### Localizing with Remote Content
+
+- ``remoteLocalizedString(_:bundle:)``
+- ``remoteLocalizedString(format:bundle:_:)``
+- ``remoteLocalizedString(_:key:bundle:remoteContentBundle:)``
+- ``Foundation/Bundle``
+
 ### Caching
 
 - ``ExpiringValue``
