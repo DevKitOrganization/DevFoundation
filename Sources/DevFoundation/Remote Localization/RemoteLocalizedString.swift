@@ -48,7 +48,7 @@ public func remoteLocalizedString(
 ///
 /// Into:
 ///
-///     localizedString(
+///     remoteLocalizedString(
 ///         "feline.adoptionMessage",
 ///         key: "feline.adoptionMessage",
 ///         bundle: #bundle
