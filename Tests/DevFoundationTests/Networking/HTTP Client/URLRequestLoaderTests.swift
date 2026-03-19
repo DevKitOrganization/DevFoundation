@@ -52,7 +52,7 @@ struct URLRequestLoaderTests: RandomValueGenerating {
             httpMethod: request.httpMethod!,
             url: request.url!,
             checksHeadersWhenMatching: false,
-            checksBodyWhenMatching: false
+            checksBodyWhenMatching: false,
         )
 
         mockRequest.responder = UMKMockHTTPResponder(statusCode: expectedStatusCode, body: expectedBody)
@@ -80,7 +80,7 @@ struct URLRequestLoaderTests: RandomValueGenerating {
             httpMethod: request.httpMethod!,
             url: request.url!,
             checksHeadersWhenMatching: false,
-            checksBodyWhenMatching: false
+            checksBodyWhenMatching: false,
         )
 
         mockRequest.responder = UMKMockHTTPResponder(statusCode: expectedStatusCode, body: nil)
@@ -108,7 +108,7 @@ struct URLRequestLoaderTests: RandomValueGenerating {
             httpMethod: request.httpMethod!,
             url: request.url!,
             checksHeadersWhenMatching: false,
-            checksBodyWhenMatching: false
+            checksBodyWhenMatching: false,
         )
         mockRequest.responder = UMKMockHTTPResponder(error: expectedError)
         UMKMockURLProtocol.expectMockRequest(mockRequest)

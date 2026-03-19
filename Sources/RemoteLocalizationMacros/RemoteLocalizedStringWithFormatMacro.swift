@@ -13,7 +13,7 @@ import SwiftSyntaxMacros
 public struct RemoteLocalizedStringWithFormatMacro: ExpressionMacro {
     public static func expansion(
         of node: some FreestandingMacroExpansionSyntax,
-        in context: some MacroExpansionContext
+        in context: some MacroExpansionContext,
     ) throws -> ExprSyntax {
         guard
             let formatArgument = node.arguments.first(where: { $0.label?.text == "format" }),
@@ -38,12 +38,12 @@ public struct RemoteLocalizedStringWithFormatMacro: ExpressionMacro {
             localizedStringArguments = [
                 LabeledExprSyntax(
                     expression: ExprSyntax(StringLiteralExprSyntax(content: keyString)),
-                    trailingComma: .commaToken()
+                    trailingComma: .commaToken(),
                 ),
                 LabeledExprSyntax(
                     label: .identifier("bundle"),
                     colon: .colonToken(),
-                    expression: bundleArgument.expression
+                    expression: bundleArgument.expression,
                 ),
             ]
         } else {
@@ -59,13 +59,13 @@ public struct RemoteLocalizedStringWithFormatMacro: ExpressionMacro {
             macroName: .identifier("remoteLocalizedString"),
             leftParen: .leftParenToken(),
             arguments: LabeledExprListSyntax(localizedStringArguments),
-            rightParen: .rightParenToken()
+            rightParen: .rightParenToken(),
         )
 
         argumentsArray.append(
             LabeledExprSyntax(
                 expression: ExprSyntax(localizedStringCall),
-                trailingComma: .commaToken()
+                trailingComma: .commaToken(),
             )
         )
 
@@ -80,7 +80,7 @@ public struct RemoteLocalizedStringWithFormatMacro: ExpressionMacro {
             argumentsArray.append(
                 LabeledExprSyntax(
                     expression: argument.expression,
-                    trailingComma: trailingComma
+                    trailingComma: trailingComma,
                 )
             )
         }
@@ -91,11 +91,11 @@ public struct RemoteLocalizedStringWithFormatMacro: ExpressionMacro {
             FunctionCallExprSyntax(
                 calledExpression: MemberAccessExprSyntax(
                     base: DeclReferenceExprSyntax(baseName: .identifier("String")),
-                    name: .identifier("localizedStringWithFormat")
+                    name: .identifier("localizedStringWithFormat"),
                 ),
                 leftParen: .leftParenToken(),
                 arguments: arguments,
-                rightParen: .rightParenToken()
+                rightParen: .rightParenToken(),
             )
         )
     }

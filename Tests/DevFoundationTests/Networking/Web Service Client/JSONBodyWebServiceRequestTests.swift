@@ -58,7 +58,7 @@ struct JSONBodyWebServiceRequestTests: RandomValueGenerating {
         let expectedError = randomError()
         let request = MockJSONBodyWebServiceRequest(
             jsonBody: AlwaysThrowingEncodable(error: expectedError),
-            jsonEncoder: JSONEncoder()
+            jsonEncoder: JSONEncoder(),
         )
 
         #expect(throws: expectedError) {

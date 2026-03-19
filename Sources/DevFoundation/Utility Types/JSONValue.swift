@@ -129,8 +129,8 @@ extension JSONValue: Codable {
                 self,
                 .init(
                     codingPath: encoder.codingPath,
-                    debugDescription: "Cannot encode .ifPresent outside of a JSON collection"
-                )
+                    debugDescription: "Cannot encode .ifPresent outside of a JSON collection",
+                ),
             )
         case .null:
             var container = encoder.singleValueContainer()
@@ -169,7 +169,7 @@ extension JSONValue.Number: Codable {
             throw DecodingError.dataCorrupted(
                 .init(
                     codingPath: decoder.codingPath,
-                    debugDescription: "Invalid JSON number"
+                    debugDescription: "Invalid JSON number",
                 )
             )
         }

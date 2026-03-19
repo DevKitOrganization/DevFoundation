@@ -79,7 +79,7 @@ struct HTTPHeaderItemTests: RandomValueGenerating {
             url: randomURL(),
             statusCode: randomInt(in: 100 ..< 600),
             httpVersion: "1.1",
-            headerFields: [:]
+            headerFields: [:],
         )!
 
         let stringHeaders = Dictionary(count: randomInt(in: 3 ..< 10)) {

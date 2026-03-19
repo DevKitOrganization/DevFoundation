@@ -47,7 +47,7 @@ public final class HTTPClient<RequestContext>: Sendable where RequestContext: Se
     public init(
         urlRequestLoader: any URLRequestLoader,
         interceptors: [any HTTPClientInterceptor<RequestContext>] = [],
-        retryPolicy: (any RetryPolicy<(URLRequest, RequestContext), Result<HTTPResponse<Data>, any Error>>)? = nil
+        retryPolicy: (any RetryPolicy<(URLRequest, RequestContext), Result<HTTPResponse<Data>, any Error>>)? = nil,
     ) {
         self.urlRequestLoader = urlRequestLoader
         self.interceptors = interceptors
@@ -90,7 +90,7 @@ public final class HTTPClient<RequestContext>: Sendable where RequestContext: Se
         _ urlRequest: URLRequest,
         context: RequestContext,
         attemptCount: Int,
-        initialDelay: Duration
+        initialDelay: Duration,
     ) async throws -> HTTPResponse<Data> {
         if initialDelay != .zero {
             try Task.checkCancellation()
@@ -107,7 +107,7 @@ public final class HTTPClient<RequestContext>: Sendable where RequestContext: Se
                 forInput: (urlRequest, context),
                 output: result,
                 attemptCount: attemptCount,
-                previousDelay: initialDelay
+                previousDelay: initialDelay,
             )
         else {
             return try result.get()
@@ -131,7 +131,7 @@ public final class HTTPClient<RequestContext>: Sendable where RequestContext: Se
     private func load(
         _ urlRequest: URLRequest,
         context: RequestContext,
-        interceptorIndex: Int
+        interceptorIndex: Int,
     ) async throws -> HTTPResponse<Data> {
         // If we’re out of interceptors, load the data
         guard interceptorIndex < interceptors.endIndex else {
@@ -147,7 +147,7 @@ public final class HTTPClient<RequestContext>: Sendable where RequestContext: Se
         // Otherwise, pass the interceptor our data and call the next one
         return try await interceptors[interceptorIndex].intercept(
             request: urlRequest,
-            context: context
+            context: context,
         ) { (request, context) in
             return try await load(request, context: context, interceptorIndex: interceptorIndex + 1)
         }

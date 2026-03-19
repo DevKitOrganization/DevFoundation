@@ -52,7 +52,7 @@ public final class ContextualBusEventObserver<Context>: BusEventObserver where C
     @discardableResult
     public func addHandler<Event>(
         for eventType: Event.Type,
-        body: @escaping @Sendable (Event, inout Context) -> Void
+        body: @escaping @Sendable (Event, inout Context) -> Void,
     ) -> AnyObject where Event: BusEvent {
         let key = EventHandlerKey(eventType: eventType)
         let handler = Handler<Event>(body: body, eventID: nil)
@@ -76,7 +76,7 @@ public final class ContextualBusEventObserver<Context>: BusEventObserver where C
     public func addHandler<Event>(
         for eventType: Event.Type,
         id: Event.ID,
-        body: @escaping @Sendable (Event, inout Context) -> Void
+        body: @escaping @Sendable (Event, inout Context) -> Void,
     ) -> AnyObject where Event: BusEvent & Identifiable, Event.ID: Sendable {
         let key = IdentifiableEventHandlerKey(eventType: eventType, eventID: id)
         let handler = Handler<Event>(body: body, eventID: AnySendableHashable(id))
@@ -252,7 +252,7 @@ extension ContextualBusEventObserver {
         ///   - The event ID with which the handler was added.
         init(
             body: @escaping @Sendable (Event, inout Context) -> Void,
-            eventID: AnySendableHashable?
+            eventID: AnySendableHashable?,
         ) {
             self.body = body
             self.eventID = eventID
@@ -283,7 +283,7 @@ extension ContextualBusEventObserver {
         /// The serial executor on which this actor’s jobs are executed.
         private let serialExecutor = DispatchSerialQueue(
             label: reverseDNSPrefixed("contextual-bus-event-observer"),
-            target: .utility
+            target: .utility,
         )
 
 
@@ -308,7 +308,7 @@ extension ContextualBusEventObserver {
 
 
         nonisolated var unownedExecutor: UnownedSerialExecutor {
-            return .init(serialExecutor)
+            return .init(complexEquality: serialExecutor)
         }
     }
 }

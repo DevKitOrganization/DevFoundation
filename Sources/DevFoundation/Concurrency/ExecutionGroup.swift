@@ -83,7 +83,7 @@ public final class ExecutionGroup: Sendable {
     @discardableResult
     public func addTask<Success>(
         priority: TaskPriority? = nil,
-        operation: @escaping @Sendable @isolated(any) () async -> Success
+        operation: @escaping @Sendable @isolated(any) () async -> Success,
     ) -> Task<Success, Never> {
         incrementTaskCount()
 
@@ -103,7 +103,7 @@ public final class ExecutionGroup: Sendable {
     @discardableResult
     public func addTask<Success>(
         priority: TaskPriority? = nil,
-        operation: @escaping @Sendable @isolated(any) () async throws -> Success
+        operation: @escaping @Sendable @isolated(any) () async throws -> Success,
     ) -> Task<Success, any Error> where Success: Sendable {
         incrementTaskCount()
 

@@ -83,7 +83,7 @@ struct SequentialPagerTests: RandomValueGenerating {
 
         mockLoader.loadPageStub = ThrowingStub(
             defaultReturnValue: page2,
-            resultQueue: [.success(page1)]
+            resultQueue: [.success(page1)],
         )
 
         let pager = SequentialPager(pageLoader: mockLoader)
@@ -148,7 +148,7 @@ struct SequentialPagerTests: RandomValueGenerating {
 
         mockLoader.loadPageStub = ThrowingStub(
             defaultReturnValue: page2,
-            resultQueue: [.success(page1)]
+            resultQueue: [.success(page1)],
         )
 
         // Add delay to allow both calls to get past cache check

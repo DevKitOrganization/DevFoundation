@@ -37,7 +37,7 @@ public protocol RetryPolicy<Input, Output>: Sendable {
         forInput input: Input,
         output: Output,
         attemptCount: Int,
-        previousDelay: Duration?
+        previousDelay: Duration?,
     ) -> Duration?
 }
 
@@ -73,7 +73,7 @@ public struct PredefinedDelaySequenceRetryPolicy<Input, Output>: RetryPolicy {
     public init(
         delays: [Duration],
         maxRetries: Int? = nil,
-        retryPredicate: @escaping @Sendable (Input, Output) -> Bool
+        retryPredicate: @escaping @Sendable (Input, Output) -> Bool,
     ) {
         self.delays = delays
         self.maxRetries = maxRetries ?? delays.count
@@ -85,7 +85,7 @@ public struct PredefinedDelaySequenceRetryPolicy<Input, Output>: RetryPolicy {
         forInput input: Input,
         output: Output,
         attemptCount: Int,
-        previousDelay: Duration?
+        previousDelay: Duration?,
     ) -> Duration? {
         guard attemptCount <= maxRetries, retryPredicate(input, output) else {
             return nil
@@ -118,14 +118,14 @@ public struct AggregateRetryPolicy<Input, Output>: RetryPolicy {
         forInput input: Input,
         output: Output,
         attemptCount: Int,
-        previousDelay: Duration?
+        previousDelay: Duration?,
     ) -> Duration? {
         for policy in policies {
             if let delay = policy.retryDelay(
                 forInput: input,
                 output: output,
                 attemptCount: attemptCount,
-                previousDelay: previousDelay
+                previousDelay: previousDelay,
             ) {
                 return delay
             }

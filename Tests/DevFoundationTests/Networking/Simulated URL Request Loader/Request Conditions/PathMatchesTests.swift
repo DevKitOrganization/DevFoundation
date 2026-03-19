@@ -21,7 +21,7 @@ struct PathMatchesTests: RandomValueGenerating {
 
         let condition = SimulatedURLRequestLoader.RequestConditions.PathMatches(
             pattern: pattern,
-            percentEncoded: percentEncoded
+            percentEncoded: percentEncoded,
         )
 
         #expect(condition.percentEncoded == percentEncoded)
@@ -32,7 +32,7 @@ struct PathMatchesTests: RandomValueGenerating {
     mutating func isFulfilledReturnsTrueWhenPathMatches() {
         let condition = SimulatedURLRequestLoader.RequestConditions.PathMatches(
             pattern: #//users/[0-9]+/#,
-            percentEncoded: false
+            percentEncoded: false,
         )
         let urlRequest = URLRequest(url: URL(string: "https://api.example.com/users/123")!)
         let requestComponents = SimulatedURLRequestLoader.RequestComponents(urlRequest: urlRequest)!
@@ -45,7 +45,7 @@ struct PathMatchesTests: RandomValueGenerating {
     mutating func isFulfilledReturnsFalseWhenPathDoesNotMatch() {
         let condition = SimulatedURLRequestLoader.RequestConditions.PathMatches(
             pattern: #//users/[0-9]+/#,
-            percentEncoded: false
+            percentEncoded: false,
         )
         let urlRequest = URLRequest(url: URL(string: "https://api.example.com/posts/abc")!)
         let requestComponents = SimulatedURLRequestLoader.RequestComponents(urlRequest: urlRequest)!
@@ -59,7 +59,7 @@ struct PathMatchesTests: RandomValueGenerating {
         let pattern = #//users/[0-9]+/#
         let condition = SimulatedURLRequestLoader.RequestConditions.PathMatches(
             pattern: pattern,
-            percentEncoded: true
+            percentEncoded: true,
         )
 
         #expect(String(describing: condition) == ".pathMatches(*****, percentEncoded: true)")
@@ -71,7 +71,7 @@ struct PathMatchesTests: RandomValueGenerating {
         let path = "/users/123"
         let condition: SimulatedURLRequestLoader.RequestConditions.PathMatches = .pathEquals(
             path,
-            percentEncoded: false
+            percentEncoded: false,
         )
 
         #expect(condition.percentEncoded == false)
@@ -88,7 +88,7 @@ struct PathMatchesTests: RandomValueGenerating {
         let pathPattern = #/.*api/v[0-9]+/users/#
         let condition: SimulatedURLRequestLoader.RequestConditions.PathMatches = .pathMatches(
             pathPattern,
-            percentEncoded: true
+            percentEncoded: true,
         )
 
         #expect(condition.percentEncoded == true)

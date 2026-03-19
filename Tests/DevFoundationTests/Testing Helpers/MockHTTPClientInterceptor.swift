@@ -25,7 +25,7 @@ where RequestContext: Sendable {
     func intercept(
         request: URLRequest,
         context: RequestContext,
-        next: (URLRequest, RequestContext) async throws -> HTTPResponse<Data>
+        next: (URLRequest, RequestContext) async throws -> HTTPResponse<Data>,
     ) async throws -> HTTPResponse<Data> {
         try await interceptPrologue?()
 

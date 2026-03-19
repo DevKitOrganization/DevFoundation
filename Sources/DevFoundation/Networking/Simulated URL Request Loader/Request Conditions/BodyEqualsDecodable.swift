@@ -58,13 +58,13 @@ where Self == SimulatedURLRequestLoader.RequestConditions.AnyRequestCondition {
     /// - Returns: The new request condition.
     public static func bodyEquals<Body>(
         _ body: Body,
-        decoder: any TopLevelDecoder<Data> & Sendable = JSONDecoder()
+        decoder: any TopLevelDecoder<Data> & Sendable = JSONDecoder(),
     ) -> Self
     where Body: Decodable & Equatable & Sendable {
         return .init(
             SimulatedURLRequestLoader.RequestConditions.BodyEqualsDecodable(
                 body: body,
-                decoder: decoder
+                decoder: decoder,
             )
         )
     }

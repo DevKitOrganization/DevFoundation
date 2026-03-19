@@ -49,7 +49,7 @@ struct EventBusTests: RandomValueGenerating {
         let identifiableBusEvents = Array(count: randomInt(in: 3 ... 5)) {
             MockIdentifiableBusEvent(
                 id: randomInt(in: 0 ... .max),
-                string: randomAlphanumericString()
+                string: randomAlphanumericString(),
             )
         }
 
@@ -104,7 +104,7 @@ struct EventBusTests: RandomValueGenerating {
         // Post an event and make sure the same event is received multiple times
         let identifiableEvent = MockIdentifiableBusEvent(
             id: randomInt(in: .min ... .max),
-            string: randomAlphanumericString()
+            string: randomAlphanumericString(),
         )
         eventBus.post(identifiableEvent)
         let identifiableArguments = try #require(

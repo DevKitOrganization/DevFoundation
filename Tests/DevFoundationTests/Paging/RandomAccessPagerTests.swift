@@ -161,7 +161,7 @@ struct RandomAccessPagerTests: RandomValueGenerating {
 
         mockLoader.loadPageStub = ThrowingStub(
             defaultReturnValue: page1,
-            resultQueue: [.success(page2), .success(page0)]
+            resultQueue: [.success(page2), .success(page0)],
         )
 
         let pager = RandomAccessPager(pageLoader: mockLoader)
@@ -225,7 +225,7 @@ struct RandomAccessPagerTests: RandomValueGenerating {
 
         mockLoader.loadPageStub = ThrowingStub(
             defaultReturnValue: page2,
-            resultQueue: [.success(page1)]
+            resultQueue: [.success(page1)],
         )
 
         // Add delay to allow both calls to get past cache check

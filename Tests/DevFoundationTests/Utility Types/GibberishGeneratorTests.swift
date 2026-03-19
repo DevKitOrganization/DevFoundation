@@ -26,7 +26,7 @@ struct GibberishGeneratorTests: RandomValueGenerating {
                 sentenceSeparator: ".",
                 sentenceTemplates: ["_"],
                 templateWordToken: "_",
-                words: ["a"]
+                words: ["a"],
             )
         }
 
@@ -38,7 +38,7 @@ struct GibberishGeneratorTests: RandomValueGenerating {
                 sentenceSeparator: ".",
                 sentenceTemplates: ["_"],
                 templateWordToken: "_",
-                words: ["b"]
+                words: ["b"],
             )
         }
     }
@@ -54,7 +54,7 @@ struct GibberishGeneratorTests: RandomValueGenerating {
                 sentenceSeparator: ".",
                 sentenceTemplates: [],
                 templateWordToken: "_",
-                words: ["c"]
+                words: ["c"],
             )
         }
     }
@@ -70,7 +70,7 @@ struct GibberishGeneratorTests: RandomValueGenerating {
                 sentenceSeparator: ".",
                 sentenceTemplates: ["_"],
                 templateWordToken: "",
-                words: ["c"]
+                words: ["c"],
             )
         }
     }
@@ -86,7 +86,7 @@ struct GibberishGeneratorTests: RandomValueGenerating {
                 sentenceSeparator: ".",
                 sentenceTemplates: ["_"],
                 templateWordToken: "_",
-                words: []
+                words: [],
             )
         }
     }
@@ -145,7 +145,7 @@ struct GibberishGeneratorTests: RandomValueGenerating {
         var sentenceCount = 0
         paragraph.enumerateSubstrings(
             in: paragraph.startIndex ..< paragraph.endIndex,
-            options: .bySentences
+            options: .bySentences,
         ) { (sentence, _, _, _) in
             guard let sentence else {
                 Issue.record("sentence is nil")
@@ -179,7 +179,7 @@ struct GibberishGeneratorTests: RandomValueGenerating {
         var sentenceCount = 0
         paragraph.enumerateSubstrings(
             in: paragraph.startIndex ..< paragraph.endIndex,
-            options: .bySentences
+            options: .bySentences,
         ) { (sentence, _, _, _) in
             guard sentence != nil else {
                 Issue.record("sentence is nil")
@@ -204,7 +204,7 @@ struct GibberishGeneratorTests: RandomValueGenerating {
         var sentenceCount = 0
         paragraph1.enumerateSubstrings(
             in: paragraph1.startIndex ..< paragraph1.endIndex,
-            options: .bySentences
+            options: .bySentences,
         ) { (sentence, _, _, _) in
             guard let sentence else {
                 Issue.record("sentence is nil")
@@ -237,14 +237,14 @@ struct GibberishGeneratorTests: RandomValueGenerating {
         let paragraph1 = generator.generateParagraph(using: &localRNG, sentenceCount: expectedSentenceCount)
         let paragraph2 = generator.generateParagraph(
             using: &randomNumberGenerator,
-            sentenceCount: expectedSentenceCount
+            sentenceCount: expectedSentenceCount,
         )
         #expect(paragraph1 == paragraph2)
 
         var sentenceCount = 0
         paragraph1.enumerateSubstrings(
             in: paragraph1.startIndex ..< paragraph1.endIndex,
-            options: .bySentences
+            options: .bySentences,
         ) { (sentence, _, _, _) in
             guard sentence != nil else {
                 Issue.record("sentence is nil")

@@ -30,7 +30,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
         try await confirmation("handler is not called", expectedCount: 0) { (didCallHandler) in
             observer.addHandler(
                 for: MockIdentifiableBusEvent.self,
-                id: randomInt(in: .min ... .max)
+                id: randomInt(in: .min ... .max),
             ) { (_, _) in
                 didCallHandler()
             }
@@ -47,7 +47,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
             observer.addHandler(for: MockBusEvent.self) { (_, _) in didCallHandler() }
             observer.addHandler(
                 for: MockIdentifiableBusEvent.self,
-                id: randomInt(in: .min ..< 0)
+                id: randomInt(in: .min ..< 0),
             ) { (_, _) in
                 didCallHandler()
             }
@@ -55,7 +55,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
             eventBus.post(
                 MockIdentifiableBusEvent(
                     id: randomInt(in: 0 ... .max),
-                    string: randomAlphanumericString()
+                    string: randomAlphanumericString(),
                 )
             )
             try await Task.sleep(for: .milliseconds(500))
@@ -142,7 +142,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
         try await confirmation("removed handler is not called", expectedCount: 0) { (didCallHandler) in
             let handler = observer.addHandler(
                 for: MockIdentifiableBusEvent.self,
-                id: randomInt(in: .min ... .max)
+                id: randomInt(in: .min ... .max),
             ) { (event, context) in
                 didCallHandler()
             }
@@ -150,7 +150,7 @@ struct ContextualBusEventObserverTests: RandomValueGenerating {
             eventBus.post(
                 MockIdentifiableBusEvent(
                     id: randomInt(in: .min ... .max),
-                    string: randomAlphanumericString()
+                    string: randomAlphanumericString(),
                 )
             )
             try await Task.sleep(for: .milliseconds(500))

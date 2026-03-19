@@ -48,7 +48,7 @@ struct ScaledDateProviderTests: RandomValueGenerating {
         #expect(
             scaledProvider.now.isApproximatelyEqual(
                 to: baseStartDate.addingTimeInterval(elapsedTimeInterval * scale),
-                absoluteTolerance: 0.01
+                absoluteTolerance: 0.01,
             )
         )
     }

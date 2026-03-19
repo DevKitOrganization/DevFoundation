@@ -24,7 +24,7 @@ struct Data_ObfuscationTests: RandomValueGenerating {
             _ = try Data().obfuscated(
                 withKey: Data(),
                 keySizeType: UInt8.self,
-                messageSizeType: UInt64.self
+                messageSizeType: UInt64.self,
             )
         }
     }
@@ -39,7 +39,7 @@ struct Data_ObfuscationTests: RandomValueGenerating {
         let obfuscatedMessage = try message.obfuscated(
             withKey: key,
             keySizeType: Int8.self,
-            messageSizeType: Int16.self
+            messageSizeType: Int16.self,
         )
 
         #expect(!obfuscatedMessage.contains(message))
@@ -47,7 +47,7 @@ struct Data_ObfuscationTests: RandomValueGenerating {
 
         let deobfuscatedMessage = try obfuscatedMessage.deobfuscated(
             keySizeType: Int8.self,
-            messageSizeType: Int16.self
+            messageSizeType: Int16.self,
         )
 
         #expect(deobfuscatedMessage == message)
@@ -60,7 +60,7 @@ struct Data_ObfuscationTests: RandomValueGenerating {
             _ = try randomData(count: 256).obfuscated(
                 withKey: randomData(count: 32),
                 keySizeType: UInt8.self,
-                messageSizeType: UInt8.self
+                messageSizeType: UInt8.self,
             )
         }
     }
@@ -72,7 +72,7 @@ struct Data_ObfuscationTests: RandomValueGenerating {
             _ = try randomData(count: 16).obfuscated(
                 withKey: randomData(count: 256),
                 keySizeType: UInt8.self,
-                messageSizeType: Int8.self
+                messageSizeType: Int8.self,
             )
         }
     }
@@ -83,13 +83,13 @@ struct Data_ObfuscationTests: RandomValueGenerating {
         let obfuscatedMessage = try randomData(count: 128).obfuscated(
             withKey: randomData(count: 32),
             keySizeType: UInt8.self,
-            messageSizeType: UInt8.self
+            messageSizeType: UInt8.self,
         )
 
         #expect(throws: DataDeobfuscationError.invalidMessage) {
             _ = try obfuscatedMessage.deobfuscated(
                 keySizeType: UInt8.self,
-                messageSizeType: UInt32.self
+                messageSizeType: UInt32.self,
             )
         }
     }
@@ -100,13 +100,13 @@ struct Data_ObfuscationTests: RandomValueGenerating {
         let obfuscatedMessage = try randomData(count: 128).obfuscated(
             withKey: randomData(count: 32),
             keySizeType: UInt8.self,
-            messageSizeType: UInt8.self
+            messageSizeType: UInt8.self,
         )
 
         #expect(throws: DataDeobfuscationError.invalidKey) {
             _ = try obfuscatedMessage.deobfuscated(
                 keySizeType: UInt16.self,
-                messageSizeType: UInt8.self
+                messageSizeType: UInt8.self,
             )
         }
     }
@@ -117,7 +117,7 @@ struct Data_ObfuscationTests: RandomValueGenerating {
         #expect(throws: DataDeobfuscationError.invalidMessage) {
             _ = try randomData(count: 1).deobfuscated(
                 keySizeType: UInt16.self,
-                messageSizeType: UInt16.self
+                messageSizeType: UInt16.self,
             )
         }
     }
@@ -131,7 +131,7 @@ struct Data_ObfuscationTests: RandomValueGenerating {
         #expect(throws: DataDeobfuscationError.invalidKey) {
             _ = try data.deobfuscated(
                 keySizeType: UInt8.self,
-                messageSizeType: Int.self
+                messageSizeType: Int.self,
             )
         }
     }

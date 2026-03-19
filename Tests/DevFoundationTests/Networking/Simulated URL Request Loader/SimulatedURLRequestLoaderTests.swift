@@ -30,7 +30,7 @@ struct SimulatedURLRequestLoaderTests: RandomValueGenerating {
         let responder = SimulatedURLRequestLoader.Responder(
             requestConditions: [.httpMethodEquals(.get)],
             responseGenerator: mockResponseGenerator,
-            maxResponses: 1
+            maxResponses: 1,
         )
 
         loader.add(responder)
@@ -61,7 +61,7 @@ struct SimulatedURLRequestLoaderTests: RandomValueGenerating {
         loader.respond(
             with: expectedStatusCode,
             body: expectedData,
-            when: []
+            when: [],
         )
 
         let (actualData, response) = try await loader.data(for: urlRequest)
@@ -81,7 +81,7 @@ struct SimulatedURLRequestLoaderTests: RandomValueGenerating {
 
         loader.respond(
             with: expectedError,
-            when: []
+            when: [],
         )
 
         await #expect(throws: expectedError) {
@@ -105,14 +105,14 @@ struct SimulatedURLRequestLoaderTests: RandomValueGenerating {
         loader.respond(
             with: statusCode1,
             body: data1,
-            when: [.httpMethodEquals(.post)]
+            when: [.httpMethodEquals(.post)],
         )
 
         // Second responder matches GET requests
         loader.respond(
             with: statusCode2,
             body: data2,
-            when: [.httpMethodEquals(.get)]
+            when: [.httpMethodEquals(.get)],
         )
 
         let (actualData, response) = try await loader.data(for: urlRequest)
@@ -133,7 +133,7 @@ struct SimulatedURLRequestLoaderTests: RandomValueGenerating {
         loader.respond(
             with: .ok,
             body: randomData(),
-            when: []
+            when: [],
         )
 
         await #expect(throws: SimulatedURLRequestLoader.UnfulfillableRequestError(request: urlRequest)) {

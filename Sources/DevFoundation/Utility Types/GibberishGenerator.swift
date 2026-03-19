@@ -71,11 +71,11 @@ public struct GibberishGenerator: Sendable {
             sentenceSeparator: String,
             sentenceTemplates: [String],
             templateWordToken: String,
-            words: [String]
+            words: [String],
         ) {
             precondition(
                 preferredSentencesPerParagraphRange.lowerBound > 0,
-                "preferredSentencesPerParagraphRange must have a positive lower bound"
+                "preferredSentencesPerParagraphRange must have a positive lower bound",
             )
             precondition(!sentenceTemplates.isEmpty, "sentenceTemplates must be non-empty")
             precondition(!templateWordToken.isEmpty, "templateWordToken must be non-empty")
@@ -171,7 +171,7 @@ public struct GibberishGenerator: Sendable {
     /// - Returns: A sentence using a template and words from the generator’s lexicon.
     public func generateParagraph(
         using randomNumberGenerator: inout some RandomNumberGenerator,
-        sentenceCount: Int? = nil
+        sentenceCount: Int? = nil,
     ) -> String {
         // swift-format-ignore
         let sentenceCount = sentenceCount ?? Int.random(
@@ -315,7 +315,7 @@ extension GibberishGenerator {
                 "volut", "volutpat", "vulla", "vullam", "vullan", "vullandigna", "vullandio", "vulluptat",
                 "vulluptatet", "vulluptatum", "vulput", "vulputat", "vulputate", "vulpute", "wis", "wiscinim", "wisi",
                 "wisis", "wisl", "wismod", "wismodi", "wismoloreet", "wisse", "xer",
-            ]
+            ],
         )
 
         return GibberishGenerator(lexicon: latinLexicon)

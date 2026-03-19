@@ -23,7 +23,7 @@ struct SuccessResponseTemplateTests: RandomValueGenerating {
         let template = SimulatedURLRequestLoader.SuccessResponseTemplate(
             statusCode: statusCode,
             headerItems: headerItems,
-            body: body
+            body: body,
         )
 
         #expect(template.statusCode == statusCode)
@@ -41,7 +41,7 @@ struct SuccessResponseTemplateTests: RandomValueGenerating {
         let template = SimulatedURLRequestLoader.SuccessResponseTemplate(
             statusCode: statusCode,
             headerItems: headerItems,
-            body: body
+            body: body,
         )
 
         let requestComponents = try #require(
@@ -57,7 +57,7 @@ struct SuccessResponseTemplateTests: RandomValueGenerating {
 
         let expectedHeaderFields = Dictionary(
             headerItems.map { ($0.field.rawValue, $0.value) },
-            uniquingKeysWith: { $1 }
+            uniquingKeysWith: { $1 },
         )
         #expect(httpResponse.allHeaderFields as? [String: String] == expectedHeaderFields)
     }
@@ -79,7 +79,7 @@ struct SuccessResponseTemplateTests: RandomValueGenerating {
         let template = SimulatedURLRequestLoader.SuccessResponseTemplate(
             statusCode: statusCode,
             headerItems: headerItems,
-            body: body
+            body: body,
         )
 
         let requestComponents = try #require(

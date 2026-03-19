@@ -28,7 +28,7 @@ import Foundation
 public func withTimeout<Success, Failure>(
     _ timeout: Duration,
     priority: TaskPriority? = nil,
-    operation: @escaping @Sendable () async throws(Failure) -> Success
+    operation: @escaping @Sendable () async throws(Failure) -> Success,
 ) async throws -> Success
 where Success: Sendable, Failure: Error {
     let deadline = ContinuousClock.Instant.now + timeout

@@ -34,7 +34,7 @@ final class MockWebServiceRequest: WebServiceRequest {
         fragment: String?,
         queryItems: [URLQueryItem],
         automaticallyPercentEncodesQueryItems: Bool = true,
-        httpBodyResult: Result<HTTPBody?, any Error>
+        httpBodyResult: Result<HTTPBody?, any Error>,
     ) {
         self.httpMethod = httpMethod
         self.headerItems = headerItems

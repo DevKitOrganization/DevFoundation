@@ -29,6 +29,6 @@ public protocol HTTPClientInterceptor<RequestContext>: Sendable {
         next: (
             _ request: URLRequest,
             _ context: RequestContext
-        ) async throws -> HTTPResponse<Data>
+        ) async throws -> HTTPResponse<Data>,
     ) async throws -> HTTPResponse<Data>
 }

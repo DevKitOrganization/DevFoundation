@@ -20,7 +20,7 @@ struct IdentifiableBySelfTests: RandomValueGenerating {
             bool: randomBool(),
             int: randomInt(in: .min ... .max),
             float64: randomFloat64(in: -10_000 ... 10_000),
-            string: randomAlphanumericString()
+            string: randomAlphanumericString(),
         )
 
         #expect(value.id == value)

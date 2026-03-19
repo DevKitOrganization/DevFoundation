@@ -25,14 +25,14 @@ final class MockRetryPolicy<Input, Output>: HashableByID, RetryPolicy {
         forInput input: Input,
         output: Output,
         attemptCount: Int,
-        previousDelay: Duration?
+        previousDelay: Duration?,
     ) -> Duration? {
         retryDelayStub(
             .init(
                 input: input,
                 output: output,
                 attemptCount: attemptCount,
-                previousDelay: previousDelay
+                previousDelay: previousDelay,
             )
         )
     }

@@ -10,7 +10,6 @@ import Foundation
 
 @testable import DevFoundation
 
-
 final class MockLiveQueryResultsProducer<Results>: LiveQueryResultsProducer where Results: Sendable {
     nonisolated(unsafe) var schedulingStrategyStub: Stub<Void, LiveQuerySchedulingStrategy>!
     nonisolated(unsafe) var canonicalQueryFragmentStub: Stub<String, String?>!

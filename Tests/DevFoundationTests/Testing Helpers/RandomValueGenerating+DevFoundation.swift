@@ -13,7 +13,7 @@ extension RandomValueGenerating {
     mutating func randomDuration() -> Duration {
         return Duration(
             secondsComponent: random(Int64.self, in: 0 ... 10_000_000),
-            attosecondsComponent: random(Int64.self, in: 0 ... 999_999_999_999_999_999)
+            attosecondsComponent: random(Int64.self, in: 0 ... 999_999_999_999_999_999),
         )
     }
 
@@ -35,7 +35,7 @@ extension RandomValueGenerating {
     mutating func randomHTTPHeaderItem() -> HTTPHeaderItem {
         return HTTPHeaderItem(
             field: randomHTTPHeaderField(),
-            value: randomAlphanumericString()
+            value: randomAlphanumericString(),
         )
     }
 
@@ -62,7 +62,7 @@ extension RandomValueGenerating {
             httpVersion: "1.1",
             headerFields: Dictionary(count: randomInt(in: 3 ..< 10)) {
                 (randomAlphanumericString(), randomAlphanumericString())
-            }
+            },
         )!
     }
 

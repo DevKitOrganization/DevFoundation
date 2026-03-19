@@ -112,7 +112,7 @@ struct BodyEqualsDecodableTests: RandomValueGenerating {
         let decoder = PropertyListDecoder()
         let condition: SimulatedURLRequestLoader.RequestConditions.AnyRequestCondition = .bodyEquals(
             body,
-            decoder: decoder
+            decoder: decoder,
         )
 
         let typedCondition = try #require(
@@ -126,7 +126,7 @@ struct BodyEqualsDecodableTests: RandomValueGenerating {
     private mutating func randomBody() -> TestCodable {
         return TestCodable(
             id: randomInt(in: .min ... .max),
-            name: randomAlphanumericString()
+            name: randomAlphanumericString(),
         )
     }
 }

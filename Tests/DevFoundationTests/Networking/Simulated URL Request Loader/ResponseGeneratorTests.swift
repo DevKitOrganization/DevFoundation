@@ -25,11 +25,11 @@ struct ResponseGeneratorTests: RandomValueGenerating {
         let template = SimulatedURLRequestLoader.SuccessResponseTemplate(
             statusCode: statusCode,
             headerItems: headerItems,
-            body: body
+            body: body,
         )
         let generator = SimulatedURLRequestLoader.FixedResponseGenerator(
             result: .success(template),
-            delay: delay
+            delay: delay,
         )
 
         let requestComponents = try #require(
@@ -56,7 +56,7 @@ struct ResponseGeneratorTests: RandomValueGenerating {
 
         let generator = SimulatedURLRequestLoader.FixedResponseGenerator(
             result: .failure(error),
-            delay: delay
+            delay: delay,
         )
 
         let requestComponents = try #require(
@@ -86,7 +86,7 @@ struct ResponseGeneratorTests: RandomValueGenerating {
             with: error,
             delay: delay,
             maxResponses: maxResponses,
-            when: requestConditions
+            when: requestConditions,
         )
 
         #expect(loader.responders == [responder])
@@ -118,7 +118,7 @@ struct ResponseGeneratorTests: RandomValueGenerating {
             body: body,
             delay: delay,
             maxResponses: maxResponses,
-            when: requestConditions
+            when: requestConditions,
         )
 
         #expect(loader.responders == [responder])
@@ -155,7 +155,7 @@ struct ResponseGeneratorTests: RandomValueGenerating {
             encoding: encoding,
             delay: delay,
             maxResponses: maxResponses,
-            when: requestConditions
+            when: requestConditions,
         )
 
         #expect(loader.responders == [responder])
@@ -197,7 +197,7 @@ struct ResponseGeneratorTests: RandomValueGenerating {
             encoder: encoder,
             delay: delay,
             maxResponses: maxResponses,
-            when: requestConditions
+            when: requestConditions,
         )
 
         let expectedBody = try encoder.encode(body)

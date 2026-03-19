@@ -48,7 +48,7 @@ struct WebServiceRequestTests: RandomValueGenerating {
             pathComponents: pathComponents,
             fragment: fragment,
             queryItems: queryItems,
-            httpBodyResult: .success(httpBody)
+            httpBodyResult: .success(httpBody),
         )
 
         let baseURLConfiguration = MockBaseURLConfiguration()
@@ -64,7 +64,7 @@ struct WebServiceRequestTests: RandomValueGenerating {
 
         var urlComponents = URLComponents(
             url: URL(string: pathComponents.map(\.rawValue).joined(separator: "/"), relativeTo: url)!,
-            resolvingAgainstBaseURL: true
+            resolvingAgainstBaseURL: true,
         )!
         urlComponents.fragment = fragment
         urlComponents.queryItems = queryItems
@@ -88,7 +88,7 @@ struct WebServiceRequestTests: RandomValueGenerating {
             pathComponents: [],
             fragment: fragment,
             queryItems: [],
-            httpBodyResult: .success(httpBody)
+            httpBodyResult: .success(httpBody),
         )
 
         let baseURLConfiguration = MockBaseURLConfiguration()
@@ -117,7 +117,7 @@ struct WebServiceRequestTests: RandomValueGenerating {
         let queryItems = Array(count: randomInt(in: 1 ... 5)) {
             URLQueryItem(
                 name: randomQueryString().addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!,
-                value: randomQueryString().addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                value: randomQueryString().addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!,
             )
         }
         let httpBody = randomHTTPBody()
@@ -131,7 +131,7 @@ struct WebServiceRequestTests: RandomValueGenerating {
             fragment: fragment,
             queryItems: queryItems,
             automaticallyPercentEncodesQueryItems: false,
-            httpBodyResult: .success(httpBody)
+            httpBodyResult: .success(httpBody),
         )
 
         let baseURLConfiguration = MockBaseURLConfiguration()
@@ -168,7 +168,7 @@ struct WebServiceRequestTests: RandomValueGenerating {
             pathComponents: [],
             fragment: nil,
             queryItems: [],
-            httpBodyResult: .failure(expectedError)
+            httpBodyResult: .failure(expectedError),
         )
 
         let baseURLConfiguration = MockBaseURLConfiguration()
