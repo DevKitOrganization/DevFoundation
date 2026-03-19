@@ -18,13 +18,13 @@ struct SimulatedURLRequestLoaderIntegrationTests: RandomValueGenerating {
     mutating func webServiceClientWithSimulatedURLRequestLoaderLoadsJSONRequest() async throws {
         let requestBody = TestRequestBody(
             name: randomAlphanumericString(),
-            age: randomInt(in: 1 ... 100)
+            age: randomInt(in: 1 ... 100),
         )
 
         let expectedResponse = TestResponseBody(
             id: randomInt(in: 0 ... .max),
             message: randomAlphanumericString(),
-            active: randomBool()
+            active: randomBool(),
         )
 
         let loader = SimulatedURLRequestLoader()
@@ -34,12 +34,12 @@ struct SimulatedURLRequestLoaderIntegrationTests: RandomValueGenerating {
             when: [
                 .httpMethodEquals(.post),
                 .pathMatches(#/.*/api/test/#, percentEncoded: false),
-            ]
+            ],
         )
 
         let client = WebServiceClient(
             httpClient: HTTPClient<Void>(urlRequestLoader: loader),
-            baseURLConfiguration: SingleBaseURLConfiguration(baseURL: randomURL())
+            baseURLConfiguration: SingleBaseURLConfiguration(baseURL: randomURL()),
         )
 
 
@@ -52,7 +52,7 @@ struct SimulatedURLRequestLoaderIntegrationTests: RandomValueGenerating {
     mutating func webServiceClientWithSimulatedURLRequestLoaderThrowsError() async throws {
         let requestBody = TestRequestBody(
             name: randomAlphanumericString(),
-            age: randomInt(in: 1 ... 100)
+            age: randomInt(in: 1 ... 100),
         )
 
         let error = randomError()
@@ -63,12 +63,12 @@ struct SimulatedURLRequestLoaderIntegrationTests: RandomValueGenerating {
             when: [
                 .httpMethodEquals(.post),
                 .pathMatches(#/.*/api/test/#, percentEncoded: false),
-            ]
+            ],
         )
 
         let client = WebServiceClient(
             httpClient: HTTPClient<Void>(urlRequestLoader: loader),
-            baseURLConfiguration: SingleBaseURLConfiguration(baseURL: randomURL())
+            baseURLConfiguration: SingleBaseURLConfiguration(baseURL: randomURL()),
         )
 
         let request = TestWebServiceRequest(jsonBody: requestBody)
@@ -82,7 +82,7 @@ struct SimulatedURLRequestLoaderIntegrationTests: RandomValueGenerating {
     mutating func webServiceClientWithSimulatedURLRequestLoaderThrowsUnfulfillableError() async throws {
         let requestBody = TestRequestBody(
             name: randomAlphanumericString(),
-            age: randomInt(in: 1 ... 100)
+            age: randomInt(in: 1 ... 100),
         )
 
         let error = randomError()
@@ -90,12 +90,12 @@ struct SimulatedURLRequestLoaderIntegrationTests: RandomValueGenerating {
         let loader = SimulatedURLRequestLoader()
         loader.respond(
             with: error,
-            when: [.httpMethodEquals(.get)]
+            when: [.httpMethodEquals(.get)],
         )
 
         let client = WebServiceClient(
             httpClient: HTTPClient<Void>(urlRequestLoader: loader),
-            baseURLConfiguration: SingleBaseURLConfiguration(baseURL: randomURL())
+            baseURLConfiguration: SingleBaseURLConfiguration(baseURL: randomURL()),
         )
 
         let request = TestWebServiceRequest(jsonBody: requestBody)

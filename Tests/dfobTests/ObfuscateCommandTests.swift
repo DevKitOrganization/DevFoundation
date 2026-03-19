@@ -86,7 +86,7 @@ struct ObfuscateCommandTests: RandomValueGenerating {
         let expectedObfuscatedData = try message.obfuscated(
             withKey: expectedKey,
             keySizeType: UInt8.self,
-            messageSizeType: UInt32.self
+            messageSizeType: UInt32.self,
         )
 
         #expect(obfuscatedData == expectedObfuscatedData)

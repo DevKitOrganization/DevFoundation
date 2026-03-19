@@ -23,7 +23,8 @@ struct Bundle_RemoteContentTests: RandomValueGenerating {
         }
 
         // exercise the test by creating the remote content bundle
-        let bundle = try #require(try Bundle.makeRemoteContentBundle(at: bundleURL, localizedStrings: localizedStrings))
+        let bundle = try #require(
+            try Bundle.makeRemoteContentBundle(at: bundleURL, localizedStrings: localizedStrings))
 
         // expect that the bundle was created at the correct URL with the correct structure
         #expect(bundle.bundleURL.standardizedFileURL == bundleURL.standardizedFileURL)

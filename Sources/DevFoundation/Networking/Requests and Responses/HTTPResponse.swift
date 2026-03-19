@@ -40,7 +40,7 @@ public struct HTTPResponse<Body> {
     ) throws(ErrorType) -> HTTPResponse<MappedBody> {
         return HTTPResponse<MappedBody>(
             httpURLResponse: httpURLResponse,
-            body: try transform(body)
+            body: try transform(body),
         )
     }
 }
@@ -106,7 +106,7 @@ extension HTTPResponse where Body == Data {
     /// - Throws: Throws any errors that occur during decoding.
     public func decode<Value>(
         _ type: Value.Type,
-        decoder: some TopLevelDecoder<Data>
+        decoder: some TopLevelDecoder<Data>,
     ) throws -> HTTPResponse<Value>
     where Value: Decodable {
         return try mapBody { (body) in
@@ -126,7 +126,7 @@ extension HTTPResponse where Body == Data {
     public func decode<Value, Key>(
         _ type: Value.Type,
         decoder: some TopLevelDecoder<Data>,
-        topLevelKey: Key
+        topLevelKey: Key,
     ) throws -> HTTPResponse<Value>
     where Value: Decodable, Key: CodingKey {
         return try mapBody { (body) in

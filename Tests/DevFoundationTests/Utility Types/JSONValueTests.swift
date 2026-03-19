@@ -517,7 +517,7 @@ struct JSONValueTests: RandomValueGenerating {
                     .string("two"),
                     .number(.floatingPoint(3.0)),
                     .null,
-                ],
+                ]
             ),
             .boolean(true),
             .number(.integer(-1)),
@@ -532,7 +532,7 @@ struct JSONValueTests: RandomValueGenerating {
                     "4": .null,
                     "5": [.boolean(false), .number(.integer(1)), .string("two"), .number(.floatingPoint(3.0)), .null],
                     "6": ["key": .string("value")],
-                ],
+                ]
             ),
             .string("string"),
         ]

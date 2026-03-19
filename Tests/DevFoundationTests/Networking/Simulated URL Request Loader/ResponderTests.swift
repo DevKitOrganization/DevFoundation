@@ -24,7 +24,7 @@ struct ResponderTests: RandomValueGenerating {
         let responder = SimulatedURLRequestLoader.Responder(
             requestConditions: requestConditions,
             responseGenerator: responseGenerator,
-            maxResponses: maxResponses
+            maxResponses: maxResponses,
         )
 
         #expect(responder.requestConditions as? [MockRequestCondition] == requestConditions)
@@ -42,7 +42,7 @@ struct ResponderTests: RandomValueGenerating {
         let responder = SimulatedURLRequestLoader.Responder(
             requestConditions: requestConditions,
             responseGenerator: responseGenerator,
-            maxResponses: maxResponses
+            maxResponses: maxResponses,
         )
 
         #expect(!responder.isFulfilled)
@@ -63,7 +63,7 @@ struct ResponderTests: RandomValueGenerating {
         let responder = SimulatedURLRequestLoader.Responder(
             requestConditions: requestConditions,
             responseGenerator: responseGenerator,
-            maxResponses: maxResponses
+            maxResponses: maxResponses,
         )
 
         let requestComponents = try #require(
@@ -91,7 +91,7 @@ struct ResponderTests: RandomValueGenerating {
         let responder = SimulatedURLRequestLoader.Responder(
             requestConditions: requestConditions,
             responseGenerator: responseGenerator,
-            maxResponses: nil
+            maxResponses: nil,
         )
 
         let requestComponents = try #require(
@@ -117,7 +117,7 @@ struct ResponderTests: RandomValueGenerating {
         let responder = SimulatedURLRequestLoader.Responder(
             requestConditions: requestConditions,
             responseGenerator: responseGenerator,
-            maxResponses: randomInt(in: 2 ... 5)
+            maxResponses: randomInt(in: 2 ... 5),
         )
 
         let requestComponents = try #require(
@@ -141,7 +141,7 @@ struct ResponderTests: RandomValueGenerating {
         let responder = SimulatedURLRequestLoader.Responder(
             requestConditions: requestConditions,
             responseGenerator: responseGenerator,
-            maxResponses: 0
+            maxResponses: 0,
         )
 
         let requestComponents = try #require(
@@ -168,7 +168,7 @@ struct ResponderTests: RandomValueGenerating {
         let responder = SimulatedURLRequestLoader.Responder(
             requestConditions: requestConditions,
             responseGenerator: responseGenerator,
-            maxResponses: randomInt(in: 2 ... 5)
+            maxResponses: randomInt(in: 2 ... 5),
         )
 
         let requestComponents = try #require(
@@ -197,7 +197,7 @@ struct ResponderTests: RandomValueGenerating {
         let responder = SimulatedURLRequestLoader.Responder(
             requestConditions: requestConditions,
             responseGenerator: responseGenerator,
-            maxResponses: maxResponses
+            maxResponses: maxResponses,
         )
 
         let requestComponents = try #require(
@@ -241,7 +241,7 @@ struct ResponderTests: RandomValueGenerating {
         let responder = SimulatedURLRequestLoader.Responder(
             requestConditions: requestConditions,
             responseGenerator: responseGenerator,
-            maxResponses: randomInt(in: 2 ... 5)
+            maxResponses: randomInt(in: 2 ... 5),
         )
 
         let requestComponents = try #require(
@@ -270,7 +270,7 @@ struct ResponderTests: RandomValueGenerating {
         let responder = SimulatedURLRequestLoader.Responder(
             requestConditions: requestConditions,
             responseGenerator: responseGenerator,
-            maxResponses: 1
+            maxResponses: 1,
         )
 
         let requestComponents = try #require(

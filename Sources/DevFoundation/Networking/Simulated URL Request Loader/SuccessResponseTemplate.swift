@@ -36,7 +36,7 @@ extension SimulatedURLRequestLoader {
         public init(
             statusCode: HTTPStatusCode,
             headerItems: Set<HTTPHeaderItem>,
-            body: Data
+            body: Data,
         ) {
             self.statusCode = statusCode
             self.headerItems = headerItems
@@ -58,8 +58,8 @@ extension SimulatedURLRequestLoader {
                 httpVersion: nil,
                 headerFields: Dictionary(
                     headerItems.map { ($0.field.rawValue, $0.value) },
-                    uniquingKeysWith: { $1 }
-                )
+                    uniquingKeysWith: { $1 },
+                ),
             )!
 
             return (body, httpURLResponse)

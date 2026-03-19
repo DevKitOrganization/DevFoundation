@@ -139,14 +139,14 @@ struct LiveQueryTests: RandomValueGenerating {
         let canonicalFragment2 = randomAlphanumericString()
         resultsProducer.canonicalQueryFragmentStub = Stub(
             defaultReturnValue: canonicalFragment2,
-            returnValueQueue: [canonicalFragment1]
+            returnValueQueue: [canonicalFragment1],
         )
 
         let initialResults = [randomAlphanumericString()]
         let expectedError = randomError()
         resultsProducer.resultsStub = ThrowingStub(
             defaultError: expectedError,
-            resultQueue: [.success(initialResults)]
+            resultQueue: [.success(initialResults)],
         )
 
         let (signalStream, signaler) = AsyncStream<Void>.makeStream()
@@ -185,14 +185,14 @@ struct LiveQueryTests: RandomValueGenerating {
         let canonicalFragment2 = randomAlphanumericString()
         resultsProducer.canonicalQueryFragmentStub = Stub(
             defaultReturnValue: canonicalFragment2,
-            returnValueQueue: [canonicalFragment1]
+            returnValueQueue: [canonicalFragment1],
         )
 
         let expectedError = randomError()
         let newResults = [randomAlphanumericString()]
         resultsProducer.resultsStub = ThrowingStub(
             defaultReturnValue: newResults,
-            resultQueue: [.failure(expectedError)]
+            resultQueue: [.failure(expectedError)],
         )
 
         let (signalStream, signaler) = AsyncStream<Void>.makeStream()
@@ -232,7 +232,7 @@ struct LiveQueryTests: RandomValueGenerating {
         let canonicalFragment3 = randomAlphanumericString()
         resultsProducer.canonicalQueryFragmentStub = Stub(
             defaultReturnValue: canonicalFragment3,
-            returnValueQueue: [canonicalFragment1, canonicalFragment2]
+            returnValueQueue: [canonicalFragment1, canonicalFragment2],
         )
 
         let results1 = [randomAlphanumericString()]
@@ -240,7 +240,7 @@ struct LiveQueryTests: RandomValueGenerating {
         let results3 = [randomAlphanumericString()]
         resultsProducer.resultsStub = ThrowingStub(
             defaultReturnValue: results3,
-            resultQueue: [.success(results1), .success(results2)]
+            resultQueue: [.success(results1), .success(results2)],
         )
 
         let (signalStream, signaler) = AsyncStream<Void>.makeStream()

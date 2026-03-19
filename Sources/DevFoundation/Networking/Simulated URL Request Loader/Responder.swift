@@ -77,7 +77,7 @@ extension SimulatedURLRequestLoader {
         public init(
             requestConditions: [any RequestCondition],
             responseGenerator: any ResponseGenerator,
-            maxResponses: Int? = 1
+            maxResponses: Int? = 1,
         ) {
             self.requestConditions = requestConditions
             self.responseGenerator = responseGenerator

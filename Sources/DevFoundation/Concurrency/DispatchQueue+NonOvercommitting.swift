@@ -25,14 +25,14 @@ extension DispatchQueue {
         label: String,
         qos: DispatchQoS = .unspecified,
         attributes: DispatchQueue.Attributes = [],
-        autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency = .inherit
+        autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency = .inherit,
     ) -> DispatchQueue {
         return .init(
             label: label,
             qos: qos,
             attributes: attributes,
             autoreleaseFrequency: autoreleaseFrequency,
-            target: .global(qos: qos.qosClass)
+            target: .global(qos: qos.qosClass),
         )
     }
 }

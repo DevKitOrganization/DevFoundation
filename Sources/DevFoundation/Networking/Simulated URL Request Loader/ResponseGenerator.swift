@@ -80,15 +80,15 @@ extension SimulatedURLRequestLoader {
         with error: any Error,
         delay: Duration = .zero,
         maxResponses: Int? = 1,
-        when requestConditions: [any RequestCondition]
+        when requestConditions: [any RequestCondition],
     ) -> some Responder {
         let responder = Responder(
             requestConditions: requestConditions,
             responseGenerator: FixedResponseGenerator(
                 result: .failure(error),
-                delay: delay
+                delay: delay,
             ),
-            maxResponses: maxResponses
+            maxResponses: maxResponses,
         )
         add(responder)
         return responder
@@ -112,7 +112,7 @@ extension SimulatedURLRequestLoader {
         body: Data,
         delay: Duration = .zero,
         maxResponses: Int? = 1,
-        when requestConditions: [any RequestCondition]
+        when requestConditions: [any RequestCondition],
     ) -> some Responder {
         let responder = Responder(
             requestConditions: requestConditions,
@@ -121,12 +121,12 @@ extension SimulatedURLRequestLoader {
                     SuccessResponseTemplate(
                         statusCode: statusCode,
                         headerItems: headerItems,
-                        body: body
+                        body: body,
                     )
                 ),
-                delay: delay
+                delay: delay,
             ),
-            maxResponses: maxResponses
+            maxResponses: maxResponses,
         )
         add(responder)
         return responder
@@ -152,7 +152,7 @@ extension SimulatedURLRequestLoader {
         encoding: String.Encoding = .utf8,
         delay: Duration = .zero,
         maxResponses: Int? = 1,
-        when requestConditions: [any RequestCondition]
+        when requestConditions: [any RequestCondition],
     ) -> some Responder {
         let responder = Responder(
             requestConditions: requestConditions,
@@ -161,12 +161,12 @@ extension SimulatedURLRequestLoader {
                     SuccessResponseTemplate(
                         statusCode: statusCode,
                         headerItems: headerItems,
-                        body: body.data(using: encoding)!
+                        body: body.data(using: encoding)!,
                     )
                 ),
-                delay: delay
+                delay: delay,
             ),
-            maxResponses: maxResponses
+            maxResponses: maxResponses,
         )
         add(responder)
         return responder
@@ -194,7 +194,7 @@ extension SimulatedURLRequestLoader {
         encoder: any TopLevelEncoder<Data> = JSONEncoder(),
         delay: Duration = .zero,
         maxResponses: Int? = 1,
-        when requestConditions: [any RequestCondition]
+        when requestConditions: [any RequestCondition],
     ) -> some Responder
     where Body: Encodable {
         let responder = Responder(
@@ -204,12 +204,12 @@ extension SimulatedURLRequestLoader {
                     SuccessResponseTemplate(
                         statusCode: statusCode,
                         headerItems: headerItems,
-                        body: try! encoder.encode(body)
+                        body: try! encoder.encode(body),
                     )
                 ),
-                delay: delay
+                delay: delay,
             ),
-            maxResponses: maxResponses
+            maxResponses: maxResponses,
         )
         add(responder)
         return responder

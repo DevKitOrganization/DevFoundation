@@ -94,7 +94,7 @@ struct ObfuscateCommand: AsyncParsableCommand {
         case .deobfuscate:
             let deobfuscatedData = try inputData.deobfuscated(
                 keySizeType: UInt8.self,
-                messageSizeType: UInt32.self
+                messageSizeType: UInt32.self,
             )
             try outputFileHandle.write(contentsOf: deobfuscatedData)
         case .obfuscate:

@@ -12,7 +12,7 @@ extension Date {
     func isApproximatelyEqual(to date: Date, absoluteTolerance: TimeInterval) -> Bool {
         return timeIntervalSinceReferenceDate.isApproximatelyEqual(
             to: date.timeIntervalSinceReferenceDate,
-            absoluteTolerance: absoluteTolerance
+            absoluteTolerance: absoluteTolerance,
         )
     }
 }

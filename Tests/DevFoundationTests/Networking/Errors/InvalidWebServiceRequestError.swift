@@ -21,7 +21,7 @@ struct InvalidWebServiceRequestErrorTests: RandomValueGenerating {
         for underlyingError in [nil, randomError()] {
             let error = InvalidWebServiceRequestError(
                 debugDescription: debugDescription,
-                underlyingError: underlyingError
+                underlyingError: underlyingError,
             )
             #expect(error.debugDescription == debugDescription)
             #expect(error.underlyingError as? MockError == underlyingError)

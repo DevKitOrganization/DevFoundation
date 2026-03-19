@@ -22,7 +22,7 @@ extension Data {
     public func obfuscated<MessageSize, KeySize>(
         withKey key: Data,
         keySizeType: KeySize.Type,
-        messageSizeType: MessageSize.Type
+        messageSizeType: MessageSize.Type,
     ) throws -> Data
     where
         KeySize: FixedWidthInteger,
@@ -55,7 +55,7 @@ extension Data {
     ///   - messageSizeType: The message size type used to obfuscate the data.
     public func deobfuscated<MessageSize, KeySize>(
         keySizeType: KeySize.Type,
-        messageSizeType: MessageSize.Type
+        messageSizeType: MessageSize.Type,
     ) throws -> Data
     where
         KeySize: FixedWidthInteger & Sendable,
@@ -88,7 +88,7 @@ extension Data {
     ///   be extracted.
     private func extractFieldData<FieldSize>(
         at index: Int,
-        sizeType: FieldSize.Type
+        sizeType: FieldSize.Type,
     ) -> (Data, Int)?
     where FieldSize: FixedWidthInteger & Sendable {
         let fieldSizeEndIndex = index + FieldSize.byteWidth

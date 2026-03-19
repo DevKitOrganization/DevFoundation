@@ -40,7 +40,7 @@ extension Bundle {
     ///   - localizedStrings: The localized strings to store in the bundle.
     public static func makeRemoteContentBundle(
         at bundleURL: URL,
-        localizedStrings: [String: String]
+        localizedStrings: [String: String],
     ) throws -> Bundle? {
         // We write directly into the resources directory rather than putting it in an lproj, as we don’t actually
         // know language the strings are in.

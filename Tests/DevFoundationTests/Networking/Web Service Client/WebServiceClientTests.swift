@@ -21,7 +21,7 @@ struct WebServiceClientTests: RandomValueGenerating {
 
         let client = WebServiceClient(
             httpClient: httpClient,
-            baseURLConfiguration: baseURLConfiguration
+            baseURLConfiguration: baseURLConfiguration,
         )
 
         #expect(client.httpClient === httpClient)
@@ -44,13 +44,13 @@ struct WebServiceClientTests: RandomValueGenerating {
             pathComponents: [],
             fragment: nil,
             queryItems: [],
-            httpBodyResult: .failure(expectedError)
+            httpBodyResult: .failure(expectedError),
         )
 
         let httpClient = HTTPClient<String>(urlRequestLoader: MockURLRequestLoader())
         let client = WebServiceClient(
             httpClient: httpClient,
-            baseURLConfiguration: baseURLConfiguration
+            baseURLConfiguration: baseURLConfiguration,
         )
 
         do {
@@ -79,7 +79,7 @@ struct WebServiceClientTests: RandomValueGenerating {
             pathComponents: [],
             fragment: nil,
             queryItems: [],
-            httpBodyResult: .success(randomHTTPBody())
+            httpBodyResult: .success(randomHTTPBody()),
         )
 
         let expectedError = randomError()
@@ -89,7 +89,7 @@ struct WebServiceClientTests: RandomValueGenerating {
         let httpClient = HTTPClient<String>(urlRequestLoader: urlRequestLoader)
         let client = WebServiceClient(
             httpClient: httpClient,
-            baseURLConfiguration: baseURLConfiguration
+            baseURLConfiguration: baseURLConfiguration,
         )
 
         await #expect(throws: expectedError) {
@@ -115,7 +115,7 @@ struct WebServiceClientTests: RandomValueGenerating {
             pathComponents: [],
             fragment: nil,
             queryItems: [],
-            httpBodyResult: .success(randomHTTPBody())
+            httpBodyResult: .success(randomHTTPBody()),
         )
         let expectedError = randomError()
         request.mapResponseStub = ThrowingStub(defaultError: expectedError)
@@ -127,7 +127,7 @@ struct WebServiceClientTests: RandomValueGenerating {
         let httpClient = HTTPClient<String>(urlRequestLoader: urlRequestLoader)
         let client = WebServiceClient(
             httpClient: httpClient,
-            baseURLConfiguration: baseURLConfiguration
+            baseURLConfiguration: baseURLConfiguration,
         )
 
         await #expect(throws: expectedError) {
@@ -154,7 +154,7 @@ struct WebServiceClientTests: RandomValueGenerating {
             pathComponents: Array(count: randomInt(in: 1 ... 5)) { randomURLPathComponent() },
             fragment: randomOptional(randomAlphanumericString()),
             queryItems: Array(count: randomInt(in: 1 ... 5)) { randomURLQueryItem() },
-            httpBodyResult: .success(randomHTTPBody())
+            httpBodyResult: .success(randomHTTPBody()),
         )
         let expectedMappedResponse = randomBasicLatinString()
         request.mapResponseStub = ThrowingStub(defaultReturnValue: expectedMappedResponse)
@@ -167,7 +167,7 @@ struct WebServiceClientTests: RandomValueGenerating {
         let httpClient = HTTPClient<String>(urlRequestLoader: urlRequestLoader)
         let client = WebServiceClient(
             httpClient: httpClient,
-            baseURLConfiguration: baseURLConfiguration
+            baseURLConfiguration: baseURLConfiguration,
         )
 
         let response = try await usesLoadUsingSyntax ? request.load(using: client) : client.load(request)

@@ -27,7 +27,7 @@ struct HTTPClientTests: RandomValueGenerating {
         let client = HTTPClient(
             urlRequestLoader: urlRequestLoader,
             interceptors: interceptors,
-            retryPolicy: retryPolicy
+            retryPolicy: retryPolicy,
         )
 
         #expect(client.urlRequestLoader as? MockURLRequestLoader === urlRequestLoader)
@@ -55,7 +55,7 @@ struct HTTPClientTests: RandomValueGenerating {
         urlRequestLoader.dataStub = ThrowingStub(
             defaultReturnValue: (
                 expectedResponse.body,
-                expectedResponse.httpURLResponse
+                expectedResponse.httpURLResponse,
             )
         )
 
@@ -99,18 +99,18 @@ struct HTTPClientTests: RandomValueGenerating {
 
         urlRequestLoader.dataStub = ThrowingStub(
             defaultReturnValue: (successResponse.body, successResponse.httpURLResponse),
-            resultQueue: [.failure(randomError())]
+            resultQueue: [.failure(randomError())],
         )
 
         let retryPolicy = TestRetryPolicy()
         retryPolicy.retryDelayStub = Stub(
             defaultReturnValue: nil,
-            returnValueQueue: [Duration.seconds(1)]
+            returnValueQueue: [Duration.seconds(1)],
         )
 
         let client = HTTPClient<String>(
             urlRequestLoader: urlRequestLoader,
-            retryPolicy: retryPolicy
+            retryPolicy: retryPolicy,
         )
 
         let request = randomURLRequest()
@@ -166,7 +166,7 @@ struct HTTPClientTests: RandomValueGenerating {
             url: randomURL(),
             mimeType: nil,
             expectedContentLength: randomInt(in: 100 ... 1000),
-            textEncodingName: nil
+            textEncodingName: nil,
         )
         urlRequestLoader.dataStub = ThrowingStub(defaultReturnValue: (randomData(), nonHTTPResponse))
 

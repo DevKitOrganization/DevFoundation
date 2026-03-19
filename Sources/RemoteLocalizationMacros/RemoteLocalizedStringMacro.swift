@@ -12,7 +12,7 @@ import SwiftSyntaxMacros
 public struct RemoteLocalizedStringMacro: ExpressionMacro {
     public static func expansion(
         of node: some FreestandingMacroExpansionSyntax,
-        in context: some MacroExpansionContext
+        in context: some MacroExpansionContext,
     ) throws -> ExprSyntax {
         guard
             let firstArgument = node.arguments.first,
@@ -32,7 +32,7 @@ public struct RemoteLocalizedStringMacro: ExpressionMacro {
         argumentsArray.append(
             LabeledExprSyntax(
                 expression: ExprSyntax(StringLiteralExprSyntax(content: keyString)),
-                trailingComma: .commaToken()
+                trailingComma: .commaToken(),
             )
         )
 
@@ -42,7 +42,7 @@ public struct RemoteLocalizedStringMacro: ExpressionMacro {
                 label: .identifier("key"),
                 colon: .colonToken(),
                 expression: ExprSyntax(StringLiteralExprSyntax(content: keyString)),
-                trailingComma: .commaToken()
+                trailingComma: .commaToken(),
             )
         )
 
@@ -60,7 +60,7 @@ public struct RemoteLocalizedStringMacro: ExpressionMacro {
                     macroName: .identifier("bundle"),
                     leftParen: .leftParenToken(),
                     arguments: LabeledExprListSyntax([]),
-                    rightParen: .rightParenToken()
+                    rightParen: .rightParenToken(),
                 )
             )
         }
@@ -69,7 +69,7 @@ public struct RemoteLocalizedStringMacro: ExpressionMacro {
             LabeledExprSyntax(
                 label: .identifier("bundle"),
                 colon: .colonToken(),
-                expression: bundleExpression
+                expression: bundleExpression,
             )
         )
 
@@ -80,7 +80,7 @@ public struct RemoteLocalizedStringMacro: ExpressionMacro {
                 calledExpression: DeclReferenceExprSyntax(baseName: .identifier("remoteLocalizedString")),
                 leftParen: .leftParenToken(),
                 arguments: arguments,
-                rightParen: .rightParenToken()
+                rightParen: .rightParenToken(),
             )
         )
     }

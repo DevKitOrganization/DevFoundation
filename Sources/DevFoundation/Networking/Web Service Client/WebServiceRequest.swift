@@ -159,7 +159,7 @@ extension WebServiceRequest {
         } catch {
             throw InvalidWebServiceRequestError(
                 debugDescription: "could not create the request’s HTTP body",
-                underlyingError: error
+                underlyingError: error,
             )
         }
 

@@ -101,12 +101,12 @@ struct HTTPResponseTests: RandomValueGenerating {
             array: Array(count: 5) { randomFloat64(in: 0 ... 100) },
             bool: randomBool(),
             int: randomInt(in: -100 ... 100),
-            string: randomBasicLatinString()
+            string: randomBasicLatinString(),
         )
 
         let response = HTTPResponse(
             httpURLResponse: randomHTTPURLResponse(),
-            body: try JSONEncoder().encode(mockCodable)
+            body: try JSONEncoder().encode(mockCodable),
         )
 
         let decodedResponse = try response.decode(MockCodable.self, decoder: JSONDecoder())
@@ -130,18 +130,18 @@ struct HTTPResponseTests: RandomValueGenerating {
             array: Array(count: 5) { randomFloat64(in: 0 ... 100) },
             bool: randomBool(),
             int: randomInt(in: -100 ... 100),
-            string: randomBasicLatinString()
+            string: randomBasicLatinString(),
         )
 
         let response = HTTPResponse(
             httpURLResponse: randomHTTPURLResponse(),
-            body: try JSONEncoder().encode(mockCodable)
+            body: try JSONEncoder().encode(mockCodable),
         )
 
         let decodedResponse = try response.decode(
             [Float64].self,
             decoder: JSONDecoder(),
-            topLevelKey: MockCodable.CodingKeys.array
+            topLevelKey: MockCodable.CodingKeys.array,
         )
         #expect(decodedResponse == response.mapBody { _ in mockCodable.array })
     }

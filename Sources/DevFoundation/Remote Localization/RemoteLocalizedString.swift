@@ -25,7 +25,7 @@ public func remoteLocalizedString(
     _ keyAndValue: String.LocalizationValue,
     key: String,
     bundle: Bundle,
-    remoteContentBundle: Bundle? = .defaultRemoteContentBundle
+    remoteContentBundle: Bundle? = .defaultRemoteContentBundle,
 ) -> String {
     if let remoteContentBundle {
         let value = String(localized: keyAndValue, bundle: remoteContentBundle)

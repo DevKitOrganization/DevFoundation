@@ -43,7 +43,7 @@ public struct ExpiringValue<Value> {
     public init(
         _ value: Value,
         dateProvider: any DateProvider = DateProviders.current,
-        lifetimeDuration: Duration
+        lifetimeDuration: Duration,
     ) {
         let now = dateProvider.now
         self.value = value
@@ -62,7 +62,7 @@ public struct ExpiringValue<Value> {
     public init(
         _ value: Value,
         dateProvider: any DateProvider = DateProviders.current,
-        lifetimeDuration: TimeInterval
+        lifetimeDuration: TimeInterval,
     ) {
         self.init(value, dateProvider: dateProvider, lifetimeDuration: .seconds(lifetimeDuration))
     }

@@ -33,7 +33,7 @@ struct TopLevelCodingTests: RandomValueGenerating {
             array: [],
             bool: randomBool(),
             int: randomInt(in: .min ... .max),
-            string: expectedString
+            string: expectedString,
         )
 
         let encodedData = try PropertyListEncoder().encode(mockCodable)
@@ -41,7 +41,7 @@ struct TopLevelCodingTests: RandomValueGenerating {
         let actualString = try decoder.decode(
             String.self,
             from: encodedData,
-            topLevelKey: MockCodable.CodingKeys.string
+            topLevelKey: MockCodable.CodingKeys.string,
         )
         #expect(actualString == expectedString)
 

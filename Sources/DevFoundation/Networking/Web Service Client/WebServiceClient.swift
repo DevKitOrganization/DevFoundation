@@ -65,7 +65,7 @@ where BaseURLConfiguration: BaseURLConfiguring, RequestContext: Sendable {
         let urlRequest = try request.urlRequest(with: baseURLConfiguration)
         let response = try await httpClient.load(
             urlRequest,
-            context: request.context
+            context: request.context,
         )
         return try request.mapResponse(response)
     }

@@ -22,21 +22,21 @@ struct HashableByIDTests: RandomValueGenerating {
             id: equalID,
             irrelevantBool: randomBool(),
             irrelevantInt: randomInt(in: .min ... .max),
-            irrelevantString: randomBasicLatinString()
+            irrelevantString: randomBasicLatinString(),
         )
 
         let equal2 = MockHashableByID(
             id: equalID,
             irrelevantBool: randomBool(),
             irrelevantInt: randomInt(in: .min ... .max),
-            irrelevantString: randomBasicLatinString()
+            irrelevantString: randomBasicLatinString(),
         )
 
         let unequal = MockHashableByID(
             id: equalID + 1,
             irrelevantBool: randomBool(),
             irrelevantInt: randomInt(in: .min ... .max),
-            irrelevantString: randomBasicLatinString()
+            irrelevantString: randomBasicLatinString(),
         )
 
         #expect(equal1 == equal2)

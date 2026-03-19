@@ -78,7 +78,7 @@ public final class SequentialPager<Page>: SequentialPaging where Page: OffsetPag
     public init(pageLoader: some SequentialPageLoader<Page>, loadedPages: [Page] = []) {
         precondition(
             loadedPages.enumerated().allSatisfy { (index, page) in page.pageOffset == index },
-            "loaded pages must start at offset 0 and be consecutive"
+            "loaded pages must start at offset 0 and be consecutive",
         )
 
         self.pageLoader = pageLoader

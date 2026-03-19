@@ -14,6 +14,6 @@ extension DispatchQueue {
     /// queue uses `.utility` for its quality-of-service.
     public static let utility: DispatchQueue = .makeNonOvercommitting(
         label: reverseDNSPrefixed("utility"),
-        qos: .utility
+        qos: .utility,
     )
 }

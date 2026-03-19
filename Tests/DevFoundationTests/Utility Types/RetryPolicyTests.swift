@@ -24,7 +24,7 @@ struct RetryPolicyTests: RandomValueGenerating {
         let policy = PredefinedDelaySequenceRetryPolicy<String, String>(
             delays: delays,
             maxRetries: maxRetries,
-            retryPredicate: { _, _ in true }
+            retryPredicate: { _, _ in true },
         )
 
         #expect(policy.delays == delays)
@@ -40,7 +40,7 @@ struct RetryPolicyTests: RandomValueGenerating {
 
         let policy = PredefinedDelaySequenceRetryPolicy<String, String>(
             delays: delays,
-            retryPredicate: { _, _ in true }
+            retryPredicate: { _, _ in true },
         )
 
         #expect(policy.delays == delays)
@@ -53,14 +53,14 @@ struct RetryPolicyTests: RandomValueGenerating {
         let policy = PredefinedDelaySequenceRetryPolicy<String, String>(
             delays: [],
             maxRetries: 1,
-            retryPredicate: { _, _ in true }
+            retryPredicate: { _, _ in true },
         )
 
         let delay = policy.retryDelay(
             forInput: randomAlphanumericString(),
             output: randomAlphanumericString(),
             attemptCount: 1,
-            previousDelay: nil
+            previousDelay: nil,
         )
 
         #expect(delay == .zero)
@@ -73,14 +73,14 @@ struct RetryPolicyTests: RandomValueGenerating {
         let policy = PredefinedDelaySequenceRetryPolicy<String, String>(
             delays: [singleDelay],
             maxRetries: 2,
-            retryPredicate: { _, _ in true }
+            retryPredicate: { _, _ in true },
         )
 
         let delay = policy.retryDelay(
             forInput: randomAlphanumericString(),
             output: randomAlphanumericString(),
             attemptCount: 1,
-            previousDelay: nil
+            previousDelay: nil,
         )
 
         #expect(delay == singleDelay)
@@ -93,7 +93,7 @@ struct RetryPolicyTests: RandomValueGenerating {
         let policy = PredefinedDelaySequenceRetryPolicy<String, String>(
             delays: delays,
             maxRetries: 5,
-            retryPredicate: { _, _ in true }
+            retryPredicate: { _, _ in true },
         )
 
         for (i, expected) in delays.enumerated() {
@@ -101,7 +101,7 @@ struct RetryPolicyTests: RandomValueGenerating {
                 forInput: randomAlphanumericString(),
                 output: randomAlphanumericString(),
                 attemptCount: i + 1,
-                previousDelay: i == 0 ? nil : delays[i - 1]
+                previousDelay: i == 0 ? nil : delays[i - 1],
             )
             #expect(actual == expected)
         }
@@ -112,14 +112,14 @@ struct RetryPolicyTests: RandomValueGenerating {
     mutating func testPredefinedDelaySequenceRetryPredicateFalse() {
         let policy = PredefinedDelaySequenceRetryPolicy<String, String>(
             delays: [Duration.seconds(1)],
-            retryPredicate: { _, _ in false }
+            retryPredicate: { _, _ in false },
         )
 
         let delay = policy.retryDelay(
             forInput: randomAlphanumericString(),
             output: randomAlphanumericString(),
             attemptCount: 1,
-            previousDelay: nil
+            previousDelay: nil,
         )
 
         #expect(delay == nil)
@@ -130,14 +130,14 @@ struct RetryPolicyTests: RandomValueGenerating {
     mutating func testPredefinedDelaySequenceMaxAttemptsExceeded() {
         let policy = PredefinedDelaySequenceRetryPolicy<String, String>(
             delays: [Duration.seconds(1)],
-            retryPredicate: { _, _ in true }
+            retryPredicate: { _, _ in true },
         )
 
         let delay = policy.retryDelay(
             forInput: randomAlphanumericString(),
             output: randomAlphanumericString(),
             attemptCount: 2,
-            previousDelay: nil
+            previousDelay: nil,
         )
 
         #expect(delay == nil)
@@ -175,7 +175,7 @@ struct RetryPolicyTests: RandomValueGenerating {
             forInput: input,
             output: output,
             attemptCount: attemptCount,
-            previousDelay: previousDelay
+            previousDelay: previousDelay,
         )
 
         #expect(delay == expectedDelay)
@@ -215,7 +215,7 @@ struct RetryPolicyTests: RandomValueGenerating {
             forInput: input,
             output: output,
             attemptCount: attemptCount,
-            previousDelay: previousDelay
+            previousDelay: previousDelay,
         )
 
         #expect(delay == nil)

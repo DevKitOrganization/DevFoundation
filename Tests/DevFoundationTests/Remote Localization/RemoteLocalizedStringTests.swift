@@ -46,7 +46,7 @@ struct LocalizationTests: RandomValueGenerating {
             String.LocalizationValue(localKey),
             key: localKey,
             bundle: localBundle,
-            remoteContentBundle: remoteBundle
+            remoteContentBundle: remoteBundle,
         )
 
         #expect(result == localValue)
