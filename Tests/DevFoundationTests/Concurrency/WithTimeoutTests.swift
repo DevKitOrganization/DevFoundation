@@ -32,8 +32,8 @@ struct WithTimeoutTests: RandomValueGenerating {
         let result = randomInt(in: .min ... .max)
 
         await #expect(throws: CancellationError.self) {
-            _ = try await withTimeout(.milliseconds(500)) {
-                try await Task.sleep(for: .milliseconds(1000))
+            _ = try await withTimeout(.milliseconds(100)) {
+                try await Task.sleep(for: .seconds(10))
                 return result
             }
         }
