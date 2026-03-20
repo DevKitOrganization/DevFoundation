@@ -6,9 +6,24 @@ on:
   push:
     branches: ["main"]
 
+env:
+  XCODE_VERSION: 26.3
+
 jobs:
+  lint:
+    name: Lint
+    runs-on: macos-26
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Select Xcode ${{ env.XCODE_VERSION }}
+        run: sudo xcode-select -s /Applications/Xcode_"$XCODE_VERSION".app
+      - name: Lint
+        run: Scripts/lint
+
   build-and-test:
     name: Build and Test (${{ matrix.platform }})
+    needs: lint
     runs-on: macos-26
     strategy:
       fail-fast: false
@@ -31,7 +46,6 @@ jobs:
       XCODE_DESTINATION: ${{ matrix.xcode_destination }}
       XCODE_TEST_PLAN: AllTests
       XCODE_TEST_PRODUCTS_PATH: .build/DevFoundation.xctestproducts
-      XCODE_VERSION: 26.3
 
     steps:
       - name: Select Xcode ${{ env.XCODE_VERSION }}
@@ -53,10 +67,6 @@ jobs:
         with:
           path: ${{ env.XCODE_TEST_PRODUCTS_PATH }}
           key: cache-xctestproducts-${{ github.workflow }}-${{ matrix.platform }}-${{ github.sha }}
-
-      - name: Lint
-        if: steps.cache-xctestproducts-restore.outputs.cache-hit != 'true'
-        run: Scripts/lint
 
       - uses: irgaly/xcode-cache@v1
         if: steps.cache-xctestproducts-restore.outputs.cache-hit != 'true'
