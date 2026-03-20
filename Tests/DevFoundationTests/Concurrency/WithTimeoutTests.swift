@@ -69,9 +69,9 @@ struct WithTimeoutTests: RandomValueGenerating {
         _ = await confirmation { (operationStarted) in
             await confirmation(expectedCount: 0) { (operationFinished) in
                 await #expect(throws: CancellationError.self) {
-                    try await withTimeout(.milliseconds(10)) {
+                    try await withTimeout(.milliseconds(100)) {
                         operationStarted()
-                        try await Task.sleep(for: .milliseconds(500))
+                        try await Task.sleep(for: .seconds(10))
                         operationFinished()
                     }
                 }
