@@ -8,6 +8,5 @@ REPO_ROOT="$(dirname "$SCRIPT_DIR")"
 
 # Run swift format with --in-place to fix formatting issues
 swift format --in-place --recursive \
-    "$REPO_ROOT/Packages/" \
     "$REPO_ROOT/Sources/" \
     "$REPO_ROOT/Tests/"

@@ -1,7 +1,6 @@
 # Markdown Style Guide
 
-This document defines the Markdown formatting standards for documentation in the Shopper iOS
-codebase.
+This document defines the Markdown formatting standards for documentation in this project.
 
 
 ## General Formatting

@@ -6,46 +6,22 @@ on:
   push:
     branches: ["main"]
 
-env:
-  XCODE_VERSION: 26.0.1
-
 jobs:
-  lint:
-    name: Lint
-    runs-on: macos-26
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Select Xcode ${{ env.XCODE_VERSION }}
-        run: sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app
-      - name: Lint
-        run: |
-          Scripts/lint
-
   build-and-test:
     name: Build and Test (${{ matrix.platform }})
-    needs: lint
     runs-on: macos-26
     strategy:
       fail-fast: false
       matrix:
         include:
-#           - platform: iOS
-#             xcode_destination: "platform=iOS Simulator,name=GitHub_Actions_Simulator"
-#             simulator_device_type: "com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro"
-#             simulator_runtime: "com.apple.CoreSimulator.SimRuntime.iOS-26-0"
+          - platform: iOS
+            xcode_destination: "platform=iOS Simulator,name=iPhone 17 Pro"
           - platform: macOS
             xcode_destination: "platform=macOS,arch=arm64"
-#             simulator_device_type: ""
-#             simulator_runtime: ""
-#           - platform: tvOS
-#             xcode_destination: "platform=tvOS Simulator,name=GitHub_Actions_Simulator"
-#             simulator_device_type: "com.apple.CoreSimulator.SimDeviceType.Apple-TV-4K-3rd-generation-4K"
-#             simulator_runtime: "com.apple.CoreSimulator.SimRuntime.tvOS-26-0"
-#           - platform: watchOS
-#             xcode_destination: "platform=watchOS Simulator,name=GitHub_Actions_Simulator"
-#             simulator_device_type: "com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-10-46mm"
-#             simulator_runtime: "com.apple.CoreSimulator.SimRuntime.watchOS-26-0"
+          - platform: tvOS
+            xcode_destination: "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)"
+          - platform: watchOS
+            xcode_destination: "platform=watchOS Simulator,name=Apple Watch Series 11 (46mm)"
 
     env:
       DEV_BUILDS: DevBuilds/Sources
@@ -55,16 +31,17 @@ jobs:
       XCODE_DESTINATION: ${{ matrix.xcode_destination }}
       XCODE_TEST_PLAN: AllTests
       XCODE_TEST_PRODUCTS_PATH: .build/DevFoundation.xctestproducts
+      XCODE_VERSION: 26.3
 
     steps:
       - name: Select Xcode ${{ env.XCODE_VERSION }}
-        run: sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app
+        run: sudo xcode-select -s /Applications/Xcode_"$XCODE_VERSION".app
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Checkout DevBuilds
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: DevKitOrganization/DevBuilds
           path: DevBuilds
@@ -72,22 +49,25 @@ jobs:
       - name: Restore XCTestProducts
         if: github.event_name != 'push'
         id: cache-xctestproducts-restore
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ${{ env.XCODE_TEST_PRODUCTS_PATH }}
-          key: cache-xctestproducts-${{ github.workflow }}-${{ matrix.platform }}-${{ env.XCODE_VERSION }}-${{ github.sha }}
+          key: cache-xctestproducts-${{ github.workflow }}-${{ matrix.platform }}-${{ github.sha }}
+
+      - name: Lint
+        if: steps.cache-xctestproducts-restore.outputs.cache-hit != 'true'
+        run: Scripts/lint
 
       - uses: irgaly/xcode-cache@v1
         if: steps.cache-xctestproducts-restore.outputs.cache-hit != 'true'
         with:
-          key: xcode-cache-deriveddata-${{ github.workflow }}-${{ matrix.platform }}-${{ env.XCODE_VERSION }}-${{ github.sha }}
+          key: xcode-cache-deriveddata-${{ env.XCODE_VERSION }}-${{ github.workflow }}-${{ matrix.platform }}-${{ github.sha }}
           restore-keys: |
-            xcode-cache-deriveddata-${{ github.workflow }}-${{ matrix.platform }}-
-            xcode-cache-deriveddata-
+            xcode-cache-deriveddata-${{ env.XCODE_VERSION }}-${{ github.workflow }}-${{ matrix.platform }}-
+            xcode-cache-deriveddata-${{ env.XCODE_VERSION }}
           deriveddata-directory: .build/DerivedData
           sourcepackages-directory: .build/DerivedData/SourcePackages
           swiftpm-package-resolved-file: Package.resolved
-          verbose: true
 
       - name: Build for Testing
         id: build-for-testing
@@ -100,8 +80,8 @@ jobs:
         run: ${{ env.DEV_BUILDS }}/build_and_test.sh --action test-without-building
 
       - name: Save XCTestProducts
-        if: failure() && steps.cache-xctestproducts-restore.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v4
+        if: (cancelled() || failure()) && steps.cache-xctestproducts-restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v5
         with:
           path: ${{ env.XCODE_TEST_PRODUCTS_PATH }}
           key: ${{ steps.cache-xctestproducts-restore.outputs.cache-primary-key }}
@@ -124,7 +104,7 @@ jobs:
 
       - name: Upload Logs and XCResults
         if: success() || failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Logs_and_XCResults-${{ matrix.platform }}
           path: |
@@ -134,7 +114,7 @@ jobs:
 
       - name: Upload xccovPretty output
         if: github.event_name != 'push'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: xccovPrettyOutput-${{ matrix.platform }}
           path: .build/xccovPretty-${{ matrix.platform }}.output
@@ -150,7 +130,7 @@ jobs:
 
     steps:
       - name: Download xccovPretty output
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: xccovPrettyOutput-macOS
 
