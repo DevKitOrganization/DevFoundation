@@ -26,13 +26,9 @@ The repository uses GitHub Actions for CI/CD with the workflow in
 `.github/workflows/VerifyChanges.yaml`. The workflow:
 
   - Lints code on PRs using `swift format`
-  - Builds and tests on macOS only (iOS, tvOS, and watchOS builds disabled due to poor
-    stability and performance in GitHub Actions)
+  - Builds and tests on iOS, macOS, tvOS, and watchOS
   - Generates code coverage reports using xccovPretty
-  - Requires Xcode 16.4 and macOS 15 runners
-
-**Note**: For comprehensive cross-platform testing, use `Scripts/test-all-platforms` locally
-or the pre-push git hook which runs all platform tests before pushing.
+  - Uses Xcode 26.3 and macOS 26 runners
 
 
 ## Architecture Overview
@@ -211,6 +207,36 @@ Follow the project's Markdown Style Guide:
   - **Code blocks**: Use 4-space indentation, not fenced blocks
   - **Lists**: Use `-` for bullets, align continuation lines with text
   - **Spacing**: 2 blank lines between major sections, 1 after headers
+  - **Terminology**: Use "function" over "method", "type" over "class"
+
+
+## Code Formatting and Spacing
+
+The project follows strict spacing conventions for readability and consistency:
+
+  - **2 blank lines between major sections** including:
+    - Between the last property declaration and first function declaration
+    - Between all function/computed property implementations at the same scope level
+    - Between top-level type declarations (class, struct, enum, protocol, extension)
+    - Before MARK comments that separate major sections
+  - **1 blank line** for minor separations:
+    - Between property declarations and nested type definitions
+    - Between all function definitions in protocols
+    - After headers in documentation
+    - After MARK comments that separate major sections
+  - **File endings**: All Swift files must end with exactly one blank line
+
+
+## Documentation Style
+
+When writing Markdown documentation, reference `@Documentation/MarkdownStyleGuide.md` to
+ensure consistent formatting, structure, and style across all project documentation. Key
+standards:
+
+  - **Line Length**: 100 characters maximum
+  - **Code Blocks**: Use 4-space indentation instead of fenced blocks
+  - **Lists**: Use `-` for bullets with proper indentation alignment
+  - **Spacing**: 2 blank lines between major sections, 1 blank line after headers
   - **Terminology**: Use "function" over "method", "type" over "class"
 
 
