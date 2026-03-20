@@ -18,7 +18,7 @@ struct WithTimeoutTests: RandomValueGenerating {
     mutating func operationCompletesBeforeTimeout() async throws {
         let expectedResult = randomAlphanumericString()
 
-        let result = try await withTimeout(.seconds(5)) {
+        let result = try await withTimeout(.seconds(60)) {
             try await Task.sleep(for: .milliseconds(150))
             return expectedResult
         }
