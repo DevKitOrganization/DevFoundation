@@ -80,6 +80,7 @@ for paging through data, and essential utility types for building robust applica
 
 ### Working with Dates
 
+- ``Foundation/Date``
 - ``Swift/Duration``
 - ``DateProvider``
 - ``DateProviders``
