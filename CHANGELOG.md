@@ -1,11 +1,21 @@
 # DevFoundation Changelog
 
-## 1.9.0: June 30, 2026
+## 1.10.0: June 30, 2026
 
 This release adds a new utility type called `CurrentValueMulticaster`. The type, similar to
 `ObservableReference`, stores a value and multicasts value updates via its `values()` async
 sequence. This type is preferable to use over `ObservableReference` when you’re not using SwiftUI or
 other observable types.
+
+
+## 1.9.0: March 23, 2026
+
+This release adds some conveniences for working with `Date`s with integral seconds and milliseconds.
+
+
+## 1.8.1: March 19, 2026
+
+This is a small release that fixes a compiler error with Xcode 26.4 RC1.
 
 
 ## 1.8.0: January 13, 2026
