@@ -1,5 +1,12 @@
 # DevFoundation Changelog
 
+## 1.9.0: June 30, 2026
+
+This release adds a new utility type called `CurrentValueMulticaster`. The type, similar to
+`ObservableReference`, stores a value and multicasts value updates via its `values()` async
+sequence. This type is preferable to use over `ObservableReference` when you’re not using SwiftUI or
+other observable types.
+
 
 ## 1.8.0: January 13, 2026
 

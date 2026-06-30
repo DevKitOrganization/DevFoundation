@@ -43,7 +43,7 @@ struct Date_UnixTests: RandomValueGenerating {
             #expect(
                 date.timeIntervalSince1970.isApproximatelyEqual(
                     to: Float64(milliseconds) / 1000,
-                    absoluteTolerance: 0.0001
+                    absoluteTolerance: 0.0001,
                 )
             )
         }
@@ -63,7 +63,7 @@ struct Date_UnixTests: RandomValueGenerating {
             #expect(
                 date.timeIntervalSince1970.isApproximatelyEqual(
                     to: milliseconds / 1000,
-                    absoluteTolerance: 0.0001
+                    absoluteTolerance: 0.0001,
                 )
             )
         }
