@@ -44,6 +44,26 @@ struct CurrentValueMulticasterTests: RandomValueGenerating {
     // MARK: - values()
 
     @Test
+    mutating func valuesReturnsNameablePublicSequenceType() async {
+        // set up a multicaster with a random initial value
+        let initialValue = randomInt(in: .min ... .max)
+        let multicaster = CurrentValueMulticaster(initialValue)
+
+        // exercise by storing the returned sequence using its explicit, public type
+        let values: CurrentValueMulticaster<Int>.Values = multicaster.values()
+
+        // expect the named type behaves as an async sequence emitting the current value
+        var firstValue: Int?
+        for await value in values {
+            firstValue = value
+            break
+        }
+
+        #expect(firstValue == initialValue)
+    }
+
+
+    @Test
     mutating func valuesEmitsCurrentValueOnSubscribe() async {
         // set up a multicaster with a random initial value
         let initialValue = randomInt(in: .min ... .max)

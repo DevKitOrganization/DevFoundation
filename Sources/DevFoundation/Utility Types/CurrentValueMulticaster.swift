@@ -101,9 +101,10 @@ public final class CurrentValueMulticaster<Element>: Sendable where Element: Sen
 
     /// Returns a sequence that emits the current value immediately, then every subsequent update.
     ///
-    /// Each call returns an independent sequence with its own buffer, governed by the multicaster’s buffering policy.
-    /// The sequence finishes when the consumer’s task is cancelled or when the multicaster is deallocated.
-    public func values() -> some AsyncSequence<Element, Never> & Sendable {
+    /// Each call returns an independent ``Values`` sequence with its own buffer, governed by the multicaster’s
+    /// buffering policy. The sequence finishes when the consumer’s task is cancelled or when the multicaster is
+    /// deallocated.
+    public func values() -> Values {
         let id = UUID()
 
         // `makeStream` is used rather than the closure-based `AsyncStream` initializer on purpose: that initializer’s
@@ -125,7 +126,37 @@ public final class CurrentValueMulticaster<Element>: Sendable where Element: Sen
             state.continuations[id] = continuation
         }
 
-        return stream
+        return Values(stream: stream)
+    }
+}
+
+
+extension CurrentValueMulticaster {
+    /// An async sequence of a multicaster’s current value followed by its subsequent updates.
+    ///
+    /// Create instances with ``CurrentValueMulticaster/values()``. Each instance is independent, with its own buffer
+    /// governed by the multicaster’s buffering policy, and finishes when the consumer’s task is cancelled or when the
+    /// multicaster is deallocated.
+    public struct Values: AsyncSequence, Sendable {
+        /// The async iterator for a ``Values`` sequence.
+        public struct AsyncIterator: AsyncIteratorProtocol {
+            /// The iterator of the underlying stream.
+            fileprivate var base: AsyncStream<Element>.Iterator
+
+
+            public mutating func next() async -> Element? {
+                await base.next()
+            }
+        }
+
+
+        /// The underlying stream that the sequence vends values from.
+        fileprivate let stream: AsyncStream<Element>
+
+
+        public func makeAsyncIterator() -> AsyncIterator {
+            AsyncIterator(base: stream.makeAsyncIterator())
+        }
     }
 }
 
