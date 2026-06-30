@@ -9,6 +9,10 @@ import Foundation
 import Synchronization
 
 /// A reference whose value changes can be observed.
+///
+/// `ObservableReference` is best consumed using the Observation framework and SwiftUI. To publish a current value
+/// from an `actor`, or to consume value changes as an `AsyncSequence`, prefer ``CurrentValueMulticaster``, which
+/// avoids the timing pitfalls of bridging Observation into an async sequence.
 @Observable
 public final class ObservableReference<Value>: Sendable where Value: Sendable {
     /// A mutex that synchronizes access to the reference’s value.

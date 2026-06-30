@@ -34,7 +34,7 @@ extension Date {
 
     /// The date represented as whole seconds since January 1, 1970 at 00:00:00 UTC.
     ///
-    /// The fractional seconds component of the date's time interval is truncated.
+    /// The fractional seconds component of the date’s time interval is truncated.
     public var secondsSince1970: Int64 {
         return Int64(timeIntervalSince1970)
     }
@@ -42,7 +42,7 @@ extension Date {
 
     /// The date represented as whole milliseconds since January 1, 1970 at 00:00:00 UTC.
     ///
-    /// The sub-millisecond component of the date's time interval is truncated.
+    /// The sub-millisecond component of the date’s time interval is truncated.
     public var millisecondsSince1970: Int64 {
         return Int64(timeIntervalSince1970 * 1000)
     }
