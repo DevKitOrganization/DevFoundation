@@ -109,7 +109,7 @@ public final class CurrentValueMulticaster<Element>: Sendable where Element: Sen
 
         // `makeStream` is used rather than the closure-based `AsyncStream` initializer on purpose: that initializer’s
         // build closure would capture `self` strongly and be retained for the stream’s lifetime, so a consumer
-        // holding the stream would keep the multicaster alive — preventing deallocation and the stream from ever
+        // holding the stream would keep the multicaster alive, preventing deallocation and the stream from ever
         // finishing. Here the only retained closure is `onTermination`, which holds `self` weakly.
         let (stream, continuation) = AsyncStream<Element>.makeStream(
             bufferingPolicy: bufferingPolicy.asyncStreamBufferingPolicy

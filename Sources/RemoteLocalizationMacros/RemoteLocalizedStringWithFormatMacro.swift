@@ -29,42 +29,47 @@ public struct RemoteLocalizedStringWithFormatMacro: ExpressionMacro {
         // Build the arguments for String.localizedStringWithFormat call
         var argumentsArray: [LabeledExprSyntax] = []
 
-        // First argument: the localized string using #localizedString macro
+        // First argument: the resolved format string, via remoteLocalizedFormatString
         let bundleArgument = node.arguments.first { $0.label?.text == "bundle" }
-        let localizedStringArguments: [LabeledExprSyntax]
-
-        if let bundleArgument = bundleArgument {
-            // Use the explicitly provided bundle argument
-            localizedStringArguments = [
-                LabeledExprSyntax(
-                    expression: ExprSyntax(StringLiteralExprSyntax(content: keyString)),
-                    trailingComma: .commaToken(),
-                ),
-                LabeledExprSyntax(
-                    label: .identifier("bundle"),
-                    colon: .colonToken(),
-                    expression: bundleArgument.expression,
-                ),
-            ]
-        } else {
-            // Default to just the key (which will use #bundle by default)
-            localizedStringArguments = [
-                LabeledExprSyntax(
-                    expression: ExprSyntax(StringLiteralExprSyntax(content: keyString))
+        let bundleExpression: ExprSyntax =
+            bundleArgument?.expression
+            ?? ExprSyntax(
+                MacroExpansionExprSyntax(
+                    macroName: .identifier("bundle"),
+                    leftParen: .leftParenToken(),
+                    arguments: LabeledExprListSyntax([]),
+                    rightParen: .rightParenToken(),
                 )
-            ]
-        }
+            )
 
-        let localizedStringCall = MacroExpansionExprSyntax(
-            macroName: .identifier("remoteLocalizedString"),
+        let remoteLocalizedFormatStringArguments = LabeledExprListSyntax([
+            LabeledExprSyntax(
+                expression: ExprSyntax(StringLiteralExprSyntax(content: keyString)),
+                trailingComma: .commaToken(),
+            ),
+            LabeledExprSyntax(
+                label: .identifier("key"),
+                colon: .colonToken(),
+                expression: ExprSyntax(StringLiteralExprSyntax(content: keyString)),
+                trailingComma: .commaToken(),
+            ),
+            LabeledExprSyntax(
+                label: .identifier("bundle"),
+                colon: .colonToken(),
+                expression: bundleExpression,
+            ),
+        ])
+
+        let remoteLocalizedFormatStringCall = FunctionCallExprSyntax(
+            calledExpression: DeclReferenceExprSyntax(baseName: .identifier("remoteLocalizedFormatString")),
             leftParen: .leftParenToken(),
-            arguments: LabeledExprListSyntax(localizedStringArguments),
+            arguments: remoteLocalizedFormatStringArguments,
             rightParen: .rightParenToken(),
         )
 
         argumentsArray.append(
             LabeledExprSyntax(
-                expression: ExprSyntax(localizedStringCall),
+                expression: ExprSyntax(remoteLocalizedFormatStringCall),
                 trailingComma: .commaToken(),
             )
         )

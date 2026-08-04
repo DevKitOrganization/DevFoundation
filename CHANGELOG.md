@@ -1,5 +1,14 @@
 # DevFoundation Changelog
 
+## 1.11.0: August 4, 2026
+
+This release adds `RemoteLocalizedFormatStringPolicy` for controlling whether content from a remote
+bundle may be used as a format string. Since a mismatched or malicious format string can crash your
+app or leak memory, `#remoteLocalizedString(format:bundle:_:)` now always uses your local format
+string by default. To opt back in for keys you’ve vetted, implement a type that conforms to
+`RemoteLocalizedFormatStringPolicy` and set it via `RemoteLocalizedFormatStringPolicies.current`.
+
+
 ## 1.10.0: June 30, 2026
 
 This release adds a new utility type called `CurrentValueMulticaster`. The type, similar to

@@ -78,6 +78,16 @@ A comprehensive utility library with the following major components:
   - **RandomAccessPageLoader**: Protocol for loading pages at specific offsets
   - **RandomAccessPager**: Concrete pager for random access to pages
 
+#### Remote Localization
+
+  - **Bundle+RemoteContent**: `Bundle.makeRemoteContentBundle(at:localizedStrings:)` and
+    `Bundle.defaultRemoteContentBundle` for supplying and configuring remote content
+  - **remoteLocalizedString/remoteLocalizedFormatString**: Resolve a key against the remote
+    content bundle, falling back to the local bundle
+  - **#remoteLocalizedString**: Macros wrapping the above for plain and format-string lookups
+  - **RemoteLocalizedFormatStringPolicy**: Decides whether a remote format string may be used;
+    disallowed by default, since an unvetted remote format string can crash the app or leak memory
+
 #### Utility Types
 
   - **AnySendableHashable**: Type-erased sendable hashable wrapper
