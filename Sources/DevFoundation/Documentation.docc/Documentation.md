@@ -35,6 +35,9 @@ for paging through data, and essential utility types for building robust applica
 - ``remoteLocalizedString(_:bundle:)``
 - ``remoteLocalizedString(format:bundle:_:)``
 - ``remoteLocalizedString(_:key:bundle:remoteContentBundle:)``
+- ``remoteLocalizedFormatString(_:key:bundle:remoteContentBundle:policy:)``
+- ``RemoteLocalizedFormatStringPolicy``
+- ``RemoteLocalizedFormatStringPolicies``
 - ``Foundation/Bundle``
 
 ### Caching

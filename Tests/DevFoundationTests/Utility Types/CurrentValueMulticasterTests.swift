@@ -156,7 +156,7 @@ struct CurrentValueMulticasterTests: RandomValueGenerating {
 
         #expect(unboundedReceived == [initialValue, newValue])
 
-        // with the default newest-1 policy, the update is still observed — it is never lost
+        // with the default newest-1 policy, the update is still observed. It is never lost
         let newestMulticaster = CurrentValueMulticaster(initialValue)
         let newestValues = newestMulticaster.values()
         newestMulticaster.value = newValue
