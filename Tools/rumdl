@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Runs the pinned version of rumdl, installing it on first use. Pinning keeps local runs and CI on
+# the same version, so a new rumdl release can’t change lint results until this version changes.
+# Each version is installed once per user into a virtual environment in the user’s cache.
+
+set -euo pipefail
+
+RUMDL_VERSION="0.3.5"
+
+INSTALL_ROOT="${XDG_CACHE_HOME:-$HOME/.cache}/devkit"
+INSTALL_DIR="$INSTALL_ROOT/rumdl-$RUMDL_VERSION"
+RUMDL="$INSTALL_DIR/bin/rumdl"
+
+if [[ ! -x "$RUMDL" ]]; then
+    echo "Installing rumdl ${RUMDL_VERSION} into ${INSTALL_DIR}…" >&2
+    mkdir -p "$INSTALL_ROOT"
+
+    # Install into a temporary directory and move it into place, so a run that starts while
+    # another is installing never sees a partial installation.
+    staging_dir="$(mktemp -d "$INSTALL_ROOT/rumdl-staging.XXXXXX")"
+    trap 'rm -rf "$staging_dir"' EXIT
+    python3 -m venv "$staging_dir"
+    "$staging_dir/bin/pip" install --quiet --disable-pip-version-check "rumdl==$RUMDL_VERSION" >&2
+
+    # If another run finished first, keep its copy. exec below skips the EXIT trap, so clean up
+    # the staging directory here.
+    if [[ ! -e "$INSTALL_DIR" ]]; then
+        mv "$staging_dir" "$INSTALL_DIR"
+    fi
+    rm -rf "$staging_dir"
+    trap - EXIT
+
+    if [[ ! -x "$RUMDL" ]]; then
+        echo "Error: couldn’t install rumdl ${RUMDL_VERSION}" >&2
+        exit 1
+    fi
+fi
+
+exec "$RUMDL" "$@"

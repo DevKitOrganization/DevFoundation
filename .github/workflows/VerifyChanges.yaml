@@ -7,30 +7,30 @@ on:
     branches: ["main"]
 
 env:
-  XCODE_VERSION: 26.3
+  XCODE_VERSION: 27.2
 
 jobs:
   lint:
     name: Lint
-    runs-on: macos-26
+    runs-on: xcode-27
     steps:
       - name: Checkout
         uses: actions/checkout@v6
       - name: Select Xcode ${{ env.XCODE_VERSION }}
         run: sudo xcode-select -s /Applications/Xcode_"$XCODE_VERSION".app
       - name: Lint
-        run: Scripts/lint
+        run: Tools/lint
 
   build-and-test:
     name: Build and Test (${{ matrix.platform }})
     needs: lint
-    runs-on: macos-26
+    runs-on: xcode-27
     strategy:
       fail-fast: false
       matrix:
         include:
           - platform: iOS
-            xcode_destination: "platform=iOS Simulator,name=iPhone 17 Pro"
+            xcode_destination: "platform=iOS Simulator,name=iPhone 18 Pro"
           - platform: macOS
             xcode_destination: "platform=macOS,arch=arm64"
           - platform: tvOS

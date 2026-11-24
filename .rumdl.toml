@@ -1,0 +1,30 @@
+# MD005 is off with it, since it flattens indented lists. MD029 is off because list numbers are
+# content: rumdl splits lists whose markers are right-aligned (" 9.", "10.") and its fix renumbers
+# the second half from 1. MD076 is off because the style guide puts nested lists and code blocks
+# inside list items without blank lines between items.
+[global]
+disable = ["MD005", "MD029", "MD032", "MD033", "MD036", "MD025", "MD041", "MD046", "MD057", "MD060", "MD076"]
+respect_gitignore = true
+
+[MD004]
+style = "dash"
+
+[MD007]
+indent = 4
+start-indented = true
+start-indent = 2
+style = "fixed"
+
+[MD012]
+maximum = 2
+
+[MD013]
+line-length = 100
+code-blocks = false
+tables = false
+headings = false
+reflow = true
+
+[MD022]
+lines-above = [0, 2, 1, 1, 1, 1]
+lines-below = 1
