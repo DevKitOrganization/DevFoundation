@@ -12,7 +12,7 @@ View our [changelog](CHANGELOG.md) to see what’s new.
 
 ## Development Requirements
 
-DevFoundation requires a Swift 6.2+ toolchain to build. We only test on Apple platforms. We follow
+DevFoundation requires a Swift 6.4+ toolchain to build. We only test on Apple platforms. We follow
 the [Swift API Design Guidelines][SwiftAPIDesignGuidelines]. We take pride in the fact that our
 public interfaces are fully documented and tested. We aim for overall test coverage over 99%.
 

@@ -1,11 +1,13 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.4
 
 import CompilerPluginSupport
 import PackageDescription
 
 let swiftSettings: [SwiftSetting] = [
     .enableUpcomingFeature("ExistentialAny"),
+    .enableUpcomingFeature("ImmutableWeakCaptures"),
     .enableUpcomingFeature("MemberImportVisibility"),
+    .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
 ]
 
 let package = Package(
@@ -20,14 +22,14 @@ let package = Package(
     products: [
         .library(
             name: "DevFoundation",
-            targets: ["DevFoundation"]
+            targets: ["DevFoundation"],
         ),
         .executable(
             name: "dfob",
             targets: [
                 "DevFoundation",
                 "dfob",
-            ]
+            ],
         ),
     ],
     dependencies: [
@@ -45,7 +47,7 @@ let package = Package(
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 "RemoteLocalizationMacros",
             ],
-            swiftSettings: swiftSettings
+            swiftSettings: swiftSettings,
         ),
         .testTarget(
             name: "DevFoundationTests",
@@ -55,18 +57,18 @@ let package = Package(
                 .product(name: "RealModule", package: "swift-numerics"),
                 "URLMock",
             ],
-            swiftSettings: swiftSettings
+            swiftSettings: swiftSettings,
         ),
         .macro(
-           name: "RemoteLocalizationMacros",
-           dependencies: [
-               .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
-               .product(name: "SwiftSyntax", package: "swift-syntax"),
-               .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
-               .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-           ],
-           swiftSettings: swiftSettings
-       ),
+            name: "RemoteLocalizationMacros",
+            dependencies: [
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+            ],
+            swiftSettings: swiftSettings,
+        ),
 
         .executableTarget(
             name: "dfob",
@@ -74,7 +76,7 @@ let package = Package(
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 "DevFoundation",
             ],
-            swiftSettings: swiftSettings
+            swiftSettings: swiftSettings,
         ),
         .testTarget(
             name: "dfobTests",
@@ -84,7 +86,7 @@ let package = Package(
                 "DevTesting",
                 "dfob",
             ],
-            swiftSettings: swiftSettings
+            swiftSettings: swiftSettings,
         ),
-    ]
+    ],
 )

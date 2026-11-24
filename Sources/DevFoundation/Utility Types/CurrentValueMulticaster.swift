@@ -144,8 +144,11 @@ extension CurrentValueMulticaster {
             fileprivate var base: AsyncStream<Element>.Iterator
 
 
-            public mutating func next() async -> Element? {
-                await base.next()
+            /// Returns the next value, or `nil` once the sequence has finished.
+            ///
+            /// - Parameter actor: The actor to wait for the value on. Defaults to the caller’s isolation.
+            public mutating func next(isolation actor: isolated (any Actor)? = #isolation) async -> Element? {
+                await base.next(isolation: actor)
             }
         }
 
