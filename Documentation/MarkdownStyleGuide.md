@@ -22,10 +22,10 @@ to stay within this limit.
 
 Use consistent spacing for visual hierarchy:
 
-- **Between major sections**: 2 blank lines
-- **After code blocks**: 1 blank line
-- **Before subsections**: 1 blank line
-- **After section headers**: 1 blank line
+  - **Between major sections**: 2 blank lines
+  - **After code blocks**: 1 blank line
+  - **Before subsections**: 1 blank line
+  - **After section headers**: 1 blank line
 
 Example:
 
@@ -77,7 +77,7 @@ Use **4-space indentation** for all code blocks instead of fenced blocks:
         import DevTesting
 
         final class MockService: ServiceProtocol {
-            nonisolated(unsafe) var performActionStub: Stub<String, Bool>!
+            nonisolated(unsafe) var performActionStub = Stub<String, Bool>()
         }
 
     ❌ Bad:
@@ -85,7 +85,7 @@ Use **4-space indentation** for all code blocks instead of fenced blocks:
     import DevTesting
 
     final class MockService: ServiceProtocol {
-        nonisolated(unsafe) var performActionStub: Stub<String, Bool>!
+        nonisolated(unsafe) var performActionStub = Stub<String, Bool>()
     }
     ```
 
@@ -154,9 +154,19 @@ Use backticks for:
 
 Use consistent terminology throughout documents:
 
-- Prefer "function" over "method" when referring to Swift functions
-- Use "type" instead of "class" when referring generically to classes/structs/enums
-- Use "property" for stored and computed properties
+  - Prefer “function” over “method” when referring to Swift functions
+  - Use “type” instead of “class” when referring generically to classes/structs/enums
+  - Use “property” for stored and computed properties
+
+
+## Typography
+
+Use typographic quotes and apostrophes, not straight ones, in prose: ’ for apostrophes (“it’s”),
+‘ and ’ for single quotes, and “ and ” for double quotes. Straight quotes remain correct inside code
+spans and code blocks.
+
+The same rule applies to code documentation (doc comments and standalone comments) and to
+user-facing strings.
 
 
 ## File Structure Examples
