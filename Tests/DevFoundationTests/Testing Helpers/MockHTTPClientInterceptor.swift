@@ -17,7 +17,7 @@ where RequestContext: Sendable {
     }
 
 
-    nonisolated(unsafe) var interceptStub: ThrowingStub<InterceptArguments, HTTPResponse<Data>, any Error>!
+    nonisolated(unsafe) var interceptStub = ThrowingStub<InterceptArguments, HTTPResponse<Data>, any Error>()
     nonisolated(unsafe) var nextArguments: [InterceptArguments] = []
     nonisolated(unsafe) var interceptPrologue: (@Sendable () async throws -> Void)?
 

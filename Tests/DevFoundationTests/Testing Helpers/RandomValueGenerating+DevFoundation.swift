@@ -17,10 +17,6 @@ extension RandomValueGenerating {
         )
     }
 
-    mutating func randomError() -> MockError {
-        return MockError(id: randomInt(in: 0 ... .max))
-    }
-
 
     mutating func randomHTTPBody() -> HTTPBody {
         return HTTPBody(contentType: randomMediaType(), data: randomData())

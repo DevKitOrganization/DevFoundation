@@ -10,9 +10,9 @@ import DevTesting
 import Foundation
 
 final class MockRandomAccessPageLoader<Page>: RandomAccessPageLoader where Page: OffsetPage {
-    nonisolated(unsafe) var pageExistsStub: Stub<Int, Bool>!
+    nonisolated(unsafe) var pageExistsStub = Stub<Int, Bool>()
     nonisolated(unsafe) var loadPagePrologue: (() async throws -> Void)?
-    nonisolated(unsafe) var loadPageStub: ThrowingStub<Int, Page, any Error>!
+    nonisolated(unsafe) var loadPageStub = ThrowingStub<Int, Page, any Error>()
 
 
     func pageExists(at offset: Int) -> Bool {

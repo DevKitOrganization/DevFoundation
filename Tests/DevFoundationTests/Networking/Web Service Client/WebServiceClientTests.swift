@@ -58,7 +58,7 @@ struct WebServiceClientTests: RandomValueGenerating {
             Issue.record("does not throw error")
         } catch let error as InvalidWebServiceRequestError {
             #expect(!error.debugDescription.isEmpty)
-            #expect(error.underlyingError as? MockError == expectedError)
+            #expect(error.underlyingError as? ArbitraryError == expectedError)
         } catch {
             Issue.record("throws unexpected error: \(error)")
         }

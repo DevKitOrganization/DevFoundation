@@ -10,7 +10,7 @@ import DevTesting
 import Foundation
 
 final class MockDateProvider: DateProvider {
-    nonisolated(unsafe) var nowStub: Stub<Void, Date>!
+    nonisolated(unsafe) var nowStub = Stub<Void, Date>()
 
 
     convenience init(now: Date) {

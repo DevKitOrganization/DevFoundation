@@ -11,9 +11,9 @@ import Foundation
 @testable import DevFoundation
 
 final class MockLiveQueryResultsProducer<Results>: LiveQueryResultsProducer where Results: Sendable {
-    nonisolated(unsafe) var schedulingStrategyStub: Stub<Void, LiveQuerySchedulingStrategy>!
-    nonisolated(unsafe) var canonicalQueryFragmentStub: Stub<String, String?>!
-    nonisolated(unsafe) var resultsStub: ThrowingStub<String, Results, any Error>!
+    nonisolated(unsafe) var schedulingStrategyStub = Stub<Void, LiveQuerySchedulingStrategy>()
+    nonisolated(unsafe) var canonicalQueryFragmentStub = Stub<String, String?>()
+    nonisolated(unsafe) var resultsStub = ThrowingStub<String, Results, any Error>()
     nonisolated(unsafe) var resultsEpilogue: (() async throws -> Void)?
 
 
@@ -34,5 +34,12 @@ final class MockLiveQueryResultsProducer<Results>: LiveQueryResultsProducer wher
             }
         }
         return try resultsStub(queryFragment)
+    }
+}
+
+
+extension LiveQuerySchedulingStrategy: DefaultStubValueProviding {
+    public static var defaultStubValue: LiveQuerySchedulingStrategy {
+        return .passthrough
     }
 }

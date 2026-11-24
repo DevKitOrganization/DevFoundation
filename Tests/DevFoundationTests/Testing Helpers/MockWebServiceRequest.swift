@@ -22,7 +22,7 @@ final class MockWebServiceRequest: WebServiceRequest {
     nonisolated(unsafe) var queryItems: [URLQueryItem]
     nonisolated(unsafe) var automaticallyPercentEncodesQueryItems: Bool
     nonisolated(unsafe) var httpBodyResult: Result<HTTPBody?, any Error>
-    nonisolated(unsafe) var mapResponseStub: ThrowingStub<HTTPResponse<Data>, String, any Error>!
+    nonisolated(unsafe) var mapResponseStub = ThrowingStub<HTTPResponse<Data>, String, any Error>()
 
 
     init(

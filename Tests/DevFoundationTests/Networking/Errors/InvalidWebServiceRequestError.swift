@@ -24,7 +24,7 @@ struct InvalidWebServiceRequestErrorTests: RandomValueGenerating {
                 underlyingError: underlyingError,
             )
             #expect(error.debugDescription == debugDescription)
-            #expect(error.underlyingError as? MockError == underlyingError)
+            #expect(error.underlyingError as? ArbitraryError == underlyingError)
         }
     }
 }
