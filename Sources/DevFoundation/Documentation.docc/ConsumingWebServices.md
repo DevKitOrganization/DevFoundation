@@ -2,45 +2,46 @@
 
 Access web services and simulate responses.
 
+
 ## Topics
 
 ### HTTP Client
 
-- ``HTTPClient``
-- ``HTTPClientInterceptor``
-- ``URLRequestLoader``
+  - ``HTTPClient``
+  - ``HTTPClientInterceptor``
+  - ``URLRequestLoader``
 
 ### Web Service Client
 
-- ``WebServiceClient``
-- ``BaseURLConfiguring``
-- ``SingleBaseURLConfiguration``
+  - ``WebServiceClient``
+  - ``BaseURLConfiguring``
+  - ``SingleBaseURLConfiguration``
 
 ### Requests and Response Handling
 
-- ``WebServiceRequest``
-- ``JSONBodyWebServiceRequest``
-- ``HTTPBody``
-- ``HTTPHeaderField``
-- ``HTTPMethod``
-- ``HTTPHeaderItem``
-- ``MediaType``
-- ``URLPathComponent``
-- ``HTTPResponse``
-- ``HTTPStatusCode``
+  - ``WebServiceRequest``
+  - ``JSONBodyWebServiceRequest``
+  - ``HTTPBody``
+  - ``HTTPHeaderField``
+  - ``HTTPMethod``
+  - ``HTTPHeaderItem``
+  - ``MediaType``
+  - ``URLPathComponent``
+  - ``HTTPResponse``
+  - ``HTTPStatusCode``
 
 ### Network Simulation
 
-- ``SimulatedURLRequestLoader``
+  - ``SimulatedURLRequestLoader``
 
 ### Errors
 
-- ``InvalidHTTPStatusCodeError``
-- ``InvalidWebServiceRequestError``
-- ``NonHTTPURLResponseError``
+  - ``InvalidHTTPStatusCodeError``
+  - ``InvalidWebServiceRequestError``
+  - ``NonHTTPURLResponseError``
 
 ### Extensions
 
-- ``Foundation/HTTPURLResponse``
-- ``Foundation/URLRequest``
-- ``Foundation/URLSession``
+  - ``Foundation/HTTPURLResponse``
+  - ``Foundation/URLRequest``
+  - ``Foundation/URLSession``
