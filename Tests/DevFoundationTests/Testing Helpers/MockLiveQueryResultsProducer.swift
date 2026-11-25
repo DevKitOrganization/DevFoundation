@@ -13,6 +13,7 @@ import Foundation
 final class MockLiveQueryResultsProducer<Results>: LiveQueryResultsProducer where Results: Sendable {
     nonisolated(unsafe) var schedulingStrategyStub = Stub<Void, LiveQuerySchedulingStrategy>()
     nonisolated(unsafe) var canonicalQueryFragmentStub = Stub<String, String?>()
+    nonisolated(unsafe) var resultsPrologue: (() async throws -> Void)?
     nonisolated(unsafe) var resultsStub = ThrowingStub<String, Results, any Error>()
     nonisolated(unsafe) var resultsEpilogue: (() async throws -> Void)?
 
@@ -33,6 +34,8 @@ final class MockLiveQueryResultsProducer<Results>: LiveQueryResultsProducer wher
                 Task { try? await epilogue() }
             }
         }
+
+        try await resultsPrologue?()
         return try resultsStub(queryFragment)
     }
 }

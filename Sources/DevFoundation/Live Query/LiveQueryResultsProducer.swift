@@ -11,21 +11,13 @@ import Foundation
 ///
 /// Conform to this protocol to define how results are generated or fetched for a given query fragment. ``LiveQuery``
 /// uses result producers to fetch results and determine how to schedule result production.
-public protocol LiveQueryResultsProducer<Results>: Sendable {
+///
+/// Results producers are result updates producers whose result updates contain a single value: the results returned by
+/// ``results(forQueryFragment:)``. If a query fragment’s results can change after they’re produced, conform to
+/// ``LiveQueryResultUpdatesProducer`` instead.
+public protocol LiveQueryResultsProducer<Results>: LiveQueryResultUpdatesProducer {
     /// The type of results that instances produce.
-    associatedtype Results: Sendable
-
-    /// The strategy used to schedule result production.
-    var schedulingStrategy: LiveQuerySchedulingStrategy { get }
-
-    /// Returns a canonical form of the query fragment, or `nil` if it’s invalid.
-    ///
-    /// Conforming types can use this function to sanitize or validate query fragments before producing results. The
-    /// default implementation trims whitespace, collapses multiple spaces into one, and returns `nil` for empty
-    /// strings.
-    ///
-    /// - Parameter queryFragment: The query fragment to canonicalize.
-    func canonicalQueryFragment(from queryFragment: String) -> String?
+    associatedtype Results
 
     /// Produces results for the specified query fragment.
     ///
@@ -36,11 +28,17 @@ public protocol LiveQueryResultsProducer<Results>: Sendable {
 
 
 extension LiveQueryResultsProducer {
-    public func canonicalQueryFragment(from queryFragment: String) -> String? {
-        let canonicalFragment = queryFragment.components(separatedBy: .whitespacesAndNewlines)
-            .filter { !$0.isEmpty }
-            .joined(separator: " ")
-
-        return canonicalFragment.isEmpty ? nil : canonicalFragment
+    /// Returns a sequence that produces the query fragment’s results once.
+    ///
+    /// The sequence calls ``results(forQueryFragment:)`` when it’s first iterated, produces its results, and then
+    /// finishes. If the iterating task is cancelled before the sequence calls ``results(forQueryFragment:)``, the
+    /// sequence throws a `CancellationError` instead. Otherwise, cancelling the iterating task cancels the call.
+    ///
+    /// - Parameter queryFragment: A canonical query fragment. Live queries ensure this is already canonicalized before
+    ///   calling this function.
+    public func resultUpdates(
+        forQueryFragment queryFragment: String
+    ) -> some AsyncSequence<Results, any Error> & Sendable {
+        return OneShotLiveQueryResultUpdates(resultsProducer: self, queryFragment: queryFragment)
     }
 }
