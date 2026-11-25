@@ -18,7 +18,7 @@ final class MockRetryPolicy<Input, Output>: HashableByID, RetryPolicy {
     }
 
 
-    nonisolated(unsafe) var retryDelayStub: Stub<RetryDelayArguments, Duration?>!
+    nonisolated(unsafe) var retryDelayStub = Stub<RetryDelayArguments, Duration?>()
 
 
     func retryDelay(

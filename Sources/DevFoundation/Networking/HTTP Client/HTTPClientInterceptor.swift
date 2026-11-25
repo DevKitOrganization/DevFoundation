@@ -22,13 +22,15 @@ public protocol HTTPClientInterceptor<RequestContext>: Sendable {
     ///   - request: The request to intercept.
     ///   - context: Additional context about the request. This type can be used to make decisions about how to perform
     ///     interception.
-    ///   - next: A closure to call to pass the request and context to the next interceptor in the chain.
+    ///   - next: A closure to call to pass the request and context to the next interceptor in the chain. It’s
+    ///     `@concurrent`, so it doesn’t run on the caller’s actor.
     func intercept(
         request: URLRequest,
         context: RequestContext,
-        next: (
-            _ request: URLRequest,
-            _ context: RequestContext
-        ) async throws -> HTTPResponse<Data>,
+        next:
+            @concurrent (
+                _ request: URLRequest,
+                _ context: RequestContext
+            ) async throws -> HTTPResponse<Data>,
     ) async throws -> HTTPResponse<Data>
 }

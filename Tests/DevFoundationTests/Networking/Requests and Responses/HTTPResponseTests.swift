@@ -51,7 +51,7 @@ struct HTTPResponseTests: RandomValueGenerating {
 
         let expectedError = randomError()
         #expect(throws: expectedError) {
-            try response.mapBody { (input) throws(MockError) -> String in
+            try response.mapBody { (input) throws(ArbitraryError) -> String in
                 #expect(input == body)
                 throw expectedError
             }

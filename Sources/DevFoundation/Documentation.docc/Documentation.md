@@ -5,7 +5,7 @@ Access essential types and services for building your library or app’s foundat
 
 ## Overview
 
-DevFoundation is a Swift package that provides foundational utilities for Apple platforms. 
+DevFoundation is a Swift package that provides foundational utilities for Apple platforms.
 It offers comprehensive networking capabilities, an event bus, concurrency utilities, a system
 for paging through data, and essential utility types for building robust applications.
 
@@ -14,90 +14,90 @@ for paging through data, and essential utility types for building robust applica
 
 ### Networking
 
-- <doc:ConsumingWebServices>
+  - <doc:ConsumingWebServices>
 
 ### Type-Safe Events
 
-- <doc:TypeSafeEvents>
+  - <doc:TypeSafeEvents>
 
 ### Paging
 
-- <doc:PagingThroughData>
+  - <doc:PagingThroughData>
 
 ### Live Queries
 
-- ``LiveQuery``
-- ``LiveQueryResultsProducer``
-- ``LiveQuerySchedulingStrategy``
+  - ``LiveQuery``
+  - ``LiveQueryResultsProducer``
+  - ``LiveQuerySchedulingStrategy``
 
 ### Localizing with Remote Content
 
-- ``remoteLocalizedString(_:bundle:)``
-- ``remoteLocalizedString(format:bundle:_:)``
-- ``remoteLocalizedString(_:key:bundle:remoteContentBundle:)``
-- ``remoteLocalizedFormatString(_:key:bundle:remoteContentBundle:policy:)``
-- ``RemoteLocalizedFormatStringPolicy``
-- ``RemoteLocalizedFormatStringPolicies``
-- ``Foundation/Bundle``
+  - ``remoteLocalizedString(_:bundle:)``
+  - ``remoteLocalizedString(format:bundle:_:)``
+  - ``remoteLocalizedString(_:key:bundle:remoteContentBundle:)``
+  - ``remoteLocalizedFormatString(_:key:bundle:remoteContentBundle:policy:)``
+  - ``RemoteLocalizedFormatStringPolicy``
+  - ``RemoteLocalizedFormatStringPolicies``
+  - ``Foundation/Bundle``
 
 ### Caching
 
-- ``ExpiringValue``
+  - ``ExpiringValue``
 
 ### Observing Changes
 
-- ``ObservableReference``
+  - ``ObservableReference``
 
 ### Concurrency Utilities
 
-- ``ExecutionGroup``
-- ``withTimeout(_:priority:operation:)``
-- ``Dispatch/DispatchQueue``
-- ``Swift/Result``
+  - ``ExecutionGroup``
+  - ``withTimeout(_:priority:operation:)``
+  - ``Dispatch/DispatchQueue``
+  - ``Swift/Result``
 
 ### Encoding, Decoding, and JSON
 
-- ``JSONValue``
-- ``TopLevelDecoder``
-- ``TopLevelEncoder``
-- ``Foundation/JSONDecoder``
-- ``Foundation/PropertyListDecoder``
+  - ``JSONValue``
+  - ``TopLevelDecoder``
+  - ``TopLevelEncoder``
+  - ``Foundation/JSONDecoder``
+  - ``Foundation/PropertyListDecoder``
 
 ### Expressing Retry Policies
 
-- ``RetryPolicy``
-- ``PredefinedDelaySequenceRetryPolicy``
-- ``AggregateRetryPolicy``
+  - ``RetryPolicy``
+  - ``PredefinedDelaySequenceRetryPolicy``
+  - ``AggregateRetryPolicy``
 
 ### Generating Gibberish
 
-- ``GibberishGenerator``
+  - ``GibberishGenerator``
 
 ### Handling User Inputs
 
-- ``UserSelection``
+  - ``UserSelection``
 
 ### Obfuscating and Deobfuscating Data
 
-- ``Foundation/Data``
+  - ``Foundation/Data``
 
 ### Working with Dates
 
-- ``Foundation/Date``
-- ``Swift/Duration``
-- ``DateProvider``
-- ``DateProviders``
+  - ``Foundation/Date``
+  - ``Swift/Duration``
+  - ``DateProvider``
+  - ``DateProviders``
 
-### Strongly-Typed IDs and Values 
+### Strongly-Typed IDs and Values
 
-- ``TypedExtensibleEnum``
-- ``DottedHierarchicalID``
-- ``SoftwareComponentID``
+  - ``TypedExtensibleEnum``
+  - ``DottedHierarchicalID``
+  - ``SoftwareComponentID``
 
 ### Utility Protocols
 
-- ``AnySendableHashable``
-- ``HashableByID``
-- ``IdentifiableBySelf``
-- ``OptionalRepresentable``
-- ``Swift/Optional``
+  - ``AnySendableHashable``
+  - ``HashableByID``
+  - ``IdentifiableBySelf``
+  - ``OptionalRepresentable``
+  - ``Swift/Optional``

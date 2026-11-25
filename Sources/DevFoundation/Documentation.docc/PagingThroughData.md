@@ -1,22 +1,22 @@
 # Paging
 
-Easily and efficiently page through data. 
+Easily and efficiently page through data.
+
 
 ## Topics
 
 ### Sequential Paging
 
-- ``SequentialPager``
-- ``SequentialPageLoader``
-- ``SequentialPaging``
+  - ``SequentialPager``
+  - ``SequentialPageLoader``
+  - ``SequentialPaging``
 
 ### Random Access Paging
 
-- ``RandomAccessPager``
-- ``RandomAccessPageLoader``
-- ``RandomAccessPaging``
+  - ``RandomAccessPager``
+  - ``RandomAccessPageLoader``
+  - ``RandomAccessPaging``
 
 ### Supporting Types
 
-- ``OffsetPage``
-
+  - ``OffsetPage``

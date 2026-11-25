@@ -169,7 +169,7 @@ struct LiveQueryTests: RandomValueGenerating {
 
         // expect the error is captured and previous results are preserved
         #expect(liveQuery.results == initialResults)
-        #expect(liveQuery.lastError as? MockError == expectedError)
+        #expect(liveQuery.lastError as? ArbitraryError == expectedError)
     }
 
 
@@ -207,7 +207,7 @@ struct LiveQueryTests: RandomValueGenerating {
         await signalStream.first { _ in true }
 
         #expect(liveQuery.results == nil)
-        #expect(liveQuery.lastError as? MockError == expectedError)
+        #expect(liveQuery.lastError as? ArbitraryError == expectedError)
 
         // exercise the test by producing successful results
         liveQuery.queryFragment = fragment2

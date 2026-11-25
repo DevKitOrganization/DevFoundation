@@ -18,7 +18,7 @@ struct ResultCatchingAsyncTests: RandomValueGenerating {
     mutating func testResultCatchingAsyncSuccess() async {
         let expectedValue = randomAlphanumericString()
 
-        let result = await Result<String, MockError> { () async throws(MockError) -> String in
+        let result = await Result<String, ArbitraryError> { () async throws(ArbitraryError) -> String in
             return expectedValue
         }
 
@@ -28,9 +28,9 @@ struct ResultCatchingAsyncTests: RandomValueGenerating {
 
     @Test
     mutating func testResultCatchingAsyncFailure() async {
-        let expectedError = MockError(id: randomInt(in: .min ... .max))
+        let expectedError = randomError()
 
-        let result = await Result<String, MockError> { () async throws(MockError) -> String in
+        let result = await Result<String, ArbitraryError> { () async throws(ArbitraryError) -> String in
             throw expectedError
         }
 

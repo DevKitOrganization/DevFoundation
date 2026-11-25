@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Installs a pre-push hook that runs Tools/lint, so formatting problems are caught before CI sees
+# them. The hook goes in the repository’s common Git directory, so it applies to every worktree.
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"
+
+cd "$REPO_ROOT"
+GIT_COMMON_DIR="$(git rev-parse --path-format=absolute --git-common-dir)"
+HOOKS_DIR="$GIT_COMMON_DIR/hooks"
+mkdir -p "$HOOKS_DIR"
+
+cat > "$HOOKS_DIR/pre-push" << 'HOOK'
+#!/bin/bash
+
+# Installed by Tools/install-git-hooks. Runs Tools/lint before pushing.
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+
+echo "Running Tools/lint…"
+if ! "$REPO_ROOT/Tools/lint"; then
+    echo "Lint failed. Run Tools/format, or push with --no-verify to skip this check."
+    exit 1
+fi
+HOOK
+
+chmod +x "$HOOKS_DIR/pre-push"
+echo "Installed a pre-push hook that runs Tools/lint."

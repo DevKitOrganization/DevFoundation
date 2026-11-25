@@ -17,7 +17,7 @@ final class MockRemoteLocalizedFormatStringPolicy: RemoteLocalizedFormatStringPo
     }
 
 
-    nonisolated(unsafe) var allowsRemoteFormatStringStub: Stub<AllowsRemoteFormatStringArguments, Bool>!
+    nonisolated(unsafe) var allowsRemoteFormatStringStub = Stub<AllowsRemoteFormatStringArguments, Bool>()
 
 
     func allowsRemoteFormatString(

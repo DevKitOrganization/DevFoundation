@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Lints Swift with swift-format, the length of Swift comments, and Markdown with rumdl. Exits with a
+# nonzero status if any check fails, after running all of them.
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"
+
+# Swift files and directories to check, relative to the repository root
+SWIFT_PATHS=(Package.swift Sources Tests)
+swift_paths=("${SWIFT_PATHS[@]/#/$REPO_ROOT/}")
+
+exit_status=0
+
+swift format lint --strict --recursive "${swift_paths[@]}" || exit_status=1
+
+# swift-format doesn’t check the length of standalone or documentation comments, so report those
+# over its line length. Perl counts characters rather than bytes. Read the limit with Python rather
+# than plutil, which only exists on macOS.
+line_length="$(python3 -c 'import json, sys; print(json.load(open(sys.argv[1]))["lineLength"])' \
+    "$REPO_ROOT/.swift-format")"
+find "${swift_paths[@]}" -name '*.swift' -print0 2>/dev/null |
+    xargs -0 perl -CDS -sne '
+        chomp;
+        if (m{^\s*//} && length($_) > $limit) {
+            printf STDERR "%s:%d:%d: error: [CommentLength] wrap this comment, which is %d characters long, to %d or fewer\n",
+                $ARGV, $., $limit + 1, length($_), $limit;
+            $found = 1;
+        }
+        close ARGV if eof;
+        END { exit 1 if $found }
+    ' -- -limit="$line_length" || exit_status=1
+
+# Lint Markdown using the rules in .rumdl.toml
+"$SCRIPT_DIR/rumdl" check "$REPO_ROOT" || exit_status=1
+
+exit "$exit_status"

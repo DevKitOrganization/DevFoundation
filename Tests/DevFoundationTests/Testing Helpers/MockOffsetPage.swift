@@ -10,7 +10,7 @@ import DevTesting
 import Foundation
 
 final class MockOffsetPage: OffsetPage, HashableByID {
-    nonisolated(unsafe) var pageOffsetStub: Stub<Void, Int>!
+    nonisolated(unsafe) var pageOffsetStub = Stub<Void, Int>()
 
 
     var pageOffset: Int {

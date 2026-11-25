@@ -7,36 +7,36 @@ on:
     branches: ["main"]
 
 env:
-  XCODE_VERSION: 26.3
+  XCODE_VERSION: 27.2
 
 jobs:
   lint:
     name: Lint
-    runs-on: macos-26
+    runs-on: xcode-27
     steps:
       - name: Checkout
         uses: actions/checkout@v6
       - name: Select Xcode ${{ env.XCODE_VERSION }}
         run: sudo xcode-select -s /Applications/Xcode_"$XCODE_VERSION".app
       - name: Lint
-        run: Scripts/lint
+        run: Tools/lint
 
   build-and-test:
     name: Build and Test (${{ matrix.platform }})
     needs: lint
-    runs-on: macos-26
+    runs-on: xcode-27
     strategy:
       fail-fast: false
       matrix:
         include:
           - platform: iOS
-            xcode_destination: "platform=iOS Simulator,name=iPhone 17 Pro"
+            xcode_destination: "platform=iOS Simulator,OS=27.2,name=iPhone 18 Pro"
           - platform: macOS
             xcode_destination: "platform=macOS,arch=arm64"
           - platform: tvOS
-            xcode_destination: "platform=tvOS Simulator,name=Apple TV 4K (3rd generation)"
+            xcode_destination: "platform=tvOS Simulator,OS=27.2,name=Apple TV 4K (4th generation)"
           - platform: watchOS
-            xcode_destination: "platform=watchOS Simulator,name=Apple Watch Series 11 (46mm)"
+            xcode_destination: "platform=watchOS Simulator,OS=27.2,name=Apple Watch Series 12 (46mm)"
 
     env:
       DEV_BUILDS: DevBuilds/Sources
@@ -96,8 +96,12 @@ jobs:
           path: ${{ env.XCODE_TEST_PRODUCTS_PATH }}
           key: ${{ steps.cache-xctestproducts-restore.outputs.cache-primary-key }}
 
+      # Optional until Xcode records coverage for Swift packages again. With Xcode 27.2, result
+      # bundles have no coverage for package targets, so xccov can’t report it.
       - name: Log Code Coverage
+        id: coverage
         if: github.event_name != 'push'
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -123,7 +127,7 @@ jobs:
           include-hidden-files: true
 
       - name: Upload xccovPretty output
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' && steps.coverage.outcome == 'success'
         uses: actions/upload-artifact@v7
         with:
           name: xccovPrettyOutput-${{ matrix.platform }}
@@ -140,11 +144,14 @@ jobs:
 
     steps:
       - name: Download xccovPretty output
+        id: download-coverage
+        continue-on-error: true
         uses: actions/download-artifact@v8
         with:
           name: xccovPrettyOutput-macOS
 
       - name: Post Code Coverage Comment
+        if: steps.download-coverage.outcome == 'success'
         uses: thollander/actions-comment-pull-request@v3
         with:
           file-path: xccovPretty-macOS.output

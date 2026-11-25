@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Formats Swift with swift-format and Markdown with rumdl, in place.
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"
+
+# Swift files and directories to format, relative to the repository root
+SWIFT_PATHS=(Package.swift Sources Tests)
+swift_paths=("${SWIFT_PATHS[@]/#/$REPO_ROOT/}")
+
+exit_status=0
+
+swift format --in-place --recursive "${swift_paths[@]}" || exit_status=1
+
+# Rewrite Markdown using the rules in .rumdl.toml
+"$SCRIPT_DIR/rumdl" fmt "$REPO_ROOT" || exit_status=1
+
+exit "$exit_status"

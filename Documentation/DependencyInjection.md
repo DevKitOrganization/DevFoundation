@@ -1,10 +1,13 @@
+---
+description: Dependency injection: Dependencies struct, Dependency Provider, direct injection
+read-when: Designing a new type’s initializer and deciding what to inject vs. pass as a parameter
+---
+
 # Dependency Injection
 
-This document outlines the dependency injection patterns and conventions that I like to use in my
-Swift code.
-
-After reading this doc, take a look at the [Test Mocks guide](TestMocks.md) for specific guidance
-about how to write mocks.
+This document outlines the dependency injection patterns and conventions used throughout this
+codebase. After reading it, see [Test Mocks](Testing/TestMocks.md) for how to
+write mocks.
 
 
 ## When to Use Dependency Injection
@@ -175,9 +178,12 @@ Consume the provider in your type:
 
 #### Testing Support
 
-Create a mock provider for testing, using the patterns from [TestMocks.md](TestMocks.md):
+Create a mock provider for testing, using `Stub` from DevTesting:
 
     final class MockUserServiceDependencyProvider: UserService.DependencyProviding {
+        // These return existentials and a view model — types with no default stub value — so they
+        // stay force-unwrapped and must be configured in test setup. Where a return type has a
+        // default stub value, prefer `= Stub<…>()`.
         nonisolated(unsafe) var networkClientStub: Stub<Void, any NetworkClient>!
         nonisolated(unsafe) var telemetryEventLoggerStub: Stub<Void, any TelemetryEventLogging>!
         nonisolated(unsafe) var makeProfileViewModelStub: Stub<Void, ProfileViewModel>!

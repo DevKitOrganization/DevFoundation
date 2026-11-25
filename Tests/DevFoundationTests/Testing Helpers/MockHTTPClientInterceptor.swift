@@ -17,7 +17,7 @@ where RequestContext: Sendable {
     }
 
 
-    nonisolated(unsafe) var interceptStub: ThrowingStub<InterceptArguments, HTTPResponse<Data>, any Error>!
+    nonisolated(unsafe) var interceptStub = ThrowingStub<InterceptArguments, HTTPResponse<Data>, any Error>()
     nonisolated(unsafe) var nextArguments: [InterceptArguments] = []
     nonisolated(unsafe) var interceptPrologue: (@Sendable () async throws -> Void)?
 
@@ -25,7 +25,7 @@ where RequestContext: Sendable {
     func intercept(
         request: URLRequest,
         context: RequestContext,
-        next: (URLRequest, RequestContext) async throws -> HTTPResponse<Data>,
+        next: @concurrent (URLRequest, RequestContext) async throws -> HTTPResponse<Data>,
     ) async throws -> HTTPResponse<Data> {
         try await interceptPrologue?()
 

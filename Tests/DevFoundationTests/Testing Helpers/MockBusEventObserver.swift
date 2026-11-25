@@ -10,8 +10,8 @@ import DevTesting
 import Foundation
 
 final class MockBusEventObserver: BusEventObserver {
-    nonisolated(unsafe) var observeStub: Stub<any BusEvent, Void>!
-    nonisolated(unsafe) var observeIdentifiableStub: Stub<any BusEvent & Identifiable, Void>!
+    nonisolated(unsafe) var observeStub = Stub<any BusEvent, Void>()
+    nonisolated(unsafe) var observeIdentifiableStub = Stub<any BusEvent & Identifiable, Void>()
 
 
     func observe(_ event: some BusEvent) {
