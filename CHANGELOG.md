@@ -1,6 +1,20 @@
 # DevFoundation Changelog
 
 
+## 1.12.0: November 24, 2026
+
+This release requires Swift 6.4 (Xcode 27) to build. It also enables Swift’s
+`NonisolatedNonsendingByDefault` upcoming feature, which changes where some of DevFoundation’s
+asynchronous code runs:
+
+  - Nonisolated asynchronous functions, like `HTTPClient.load(_:)` and the pagers’ `loadPage`
+    functions, now run on their caller’s actor instead of on the global concurrent executor.
+  - `CurrentValueMulticaster`’s `values()` sequence now waits for values on its caller’s actor.
+  - The `next` closure passed to `HTTPClientInterceptor.intercept(request:context:next:)` is
+    explicitly `@concurrent`, so it still runs off its caller’s actor, and existing interceptors
+    don’t need to change.
+
+
 ## 1.11.0: August 4, 2026
 
 This release adds `RemoteLocalizedFormatStringPolicy` for controlling whether content from a remote
