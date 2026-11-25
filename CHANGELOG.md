@@ -14,6 +14,33 @@ asynchronous code runs:
     explicitly `@concurrent`, so it still runs off its caller’s actor, and existing interceptors
     don’t need to change.
 
+This release also adds support for live queries whose results change after they’re produced, like
+a search over a local database that should update when the database does:
+
+  - The new `LiveQueryResultUpdatesProducer` protocol returns an `AsyncSequence` of results for each
+    query fragment. Create a live query that uses one with `LiveQuery.init(resultUpdatesProducer:)`.
+    Each value the sequence produces replaces the live query’s results, and when the query fragment
+    changes, the live query cancels its iteration of the previous fragment’s sequence.
+  - `LiveQueryResultsProducer` now refines `LiveQueryResultUpdatesProducer`, with a default
+    implementation of `resultUpdates(forQueryFragment:)` that produces results once. Existing
+    conformances don’t need to change.
+  - `LiveQuery` now cancels result production for a query fragment when a newer fragment arrives,
+    and discards any results it produces later. Previously, a live query waited for each
+    fragment’s results before producing the next fragment’s. That delayed results for the latest
+    fragment by however long the previous call had left, and it showed results for a fragment the
+    user had already moved past. Now, result production for the latest fragment starts right away,
+    and results that arrive for a fragment the user has moved past are discarded. This change is
+    required to support result updates sequences, because otherwise a live query would wait for
+    the first fragment’s sequence to finish; if it never did, the live query would never produce
+    results for later fragments.
+
+    You may notice the change if your results producer is slow relative to its debounce duration.
+    While someone types in short bursts, each burst cancels the previous call, so intermediate
+    results appear less often. Choosing a debounce duration close to your producer’s typical
+    latency avoids this. If your producer ignores cancellation, it still runs to completion, but
+    its results are no longer shown. If its work must finish, for example to cache results, run
+    that work in a separate task that cancellation doesn’t reach.
+
 
 ## 1.11.0: August 4, 2026
 

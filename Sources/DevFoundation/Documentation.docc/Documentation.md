@@ -28,6 +28,7 @@ for paging through data, and essential utility types for building robust applica
 
   - ``LiveQuery``
   - ``LiveQueryResultsProducer``
+  - ``LiveQueryResultUpdatesProducer``
   - ``LiveQuerySchedulingStrategy``
 
 ### Localizing with Remote Content
