@@ -96,8 +96,12 @@ jobs:
           path: ${{ env.XCODE_TEST_PRODUCTS_PATH }}
           key: ${{ steps.cache-xctestproducts-restore.outputs.cache-primary-key }}
 
+      # Optional until Xcode records coverage for Swift packages again. With Xcode 27.2, result
+      # bundles have no coverage for package targets, so xccov can’t report it.
       - name: Log Code Coverage
+        id: coverage
         if: github.event_name != 'push'
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -123,7 +127,7 @@ jobs:
           include-hidden-files: true
 
       - name: Upload xccovPretty output
-        if: github.event_name != 'push'
+        if: github.event_name != 'push' && steps.coverage.outcome == 'success'
         uses: actions/upload-artifact@v7
         with:
           name: xccovPrettyOutput-${{ matrix.platform }}
@@ -140,11 +144,14 @@ jobs:
 
     steps:
       - name: Download xccovPretty output
+        id: download-coverage
+        continue-on-error: true
         uses: actions/download-artifact@v8
         with:
           name: xccovPrettyOutput-macOS
 
       - name: Post Code Coverage Comment
+        if: steps.download-coverage.outcome == 'success'
         uses: thollander/actions-comment-pull-request@v3
         with:
           file-path: xccovPretty-macOS.output
